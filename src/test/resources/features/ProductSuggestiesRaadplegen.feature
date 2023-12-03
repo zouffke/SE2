@@ -65,3 +65,11 @@ Feature: Suggesties krijgen voor ingredienten
             | 16          | 3          | 2              | 2                     | 1.35         | 100         | 2024-03-01  | 2024-03-31 |
             | 17          | 3          | 1              | 1                     | 1.40         | 80          | 2024-03-01  | 2024-03-31 |
             | 18          | 3          | 2              | 2                     | 1.45         | 80          | 2024-03-01  | 2024-03-31 |
+    Scenario: Lijst gesorteerd op procentuele verschil tussen de huidige weekgemiddelde aankoopprijs
+        Given het is vandaag 2024-03-01
+        When ik op suggesties klik
+        Then krijg ik een lijst van 3 producten, gesorteerd op wekelijkse gemiddelde aankoopprijs
+        And product_id van item 1 in de lijst is 1
+        And product_id van item 2 in de lijst is 3
+        And product_id van item 3 in de lijst is 2
+
