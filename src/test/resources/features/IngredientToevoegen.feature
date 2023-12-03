@@ -1,7 +1,7 @@
-Feature: Ingrediënt toevoegen aan recept
+Feature: Ingredient toevoegen aan recept
 
     Als menuteamlid
-    Wil ik een ingrediënt kunnen toevoegen aan een recept
+    Wil ik een ingredient kunnen toevoegen aan een recept
     Zodat ik een recept kan samenstellen.
 
     Background:
@@ -16,8 +16,8 @@ Feature: Ingrediënt toevoegen aan recept
             | recept_id | is_subrecept_van | invoegen_na_stap |
             | 4         | 3                | 1                |
 
-        Given ingrediënten
-            | ingrediënt_id | ingrediënt_naam | product_id | recept_id | hoeveelheid |
+        Given ingredienten
+            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid |
             | 1             | bloem           | 1          | 1         | 100         |
             | 3             | kaas            | 3          | 2         | 20          |
             | 4             | kaas            | 3          | 3         | 20          |
@@ -67,7 +67,7 @@ Feature: Ingrediënt toevoegen aan recept
             | 18          | 3          | 2              | 2                     | 1.45         | 80          | 2024-03-01  | 2024-03-31 |
 
 
-    Scenario: Ingrediënt toevoegen aan recept
+    Scenario: Ingredient toevoegen aan recept
         When ik product met id 2 toevoeg aan recept met id 1 met een hoeveelheid van 200
-        Then heeft het recept 2 ingrediënten
-        And één van de ingrediënten is product 2 met hoeveelheid 200
+        Then heeft het recept 2 ingredienten
+        And één van de ingredienten is product 2 met hoeveelheid 200

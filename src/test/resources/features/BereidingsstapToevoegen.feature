@@ -12,8 +12,8 @@ Feature: Bereidingsstap toevoegen aan recept
       | recept_id | is_subrecept_van | invoegen_na_stap |
       | 4         | 3                | 1                |
 
-    Given ingrediënten
-      | ingrediënt_id | ingrediënt_naam | product_id | recept_id | hoeveelheid |
+    Given ingredienten
+      | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid |
       | 1             | bloem           | 1          | 1         | 100         |
       | 3             | kaas            | 3          | 2         | 20          |
       | 4             | kaas            | 3          | 3         | 20          |

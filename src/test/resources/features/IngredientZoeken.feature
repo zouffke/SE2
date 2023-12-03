@@ -1,7 +1,7 @@
-Feature: Ingrediënt zoeken
+Feature: Ingredient zoeken
     Als lid van het menuteam
-    wil ik de mogelijkheid hebben om de ingrediënten voor mijn recepten te vinden via de zoekfunctie,
-    zodat ik snel de juiste ingrediënten kan toevoegen aan een recept.
+    wil ik de mogelijkheid hebben om de ingredienten voor mijn recepten te vinden via de zoekfunctie,
+    zodat ik snel de juiste ingredienten kan toevoegen aan een recept.
 
     Background:
         Given recepten
@@ -15,8 +15,8 @@ Feature: Ingrediënt zoeken
             | recept_id | is_subrecept_van | invoegen_na_stap |
             | 4         | 3                | 1                |
 
-        Given ingrediënten
-            | ingrediënt_id | ingrediënt_naam | product_id | recept_id | hoeveelheid |
+        Given ingredienten
+            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid |
             | 1             | bloem           | 1          | 1         | 100         |
             | 3             | kaas            | 3          | 2         | 20          |
             | 4             | kaas            | 3          | 3         | 20          |
@@ -72,7 +72,7 @@ Feature: Ingrediënt zoeken
         And product_id van item 1 uit de lijst is 1
         And product_id van item 2 uit de lijst is 4
 
-    Scenario: Product zoeken op beschikbaarheid (enkel ingrediënten waarvoor twee leveranciers zijn per distributiecentrum voor de huidige datum)
+    Scenario: Product zoeken op beschikbaarheid (enkel ingredienten waarvoor twee leveranciers zijn per distributiecentrum voor de huidige datum)
         Given het is vandaag 2024-01-15
         When ik zoek naar producten die beschikbaar zijn
         Then krijg ik een lijst terug met 1 product
