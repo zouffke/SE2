@@ -2,8 +2,8 @@ package be.kdg.hifresh.domain.recepten;
 
 import java.util.*;
 
-public class IngrediëntCataloog {
+public class IngredientCataloog {
 
-	private List<Ingrediënt> ingrediënten;
+	private List<Ingredient> ingredienten;
 
 }

@@ -4,7 +4,7 @@ import be.kdg.hifresh.domain.verkoop.*;
 import be.kdg.hifresh.domain.util.*;
 
 /**
- * Weekpakket met ingrediënten en recepten voor een week koken.
+ * Weekpakket met ingredienten en recepten voor een week koken.
  */
 public class MaaltijdBox {
 

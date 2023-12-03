@@ -1,8 +1,10 @@
 package be.kdg.hifresh.domain.util;
 
+import java.time.LocalDateTime;
+
 public class Periode {
 
-	private TimeStamp start;
-	private TimeStamp end;
+	private LocalDateTime start;
+	private LocalDateTime end;
 
 }

@@ -1,6 +1,6 @@
 package be.kdg.hifresh.domain.util;
 
-public class Eenheid {
+public enum Eenheid {
 	Kilogram,
 	Liter
 }

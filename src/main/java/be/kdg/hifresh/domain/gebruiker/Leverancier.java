@@ -4,7 +4,7 @@ import java.util.*;
 import be.kdg.hifresh.domain.aankoop.*;
 
 /**
- * Bedrijf dat ingrediënten levert.
+ * Bedrijf dat ingredienten levert.
  */
 public class Leverancier extends Rol {
 

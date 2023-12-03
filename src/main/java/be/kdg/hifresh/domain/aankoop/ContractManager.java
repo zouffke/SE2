@@ -1,7 +1,7 @@
 package be.kdg.hifresh.domain.aankoop;
 
 /**
- * Startup die ingrediënten en recepten aan huis levert voor een week lekker zelf koken.
+ * Startup die ingredienten en recepten aan huis levert voor een week lekker zelf koken.
  */
 public class ContractManager {
 
