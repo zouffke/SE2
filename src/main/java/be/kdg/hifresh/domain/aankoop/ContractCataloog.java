@@ -4,6 +4,9 @@ import java.util.*;
 
 public class ContractCataloog {
 
-	private List<Contract> contracten;
+	private final List<Contract> contracten;
 
+	ContractCataloog(){
+		this.contracten = new ArrayList<>();
+	}
 }

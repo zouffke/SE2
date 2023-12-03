@@ -5,7 +5,11 @@ package be.kdg.hifresh.domain.aankoop;
  */
 public class ContractManager {
 
-	private ContractCataloog contractCataloog;
-	private DistributieCentraCataloog dcCataloog;
+	private final ContractCataloog contractCataloog;
+	private final DistributieCentraCataloog dcCataloog;
 
+	public ContractManager(){
+		this.contractCataloog = new ContractCataloog();
+		this.dcCataloog = new DistributieCentraCataloog();
+	}
 }

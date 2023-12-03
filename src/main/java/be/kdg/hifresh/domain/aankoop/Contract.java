@@ -12,4 +12,7 @@ public class Contract {
 	private Product product;
 	private List<Clausule> clausules;
 
+	Contract(Product product){
+		this.product = product;
+	}
 }

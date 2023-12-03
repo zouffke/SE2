@@ -11,5 +11,10 @@ public class Ingredient {
 	private Product product;
 	private double hoeveelheid;
 	private Eenheid eenheid;
+	private final int id;
 
+	Ingredient(int id, String naam){
+		this.id = id;
+		this.product = new Product(naam);
+	}
 }

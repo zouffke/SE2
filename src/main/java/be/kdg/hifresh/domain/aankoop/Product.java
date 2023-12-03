@@ -9,5 +9,10 @@ public class Product {
 
 	private List<Contract> contracten;
 	private String naam;
+	private final int id;
 
+	public Product(String naam, int id){
+		this.naam = naam;
+		this.id = id;
+	}
 }
