@@ -39,4 +39,22 @@ public class GemiddeldeAankoopprijsRaadplegen {
                 Double.parseDouble(r.get("hoeveelheid"))
         ));
     }
+
+    @Given("bereidingsstappen")
+    public void bereidingsstappen(DataTable dataTable) {
+        dataTable.asMaps().forEach(r -> ReceptController.addBereidingsStapToRecept(
+                Integer.parseInt(r.get("recept_id")),
+                Integer.parseInt(r.get("bereidingsstap_id")),
+                r.get("bereidingsstap_naam"),
+                r.get("bereidingsstap_beschrijving")
+        ));
+    }
+
+    @Given("distributiecentra")
+    public void distributiecentra(DataTable dataTable) {
+        dataTable.asMaps().forEach(r -> ReceptController.addCentrumToCatalog(
+                Integer.parseInt(r.get("distributiecentrum_id")),
+                r.get("distributiecentrum_naam")
+        ));
+    }
 }

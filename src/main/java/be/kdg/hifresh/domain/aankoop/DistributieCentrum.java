@@ -12,5 +12,12 @@ public class DistributieCentrum {
 	private List<Levering> leveringen;
 	private List<MaaltijdBox> maaltijdBoxen;
 	private Adres adres;
+	private final int id;
+	private String name;
+
+	DistributieCentrum(int id, String name){
+		this.id = id;
+		this.name = name;
+	}
 
 }

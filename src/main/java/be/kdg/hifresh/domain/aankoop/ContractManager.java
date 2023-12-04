@@ -26,6 +26,10 @@ public class ContractManager {
 	}
 
 	public Product getProductFromCatalog(int prodId){
-		return this.contractCataloog
+		return this.contractCataloog.getProduct(prodId);
+	}
+
+	public boolean addCentrumToCatalog(int id, String name){
+		return this.dcCataloog.addCentrum(this.dcCataloog.createNewCentrum(id, name));
 	}
 }

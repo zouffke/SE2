@@ -44,4 +44,12 @@ public class ReceptController {
     public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt) {
         return receptManager.addIngredientToProd(ingrId, prodId, receptId, amt);
     }
+
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch){
+        receptManager.addStapToRecept(receptId, stapId, stapName, stapBesch);
+    }
+
+    public static boolean addCentrumToCatalog(int id, String name){
+        return receptManager.addCentrumToCatalog(id, name);
+    }
 }
