@@ -21,4 +21,17 @@ public class ContractCataloog {
                 .filter(p -> p.getId() == prodId)
                 .findFirst().orElse(null);
     }
+
+    Contract getContractByProdId(int prodId){
+        return this.contracten.stream()
+                .filter(c -> c.getProduct().getId() == prodId)
+                .findFirst().orElse(null);
+    }
+
+    boolean addClausuleToContract(int prodId, Clausule clausule){
+        Contract contract = this.getContractByProdId(prodId);
+        if (contract == null) throw new IllegalArgumentException("Given product ID was not found in list.");
+
+        return contract.addClausule(clausule);
+    }
 }

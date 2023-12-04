@@ -19,4 +19,12 @@ public class Contract {
 	Product getProduct(){
 		return this.product;
 	}
+
+	boolean addClausule(Clausule clausule){
+		if (this.clausules == null){
+			this.clausules = new ArrayList<>();
+		}
+
+		return this.clausules.add(clausule);
+	}
 }

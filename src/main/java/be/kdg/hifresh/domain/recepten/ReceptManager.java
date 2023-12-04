@@ -1,6 +1,9 @@
 package be.kdg.hifresh.domain.recepten;
 
 import be.kdg.hifresh.domain.aankoop.ContractManager;
+import be.kdg.hifresh.domain.util.Eenheid;
+
+import java.time.LocalDateTime;
 
 /**
  * Startup die ingredienten en recepten aan huis levert voor een week lekker zelf koken.
@@ -65,7 +68,11 @@ public class ReceptManager {
         recept.addBereidingsStap(new BereidingsStap(stapName, stapBesch, stapId));
     }
 
-    boolean addCentrumToCatalog(int id, String name){
+    boolean addCentrumToCatalog(int id, String name) {
         return this.contractManager.addCentrumToCatalog(id, name);
+    }
+
+    boolean addClausuleToContract(int id, int prodId, LocalDateTime start, LocalDateTime end, double hoeveelheid, Eenheid eenheid, double bedrag) {
+        return this.contractManager.addClausuleToContract(prodId, this.contractManager.createNewClausule(id, prodId, start, end, hoeveelheid, eenheid, bedrag));
     }
 }

@@ -1,8 +1,10 @@
 package be.kdg.hifresh.domain.recepten;
 
+import be.kdg.hifresh.domain.util.Eenheid;
 import be.kdg.hifresh.domain.util.Munt;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ReceptController {
 
@@ -45,11 +47,15 @@ public class ReceptController {
         return receptManager.addIngredientToProd(ingrId, prodId, receptId, amt);
     }
 
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch){
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
         receptManager.addStapToRecept(receptId, stapId, stapName, stapBesch);
     }
 
-    public static boolean addCentrumToCatalog(int id, String name){
+    public static boolean addCentrumToCatalog(int id, String name) {
         return receptManager.addCentrumToCatalog(id, name);
+    }
+
+    public static boolean addClausule(int id, int prodId, LocalDateTime start, LocalDateTime end, double hoeveelheid, Eenheid eenheid, double bedrag) {
+        return receptManager.addClausuleToContract(id, prodId, start, end, hoeveelheid, eenheid, bedrag);
     }
 }
