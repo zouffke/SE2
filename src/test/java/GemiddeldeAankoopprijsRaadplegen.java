@@ -22,8 +22,21 @@ public class GemiddeldeAankoopprijsRaadplegen {
     }
 
 
+    @Given("producten")
+    public void producten(DataTable dataTable) {
+        dataTable.asMaps().forEach(r -> ReceptController.addProduct(
+                Integer.parseInt(r.get("product_id")),
+                r.get("product_naam")
+        ));
+    }
+
     @Given("ingredienten")
     public void ingredienten(DataTable dataTable) {
-
+        dataTable.asMaps().forEach(r -> ReceptController.addIngredientToRecept(
+                Integer.parseInt(r.get("ingredient_id")),
+                Integer.parseInt(r.get("product_id")),
+                Integer.parseInt(r.get("recept_id")),
+                Double.parseDouble(r.get("hoeveelheid"))
+        ));
     }
 }

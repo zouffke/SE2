@@ -1,6 +1,6 @@
 package be.kdg.hifresh.domain.recepten;
 
-import be.kdg.hifresh.domain.aankoop.*;
+import be.kdg.hifresh.domain.aankoop.Product;
 import be.kdg.hifresh.domain.util.Eenheid;
 
 /**
@@ -8,13 +8,18 @@ import be.kdg.hifresh.domain.util.Eenheid;
  */
 public class Ingredient {
 
-	private Product product;
-	private double hoeveelheid;
-	private Eenheid eenheid;
-	private final int id;
+    private final Product product;
+    private double hoeveelheid;
+    private Eenheid eenheid;
+    private final int id;
 
-	Ingredient(int id, String naam){
-		this.id = id;
-		this.product = new Product(naam);
-	}
+    Ingredient(int id, Product product, double hoeveelheid) {
+        this.id = id;
+        this.product = product;
+        this.hoeveelheid = hoeveelheid;
+    }
+
+    int getId() {
+        return this.id;
+    }
 }

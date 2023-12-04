@@ -12,4 +12,20 @@ public class ContractManager {
 		this.contractCataloog = new ContractCataloog();
 		this.dcCataloog = new DistributieCentraCataloog();
 	}
+
+	public boolean addContractToCatalog(Contract contract){
+		return this.contractCataloog.addContract(contract);
+	}
+
+	public Contract createNewContract(Product product){
+		return new Contract(product);
+	}
+
+	public static Product createNewProduct(String naam, int prodId){
+		return new Product(naam, prodId);
+	}
+
+	public Product getProductFromCatalog(int prodId){
+		return this.contractCataloog
+	}
 }

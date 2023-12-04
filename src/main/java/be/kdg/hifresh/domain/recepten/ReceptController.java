@@ -15,8 +15,8 @@ public class ReceptController {
     }
     //endregion
 
-    private static void checkReceptManger(){
-        if (receptManager == null){
+    private static void checkReceptManger() {
+        if (receptManager == null) {
             receptManager = new ReceptManager();
         }
     }
@@ -29,11 +29,19 @@ public class ReceptController {
         return null;
     }
 
-    public static boolean addReceptToCatalog(String name, int id, String beschrijving){
+    public static boolean addReceptToCatalog(String name, int id, String beschrijving) {
         return receptManager.addReceptToCataloog(receptManager.createRecept(name, id, beschrijving));
     }
 
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId){
+    public static boolean addSubreceptToRecept(int subReceptId, int receptId) {
         return receptManager.addSubreceptToSubrecept(subReceptId, receptId);
+    }
+
+    public static boolean addProduct(int prodId, String name) {
+        return receptManager.addProduct(prodId, name);
+    }
+
+    public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt) {
+        return receptManager.addIngredientToProd(ingrId, prodId, receptId, amt);
     }
 }

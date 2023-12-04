@@ -15,4 +15,8 @@ public class Contract {
 	Contract(Product product){
 		this.product = product;
 	}
+
+	Product getProduct(){
+		return this.product;
+	}
 }

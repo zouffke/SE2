@@ -31,7 +31,28 @@ public class ReceptManager {
                 .addSubrecept(this.receptCataloog.getRecept(subReceptId));
     }
 
-    boolean addIngredientToRecept(int receptId, ){
+    boolean addProduct(int prodId, String name) {
+        return this.contractManager
+                .addContractToCatalog(this.contractManager
+                        .createNewContract(ContractManager.createNewProduct(name, prodId)));
+    }
 
+    boolean addIngredientToProd(int ingrId, int prodId, int receptId, double amt){
+        Recept recept = this.receptCataloog.getRecept(receptId);
+        if (recept == null){
+            throw new RuntimeException("Given prod id can not be found in list");
+        }
+
+        Ingredient ingredient = this.ingredientCataloog.getIngredient(ingrId);
+        if (ingredient == null){
+            ingredient = this.ingredientCataloog.addIngredient(
+                    this.ingredientCataloog.createNewIngredient(
+                            ingrId,
+                            this.contractManager.getProductFromCatalog(prodId),
+                            amt
+                    ));
+        }
+
+        return recept.addIngredient(ingredient);
     }
 }
