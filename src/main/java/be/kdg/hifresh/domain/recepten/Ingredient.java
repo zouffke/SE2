@@ -19,6 +19,7 @@ public class Ingredient {
     /**
      * The quantity of this ingredient.
      */
+    @Getter
     private double hoeveelheid;
 
     /**

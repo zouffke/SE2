@@ -3,14 +3,12 @@ package be.kdg.hifresh.dal.recepten;
 import be.kdg.hifresh.domain.aankoop.Product;
 import be.kdg.hifresh.domain.recepten.Recept;
 import be.kdg.hifresh.domain.recepten.ReceptenFactory;
-import be.kdg.hifresh.domain.util.Eenheid;
 import be.kdg.hifresh.domain.util.Munt;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 public final class ReceptController {
 
@@ -27,6 +25,10 @@ public final class ReceptController {
     //TODO implement getGemiddeldeAankoopPrijs method
     public static List<Product> getAllProducts(int receptId) throws InvocationTargetException, IllegalAccessException {
         return manager.getAllProducts(receptId);
+    }
+
+    public static Munt getPriceForRecept(Map<Integer, Munt> prices, int receptId) throws InvocationTargetException, IllegalAccessException {
+        return manager.getPriceForRecept(prices, receptId);
     }
 
     //region setup functions

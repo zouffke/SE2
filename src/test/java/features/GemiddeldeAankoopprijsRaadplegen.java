@@ -15,7 +15,8 @@ import org.junit.jupiter.api.BeforeAll;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GemiddeldeAankoopprijsRaadplegen {
 
@@ -26,7 +27,6 @@ public class GemiddeldeAankoopprijsRaadplegen {
     static void beforeAll() {
         Controller.setManagers(new ContractManager(), new ReceptManager());
     }
-
 
 
     @Given("recepten")
@@ -121,12 +121,16 @@ public class GemiddeldeAankoopprijsRaadplegen {
         });
     }
 
+    @Given("het is vandaag {string}-{string}-{string}")
+    public void hetIsVandaag(String arg0, String arg1, String arg2) {
+        today = LocalDate.of(Integer.parseInt(arg0), Integer.parseInt(arg1), Integer.parseInt(arg2));
+    }
 
     @When("ik de gemiddelde aankoopprijs van het recept {int} raadpleeg")
     public void ikDeGemiddeldeAankoopprijsVanHetReceptRaadpleeg(int arg0) {
         try {
             avgResult = Controller.getGemiddeldeAankoopPrijs(arg0, today);
-        } catch (InvocationTargetException | IllegalAccessException e){
+        } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
     }
@@ -134,10 +138,5 @@ public class GemiddeldeAankoopprijsRaadplegen {
     @Then("krijg ik dat de gemiddelde aankoopprijs van recept {int} gelijk is aan {double}")
     public void krijgIkDatDeGemiddeldeAankoopprijsVanReceptGelijkIsAan(int arg0, double arg1) {
         assertEquals(arg1, avgResult.getBedrag());
-    }
-
-    @Given("het is vandaag {string}-{string}-{string}")
-    public void hetIsVandaag(String arg0, String arg1, String arg2) {
-        today = LocalDate.of(Integer.parseInt(arg0), Integer.parseInt(arg1), Integer.parseInt(arg2));
     }
 }

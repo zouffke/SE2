@@ -11,7 +11,9 @@ import be.kdg.hifresh.domain.util.UtilFactory;
 import lombok.Getter;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A manager class for handling contracts.
@@ -48,14 +50,22 @@ public class ContractManager extends Manager {
     }
     //endregion
 
-    public Munt getGemiddeldeAankoopPrijs(List<Product> products, LocalDate date) {
-        Munt munt = UtilFactory.createMunt(0, "Euro");
+    public Map<Integer, Munt> getGemiddeldeAankoopPrijs(List<Product> products, LocalDate date) {
+        double bedrag = 0;
+        double hoeveelheid = 0;
+
+        Map<Integer, Munt> prices = new HashMap<>();
+
         for (Product product : products) {
             for (Contract contract : product.getContracten()) {
-                for (PrijsAfspraak prijsAfspraak : contract.getGeldendePrijsAfspraken(date))
-                    munt.addBedrag(prijsAfspraak.getPrijs().getBedrag() / prijsAfspraak.getMaxHoeveelheid());
+                for (PrijsAfspraak prijsAfspraak : contract.getGeldendePrijsAfspraken(date)) {
+                    bedrag += prijsAfspraak.getPrijs().getBedrag();
+                    hoeveelheid += prijsAfspraak.getMaxHoeveelheid();
+                }
             }
+            prices.put(product.getId(), UtilFactory.createMunt((bedrag / hoeveelheid), "Euro"));
         }
-        return munt;
+
+        return prices;
     }
 }
