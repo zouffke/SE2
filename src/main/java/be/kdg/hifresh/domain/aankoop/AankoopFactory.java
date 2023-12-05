@@ -13,12 +13,6 @@ import be.kdg.hifresh.domain.util.PrijsAfspraak;
  * @author Dandois Luca
  */
 public class AankoopFactory {
-
-    //region vars
-    private static DistributieCentraCataloog distributieCentraCataloog;
-    private static ContractCataloog contractCataloog;
-    //endregion
-
     //region constructors
     /**
      * Private constructor to prevent instantiation of this utility class.
@@ -57,47 +51,6 @@ public class AankoopFactory {
      */
     public static Contract createContract(Product product) {
         return new Contract(product);
-    }
-
-    /**
-     * Creates a new ContractCataloog object.
-     *
-     * @return A new or existing ContractCataloog object.
-     *
-     * @author Dandois Luca
-     */
-    public static ContractCataloog createContractCataloog() {
-        if (contractCataloog == null) {
-            contractCataloog = new ContractCataloog();
-        }
-
-        return contractCataloog;
-    }
-
-    /**
-     * Creates a new ContractManager object.
-     *
-     * @return A new ContractManager object.
-     *
-     * @author Dandois Luca
-     */
-    public static ContractManager createContractManager() {
-        return new ContractManager();
-    }
-
-    /**
-     * Creates a new DistributieCentraCataloog object.
-     *
-     * @return A new or existing DistributieCentraCataloog object.
-     *
-     * @author Dandois Luca
-     */
-    public static DistributieCentraCataloog createDistributieCentraCataloog() {
-        if (distributieCentraCataloog == null) {
-            distributieCentraCataloog = new DistributieCentraCataloog();
-        }
-
-        return distributieCentraCataloog;
     }
 
     /**

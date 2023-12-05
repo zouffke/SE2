@@ -1,22 +1,42 @@
 package be.kdg.hifresh.domain.aankoop;
 
+import lombok.Getter;
+
 import java.util.*;
 
 /**
- * Een goed dat geleverd wordt door een leverancier en dat nodig is voor het bereiden van een maaltijd.
+ * Represents a product that is delivered by a supplier and is needed for preparing a meal.
  */
 public class Product {
 
-	private List<Contract> contracten;
-	private String naam;
-	private final int id;
+    //region vars
+    /**
+     * The list of contracts associated with this product.
+     */
+    private List<Contract> contracten;
 
-	Product(String naam, int id){
-		this.naam = naam;
-		this.id = id;
-	}
+    /**
+     * The name of this product.
+     */
+    private String naam;
 
-	public int getId(){
-		return this.id;
-	}
+    /**
+     * The id of this product.
+     */
+    @Getter
+    private final int id;
+
+    //endregion
+    //region constructors
+    /**
+     * Constructor for Product.
+     *
+     * @param naam The name of the product.
+     * @param id The id of the product.
+     */
+    Product(String naam, int id){
+        this.naam = naam;
+        this.id = id;
+    }
+    //endregion
 }

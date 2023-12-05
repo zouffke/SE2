@@ -1,8 +1,12 @@
-import be.kdg.hifresh.domain.recepten.ReceptController;
+import be.kdg.hifresh.dal.Controller;
+import be.kdg.hifresh.dal.aankoop.ContractManager;
+import be.kdg.hifresh.dal.recepten.ReceptController;
+import be.kdg.hifresh.dal.recepten.ReceptManager;
 import be.kdg.hifresh.domain.util.Eenheid;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.BeforeAll;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,6 +14,12 @@ import java.time.LocalDateTime;
 public class GemiddeldeAankoopprijsRaadplegen {
 
     private LocalDate today;
+
+    @BeforeAll
+    static void beforeAll() {
+        ContractManager cmM = new ContractManager();
+        Controller.setManagers(cmM, new ReceptManager(cmM));
+    }
 
     @Given("recepten")
     public void recepten(DataTable dataTable) {
