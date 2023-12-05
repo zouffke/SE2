@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
  * An interface for managing catalogs of objects.
  */
 public interface IManager {
+    //region catalog functions
+
     /**
      * Adds an object to a catalog.
      *
@@ -14,7 +16,7 @@ public interface IManager {
      * @param <T> The type of the object.
      * @return true if the object was added successfully, false otherwise.
      */
-    <T> boolean addTtoCatalog(T object, Catalog<T> catalog);
+    <T> boolean addObjtoCatalog(T object, Catalog<T> catalog);
 
     /**
      * Retrieves an object from a catalog at the specified index.
@@ -25,6 +27,14 @@ public interface IManager {
      * @return The object at the specified index.
      */
     <T> T getObjFromCatalog(int index, Catalog<T> catalog);
+
+    <T> int getIndexOfObjInCatalog(T Obj, Catalog<T> catalog);
+
+    <T> int getIndexOfObjByIdInCatalog(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException;
+
+    <T> T getObjFromCatalogById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException;
+
+    //endregion
 
     /**
      * Retrieves an object of type T associated with an object of type U.
@@ -38,4 +48,6 @@ public interface IManager {
      * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     <T, U> T GetObjTFromObjU(Class<T> objT, U objU) throws InvocationTargetException, IllegalAccessException;
+
+
 }

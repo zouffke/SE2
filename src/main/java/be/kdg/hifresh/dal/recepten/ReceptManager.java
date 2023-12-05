@@ -26,10 +26,6 @@ public class ReceptManager extends Manager {
      */
     private final IngredientCataloog ingredientCataloog;
 
-    /**
-     * Manager for contracts.
-     */
-    private final ContractManager contractManager;
     //endregion
 
     //region constructors
@@ -40,10 +36,9 @@ public class ReceptManager extends Manager {
      *
      * @author Dandois Luca
      */
-    public ReceptManager(ContractManager contractManager) {
+    public ReceptManager() {
         this.receptCataloog = new ReceptCataloog();
         this.ingredientCataloog = new IngredientCataloog();
-        this.contractManager = contractManager;
     }
     //endregion
 }

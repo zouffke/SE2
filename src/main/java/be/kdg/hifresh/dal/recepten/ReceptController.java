@@ -1,9 +1,13 @@
 package be.kdg.hifresh.dal.recepten;
 
+import be.kdg.hifresh.domain.aankoop.Product;
+import be.kdg.hifresh.domain.recepten.Recept;
+import be.kdg.hifresh.domain.recepten.ReceptenFactory;
 import be.kdg.hifresh.domain.util.Eenheid;
 import be.kdg.hifresh.domain.util.Munt;
 import lombok.Setter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -26,31 +30,53 @@ public final class ReceptController {
         return null;
     }
 
-    public static boolean addReceptToCatalog(String name, int id, String beschrijving) {
-        return manager.addReceptToCataloog(manager.createRecept(name, id, beschrijving));
+    //region setup functions
+
+    public static boolean addReceptToCatalog(int id, String name, String beschrijving) {
+        return manager.addObjtoCatalog(
+                ReceptenFactory.createRecept(id, name, beschrijving),
+                manager.getReceptCataloog()
+        );
     }
 
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId) {
-        return manager.addSubreceptToSubrecept(subReceptId, receptId);
+    public static boolean addSubreceptToRecept(int subReceptId, int receptId) throws InvocationTargetException, IllegalAccessException {
+        return manager.getObjFromCatalogById(
+                receptId,
+                manager.getReceptCataloog()
+        ).addSubrecept(
+                manager.getObjFromCatalogById(
+                        subReceptId,
+                        manager.getReceptCataloog())
+        );
     }
 
-    public static boolean addProduct(int prodId, String name) {
-        return manager.addProduct(prodId, name);
+    public static boolean addIngredientToRecept(int ingrId, Product product, int receptId, double amt) throws InvocationTargetException, IllegalAccessException {
+        return manager.getObjFromCatalogById(
+                        receptId,
+                        manager.getReceptCataloog())
+                .addIngredient(
+                        ReceptenFactory.createIngredient(
+                                ingrId,
+                                product,
+                                amt
+                        )
+                );
     }
 
-    public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt) {
-        return manager.addIngredientToProd(ingrId, prodId, receptId, amt);
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) throws InvocationTargetException, IllegalAccessException {
+        Recept recept = manager.getObjFromCatalogById(
+                receptId,
+                manager.getReceptCataloog());
+
+        recept.addBereidingsStap(
+                ReceptenFactory.createBereidingsStap(
+                        stapId,
+                        stapName,
+                        stapBesch
+                ),
+                recept.getNextVolgnummer()
+        );
     }
 
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
-        manager.addStapToRecept(receptId, stapId, stapName, stapBesch);
-    }
-
-    public static boolean addCentrumToCatalog(int id, String name) {
-        return manager.addCentrumToCatalog(id, name);
-    }
-
-    public static boolean addClausule(int id, int prodId, LocalDateTime start, LocalDateTime end, double hoeveelheid, Eenheid eenheid, double bedrag) {
-        return manager.addClausuleToContract(id, prodId, start, end, hoeveelheid, eenheid, bedrag);
-    }
+    //endregion
 }

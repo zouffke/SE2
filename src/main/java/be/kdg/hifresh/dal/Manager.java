@@ -9,6 +9,8 @@ import java.lang.reflect.Method;
  */
 public abstract class Manager implements IManager {
 
+    //region catalog functions
+
     /**
      * Adds an object to a catalog.
      *
@@ -18,7 +20,7 @@ public abstract class Manager implements IManager {
      * @return true if the object was added successfully, false otherwise.
      */
     @Override
-    public <T> boolean addTtoCatalog(T object, Catalog<T> catalog) {
+    public <T> boolean addObjtoCatalog(T object, Catalog<T> catalog) {
         return catalog.addObjToCatalog(object);
     }
 
@@ -34,6 +36,23 @@ public abstract class Manager implements IManager {
     public <T> T getObjFromCatalog(int index, Catalog<T> catalog) {
         return catalog.getObjFromCatalog(index);
     }
+
+    @Override
+    public <T> int getIndexOfObjInCatalog(T obj, Catalog<T> catalog) {
+        return catalog.getIndexOfObj(obj);
+    }
+
+    @Override
+    public <T> int getIndexOfObjByIdInCatalog(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
+        return catalog.getIndexOfObjById(objId);
+    }
+
+    @Override
+    public <T> T getObjFromCatalogById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
+        return catalog.getObjFromCatalog(catalog.getIndexOfObjById(objId));
+    }
+
+    //endregion
 
     /**
      * Retrieves an object of type T associated with an object of type U.
