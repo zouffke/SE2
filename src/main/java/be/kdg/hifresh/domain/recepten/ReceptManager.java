@@ -1,6 +1,7 @@
 package be.kdg.hifresh.domain.recepten;
 
-import be.kdg.hifresh.domain.aankoop.ContractManager;
+import be.kdg.hifresh.domain.aankoop.AankoopFactory;
+import be.kdg.hifresh.dal.aankoop.ContractManager;
 import be.kdg.hifresh.domain.util.Eenheid;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class ReceptManager {
     ReceptManager() {
         this.receptCataloog = new ReceptCataloog();
         this.ingredientCataloog = new IngredientCataloog();
-        this.contractManager = new ContractManager();
+        this.contractManager = AankoopFactory.createContractManager();
     }
 
     boolean addReceptToCataloog(Recept recept) {
@@ -36,8 +37,11 @@ public class ReceptManager {
 
     boolean addProduct(int prodId, String name) {
         return this.contractManager
-                .addContractToCatalog(this.contractManager
-                        .createNewContract(ContractManager.createNewProduct(name, prodId)));
+                .addContractToCatalog(
+                        AankoopFactory.createContract(
+                                AankoopFactory.createProduct(prodId, name)
+                        )
+                );
     }
 
     boolean addIngredientToProd(int ingrId, int prodId, int receptId, double amt) {

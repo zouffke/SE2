@@ -1,5 +1,12 @@
-package be.kdg.hifresh.domain.aankoop;
+package be.kdg.hifresh.dal.aankoop;
 
+import be.kdg.hifresh.dal.Catalog;
+import be.kdg.hifresh.dal.IManager;
+import be.kdg.hifresh.dal.aankoop.catalogs.ContractCataloog;
+import be.kdg.hifresh.dal.aankoop.catalogs.DistributieCentraCataloog;
+import be.kdg.hifresh.domain.aankoop.AankoopFactory;
+import be.kdg.hifresh.domain.aankoop.Clausule;
+import be.kdg.hifresh.domain.aankoop.Product;
 import be.kdg.hifresh.domain.util.Eenheid;
 import be.kdg.hifresh.domain.util.UtilFactory;
 
@@ -8,34 +15,41 @@ import java.time.LocalDateTime;
 /**
  * Startup die ingredienten en recepten aan huis levert voor een week lekker zelf koken.
  */
-public class ContractManager {
+public class ContractManager implements IManager {
 
+    //region vars
     private final ContractCataloog contractCataloog;
     private final DistributieCentraCataloog dcCataloog;
+    //endregion
 
+    //region constructors
     public ContractManager() {
-        this.contractCataloog = new ContractCataloog();
-        this.dcCataloog = new DistributieCentraCataloog();
+        this.contractCataloog = AankoopFactory.createContractCataloog();
+        this.dcCataloog = AankoopFactory.createDistributieCentraCataloog();
+    }
+    //endregion
+
+    //region Interface overrides
+    @Override
+    public <T> boolean addTtoCatalog(T object, Catalog<T> catalog) {
+        return catalog.addObjToCatalog(object);
     }
 
-    public boolean addContractToCatalog(Contract contract) {
-        return this.contractCataloog.addContract(contract);
+    @Override
+    public <T> T getObjFromCatalog(int index, Catalog<T> catalog) {
+        return catalog.getObjFromCatalog(index);
     }
+    //endregion
 
-    public Contract createNewContract(Product product) {
-        return new Contract(product);
-    }
-
-    public static Product createNewProduct(String naam, int prodId) {
-        return new Product(naam, prodId);
-    }
-
+    //region ownFunctions
+    public
+    //endregion
     public Product getProductFromCatalog(int prodId) {
         return this.contractCataloog.getProduct(prodId);
     }
 
     public boolean addCentrumToCatalog(int id, String name) {
-        return this.dcCataloog.addCentrum(this.dcCataloog.createNewCentrum(id, name));
+        return this.dcCataloog.addCentrum(AankoopFactory.createDistributieCentrum(id, name));
     }
 
     public boolean addClausuleToContract(int prodId, Clausule clausule) {
@@ -43,7 +57,7 @@ public class ContractManager {
     }
 
     public Clausule createNewClausule(int id, int prodId, LocalDateTime start, LocalDateTime end, double hoeveelheid, Eenheid eenheid, double bedrag) {
-        return new Clausule(
+        return AankoopFactory.createClausule(
                 id,
                 this.contractCataloog.getContractByProdId(prodId),
                 UtilFactory.createPeriod(start, end),

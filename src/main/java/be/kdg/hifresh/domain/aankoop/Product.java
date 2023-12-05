@@ -11,12 +11,12 @@ public class Product {
 	private String naam;
 	private final int id;
 
-	public Product(String naam, int id){
+	Product(String naam, int id){
 		this.naam = naam;
 		this.id = id;
 	}
 
-	int getId(){
+	public int getId(){
 		return this.id;
 	}
 }

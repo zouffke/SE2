@@ -1,7 +1,8 @@
 package be.kdg.hifresh.domain.gebruiker;
 
 import java.util.*;
-import be.kdg.hifresh.domain.aankoop.*;
+
+import be.kdg.hifresh.domain.aankoop.Contract;
 
 /**
  * Bedrijf dat ingredienten levert.
