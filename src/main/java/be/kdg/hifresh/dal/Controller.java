@@ -5,8 +5,10 @@ import be.kdg.hifresh.dal.aankoop.ContractManager;
 import be.kdg.hifresh.dal.recepten.ReceptController;
 import be.kdg.hifresh.dal.recepten.ReceptManager;
 import be.kdg.hifresh.domain.util.Eenheid;
+import be.kdg.hifresh.domain.util.Munt;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public final class Controller {
@@ -46,12 +48,16 @@ public final class Controller {
     }
 
     public static boolean addCentrumToCatalog(int id, String name) {
-        return ContractController. addCentrumToCatalog(id, name);
+        return ContractController.addCentrumToCatalog(id, name);
     }
 
-    public static boolean addClausule(int id, int prodId, LocalDateTime start, LocalDateTime end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addClausule(int id, int prodId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
         return ContractController.addClausule(id, prodId, start, end, hoeveelheid, eenheid, bedrag);
     }
 
     //endregion
+
+    public static Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) throws InvocationTargetException, IllegalAccessException {
+        return ContractController.getGemiddeldeAankoopPrijs(ReceptController.getAllProducts(receptId), date);
+    }
 }

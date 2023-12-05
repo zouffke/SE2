@@ -1,14 +1,20 @@
 package be.kdg.hifresh.dal.aankoop;
 
 import be.kdg.hifresh.domain.aankoop.AankoopFactory;
+import be.kdg.hifresh.domain.aankoop.Clausule;
 import be.kdg.hifresh.domain.aankoop.Contract;
 import be.kdg.hifresh.domain.aankoop.Product;
 import be.kdg.hifresh.domain.util.Eenheid;
+import be.kdg.hifresh.domain.util.Munt;
+import be.kdg.hifresh.domain.util.PrijsAfspraak;
 import be.kdg.hifresh.domain.util.UtilFactory;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public final class ContractController {
 
@@ -54,7 +60,7 @@ public final class ContractController {
         );
     }
 
-    public static boolean addClausule(int id, int prodId, LocalDateTime start, LocalDateTime end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addClausule(int id, int prodId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
         Contract contract = manager.getObjFromCatalogById(
                 prodId,
                 manager.getContractCataloog()
@@ -76,4 +82,8 @@ public final class ContractController {
     }
 
     //endregion
+
+    public static Munt getGemiddeldeAankoopPrijs(List<Product> products, LocalDate date) {
+        return manager.getGemiddeldeAankoopPrijs(products, date);
+    }
 }

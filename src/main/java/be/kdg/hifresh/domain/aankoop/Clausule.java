@@ -1,11 +1,14 @@
 package be.kdg.hifresh.domain.aankoop;
 
+import java.time.LocalDate;
 import java.util.*;
 import be.kdg.hifresh.domain.util.*;
+import lombok.Getter;
 
 /**
  * Represents a clause in a contract.
  */
+@Getter
 public class Clausule {
     //region vars
 
@@ -82,4 +85,7 @@ public class Clausule {
         return this.leveringen.add(levering);
     }
 
+    public boolean isActive(LocalDate date){
+        return periode.isIn(date);
+    }
 }

@@ -1,12 +1,13 @@
 package be.kdg.hifresh.domain.util;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class UtilFactory {
     private UtilFactory() {
     }
 
-    public static Periode createPeriod(LocalDateTime start, LocalDateTime end) {
+    public static Periode createPeriod(LocalDate start, LocalDate end) {
         return new Periode(start, end);
     }
 

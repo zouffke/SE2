@@ -16,14 +16,6 @@ Feature: Gemiddelde aankoopprijs raadplegen
             | recept_id | is_subrecept_van | invoegen_na_stap |
             | 4         | 3                | 1                |
 
-        Given ingredienten
-            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid |
-            | 1             | bloem           | 1          | 1         | 100         |
-            | 3             | kaas            | 3          | 2         | 20          |
-            | 4             | kaas            | 3          | 3         | 20          |
-            | 5             | kaas            | 3          | 4         | 40          |
-            | 6             | melk            | 2          | 4         | 100         |
-
         Given bereidingsstappen
             | bereidingsstap_id | bereidingsstap_naam      | bereidingsstap_beschrijving                  | recept_id | volgnummer |
             | 1                 | stap 1                   | stap 1                                       | 1         | 1          |
@@ -44,6 +36,14 @@ Feature: Gemiddelde aankoopprijs raadplegen
             | 2          | melk               |
             | 3          | kaas               |
             | 4          | zelfrijzende bloem |
+
+       Given ingredienten
+           | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid |
+           | 1             | bloem           | 1          | 1         | 100         |
+           | 3             | kaas            | 3          | 2         | 20          |
+           | 4             | kaas            | 3          | 3         | 20          |
+           | 5             | kaas            | 3          | 4         | 40          |
+           | 6             | melk            | 2          | 4         | 100         |
 
         Given clausules
             | clausule_id | product_id | leverancier_id | distributiecentrum_id | aankoopprijs | hoeveelheid | start_datum | eind_datum |
@@ -69,12 +69,12 @@ Feature: Gemiddelde aankoopprijs raadplegen
 
 
     Scenario: Prijs raadplegen van een recept op datum van vandaag #DONE Zie berekeningReceptKostprijs.xslx
-        Given het is vandaag 2024-03-15
+        Given het is vandaag "2024"-"03"-"15"
         When ik de gemiddelde aankoopprijs van het recept 4 raadpleeg
-        Then krijg ik dat de gemiddelde aankoopprijs van het recept 4 gelijk is aan 0.1978333
+        Then krijg ik dat de gemiddelde aankoopprijs van recept 4 gelijk is aan 0.1978333
 
     Scenario: Prijs raadplegen van een recept met subrecept op datum van vandaag.
-        Given het is vandaag 2024-03-15
+        Given het is vandaag "2024"-"03"-"15"
         When ik de gemiddelde aankoopprijs van het recept 3 raadpleeg
         Then krijg ik dat de gemiddelde aankoopprijs van recept 3 gelijk is aan 0.226333333
 

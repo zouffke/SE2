@@ -1,9 +1,12 @@
 package be.kdg.hifresh.domain.aankoop;
 
-import be.kdg.hifresh.domain.gebruiker.*;
+import be.kdg.hifresh.domain.gebruiker.Leverancier;
+import be.kdg.hifresh.domain.util.PrijsAfspraak;
 import lombok.Getter;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a contract between HiFresh and a supplier for the delivery of products.
@@ -20,22 +23,25 @@ public class Contract {
      * The product associated with this contract.
      */
     @Getter
-    private Product product;
+    private final Product product;
 
     /**
      * The list of clauses associated with this contract.
      */
+    @Getter
     private List<Clausule> clausules;
     //endregion
 
     //region constructors
+
     /**
      * Constructor for Contract.
      *
      * @param product The product associated with the contract.
      */
-    Contract(Product product){
+    Contract(Product product) {
         this.product = product;
+        product.addContract(this);
     }
     //endregion
 
@@ -45,12 +51,23 @@ public class Contract {
      * @param clausule The clause to be added.
      * @return true if the clause was added successfully, false otherwise.
      */
-    public boolean addClausule(Clausule clausule){
-        if (this.clausules == null){
+    public boolean addClausule(Clausule clausule) {
+        if (this.clausules == null) {
             this.clausules = new ArrayList<>();
         }
 
         return this.clausules.add(clausule);
     }
 
+    public List<PrijsAfspraak> getGeldendePrijsAfspraken(LocalDate date) {
+        List<PrijsAfspraak> prijsAfspraaken = new ArrayList<>();
+
+        for (Clausule clausule : this.clausules) {
+            if (clausule.isActive(date)) {
+                prijsAfspraaken.add(clausule.getPrijsAfspraak());
+            }
+        }
+
+        return prijsAfspraaken;
+    }
 }

@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public final class ReceptController {
 
@@ -24,10 +25,8 @@ public final class ReceptController {
     //endregion
 
     //TODO implement getGemiddeldeAankoopPrijs method
-    public static Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) {
-        //! Function should return the value gotten from getGemiddeldeAankoopPrijs() from class ReceptManager
-        //receptManager.
-        return null;
+    public static List<Product> getAllProducts(int receptId) throws InvocationTargetException, IllegalAccessException {
+        return manager.getAllProducts(receptId);
     }
 
     //region setup functions

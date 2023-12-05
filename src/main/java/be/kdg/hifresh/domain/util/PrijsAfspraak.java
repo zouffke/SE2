@@ -1,5 +1,8 @@
 package be.kdg.hifresh.domain.util;
 
+import lombok.Getter;
+
+@Getter
 public class PrijsAfspraak {
 
 	private Munt prijs;

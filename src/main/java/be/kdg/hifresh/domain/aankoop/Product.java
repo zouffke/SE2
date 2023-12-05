@@ -13,7 +13,8 @@ public class Product {
     /**
      * The list of contracts associated with this product.
      */
-    private List<Contract> contracten;
+    @Getter
+    private final List<Contract> contracten;
 
     /**
      * The name of this product.
@@ -37,6 +38,11 @@ public class Product {
     Product(String naam, int id){
         this.naam = naam;
         this.id = id;
+        this.contracten = new ArrayList<>();
     }
     //endregion
+
+    public void addContract(Contract contract){
+        this.contracten.add(contract);
+    }
 }

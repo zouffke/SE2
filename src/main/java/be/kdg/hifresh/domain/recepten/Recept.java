@@ -26,6 +26,7 @@ public class Recept {
     /**
      * The list of ingredients needed for this recipe.
      */
+    @Getter
     private List<Ingredient> ingredienten;
 
     /**
@@ -82,6 +83,7 @@ public class Recept {
         this.naam = naam;
         this.id = id;
         this.beschrijving = beschrijving;
+        this.stappen = new ArrayList<>();
     }
     //endregion
 
