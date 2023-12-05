@@ -15,4 +15,16 @@ public class Contract {
 	Contract(Product product){
 		this.product = product;
 	}
+
+	Product getProduct(){
+		return this.product;
+	}
+
+	boolean addClausule(Clausule clausule){
+		if (this.clausules == null){
+			this.clausules = new ArrayList<>();
+		}
+
+		return this.clausules.add(clausule);
+	}
 }

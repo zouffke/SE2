@@ -1,8 +1,10 @@
 package be.kdg.hifresh.domain.recepten;
 
+import be.kdg.hifresh.domain.util.Eenheid;
 import be.kdg.hifresh.domain.util.Munt;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class ReceptController {
 
@@ -15,8 +17,8 @@ public class ReceptController {
     }
     //endregion
 
-    private static void checkReceptManger(){
-        if (receptManager == null){
+    private static void checkReceptManger() {
+        if (receptManager == null) {
             receptManager = new ReceptManager();
         }
     }
@@ -29,11 +31,31 @@ public class ReceptController {
         return null;
     }
 
-    public static boolean addReceptToCatalog(String name, int id, String beschrijving){
+    public static boolean addReceptToCatalog(String name, int id, String beschrijving) {
         return receptManager.addReceptToCataloog(receptManager.createRecept(name, id, beschrijving));
     }
 
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId){
+    public static boolean addSubreceptToRecept(int subReceptId, int receptId) {
         return receptManager.addSubreceptToSubrecept(subReceptId, receptId);
+    }
+
+    public static boolean addProduct(int prodId, String name) {
+        return receptManager.addProduct(prodId, name);
+    }
+
+    public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt) {
+        return receptManager.addIngredientToProd(ingrId, prodId, receptId, amt);
+    }
+
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
+        receptManager.addStapToRecept(receptId, stapId, stapName, stapBesch);
+    }
+
+    public static boolean addCentrumToCatalog(int id, String name) {
+        return receptManager.addCentrumToCatalog(id, name);
+    }
+
+    public static boolean addClausule(int id, int prodId, LocalDateTime start, LocalDateTime end, double hoeveelheid, Eenheid eenheid, double bedrag) {
+        return receptManager.addClausuleToContract(id, prodId, start, end, hoeveelheid, eenheid, bedrag);
     }
 }

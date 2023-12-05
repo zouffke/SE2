@@ -15,4 +15,8 @@ public class Product {
 		this.naam = naam;
 		this.id = id;
 	}
+
+	int getId(){
+		return this.id;
+	}
 }

@@ -1,6 +1,9 @@
 package be.kdg.hifresh.domain.recepten;
 
 import be.kdg.hifresh.domain.aankoop.ContractManager;
+import be.kdg.hifresh.domain.util.Eenheid;
+
+import java.time.LocalDateTime;
 
 /**
  * Startup die ingredienten en recepten aan huis levert voor een week lekker zelf koken.
@@ -31,7 +34,45 @@ public class ReceptManager {
                 .addSubrecept(this.receptCataloog.getRecept(subReceptId));
     }
 
-    boolean addIngredientToRecept(int receptId, ){
+    boolean addProduct(int prodId, String name) {
+        return this.contractManager
+                .addContractToCatalog(this.contractManager
+                        .createNewContract(ContractManager.createNewProduct(name, prodId)));
+    }
 
+    boolean addIngredientToProd(int ingrId, int prodId, int receptId, double amt) {
+        Recept recept = this.receptCataloog.getRecept(receptId);
+        if (recept == null) {
+            throw new RuntimeException("Given prod id can not be found in list");
+        }
+
+        Ingredient ingredient = this.ingredientCataloog.getIngredient(ingrId);
+        if (ingredient == null) {
+            ingredient = this.ingredientCataloog.addIngredient(
+                    this.ingredientCataloog.createNewIngredient(
+                            ingrId,
+                            this.contractManager.getProductFromCatalog(prodId),
+                            amt
+                    ));
+        }
+
+        return recept.addIngredient(ingredient);
+    }
+
+    void addStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
+        Recept recept = this.receptCataloog.getRecept(receptId);
+        if (recept == null) {
+            throw new RuntimeException("Given prod id can not be found in list");
+        }
+
+        recept.addBereidingsStap(new BereidingsStap(stapName, stapBesch, stapId));
+    }
+
+    boolean addCentrumToCatalog(int id, String name) {
+        return this.contractManager.addCentrumToCatalog(id, name);
+    }
+
+    boolean addClausuleToContract(int id, int prodId, LocalDateTime start, LocalDateTime end, double hoeveelheid, Eenheid eenheid, double bedrag) {
+        return this.contractManager.addClausuleToContract(prodId, this.contractManager.createNewClausule(id, prodId, start, end, hoeveelheid, eenheid, bedrag));
     }
 }

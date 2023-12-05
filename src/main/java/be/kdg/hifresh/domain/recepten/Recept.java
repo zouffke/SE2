@@ -50,4 +50,20 @@ public class Recept {
 
 		return this.ingredienten.add(ingredient);
 	}
+
+	void addBereidingsStap(BereidingsStap stap, int volgnummer){
+		if (this.stappen == null){
+			this.stappen = new ArrayList<>();
+		}
+
+		this.stappen.add(volgnummer - 1, stap);
+	}
+
+	void addBereidingsStap(BereidingsStap stap){
+		this.addBereidingsStap(stap, getNextVolgnummer());
+	}
+
+	int getNextVolgnummer(){
+		return this.stappen.size() + 1;
+	}
 }
