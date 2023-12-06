@@ -1,20 +1,48 @@
 package be.kdg.hifresh.domain.recepten;
 
-import be.kdg.hifresh.domain.aankoop.*;
+import be.kdg.hifresh.domain.aankoop.Product;
 import be.kdg.hifresh.domain.util.Eenheid;
+import lombok.Getter;
 
 /**
- * Product dat nodig is voor het bereiden van een gerecht.
+ * Represents an ingredient needed for preparing a dish.
  */
 public class Ingredient {
+    //region vars
 
-	private Product product;
-	private double hoeveelheid;
-	private Eenheid eenheid;
-	private final int id;
+    /**
+     * The product associated with this ingredient.
+     */
+    private final Product product;
 
-	Ingredient(int id, String naam){
-		this.id = id;
-		this.product = new Product(naam);
-	}
+    /**
+     * The quantity of this ingredient.
+     */
+    private double hoeveelheid;
+
+    /**
+     * The unit of this ingredient.
+     */
+    private Eenheid eenheid;
+
+    /**
+     * The id of this ingredient.
+     */
+    @Getter
+    private final int id;
+    //endregion
+    //region constructors
+    /**
+     * Constructor for Ingredient.
+     *
+     * @param id The id of the ingredient.
+     * @param product The product associated with the ingredient.
+     * @param hoeveelheid The quantity of the ingredient.
+     */
+    Ingredient(int id, Product product, double hoeveelheid) {
+        this.id = id;
+        this.product = product;
+        this.hoeveelheid = hoeveelheid;
+    }
+    //endregion
 }
