@@ -67,7 +67,7 @@ Feature: Suggesties krijgen voor ingredienten
             | 18          | 3          | 2              | 2                     | 1.45         | 80          | 2024-03-01  | 2024-03-31 |
     Scenario: Lijst gesorteerd op procentuele verschil tussen de huidige weekgemiddelde aankoopprijs
         Given het is vandaag 2024-03-01
-        When ik op suggesties klik
+        When de menuteamlid op suggesties klikt
         Then krijg ik een lijst van 3 producten, gesorteerd op wekelijkse gemiddelde aankoopprijs
         And product_id van item 1 in de lijst is 1
         And product_id van item 2 in de lijst is 3
