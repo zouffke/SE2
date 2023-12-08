@@ -4,16 +4,14 @@ import be.kdg.hifresh.dal.Manager;
 import be.kdg.hifresh.dal.aankoop.catalogs.ContractCataloog;
 import be.kdg.hifresh.dal.aankoop.catalogs.DistributieCentraCataloog;
 import be.kdg.hifresh.domain.aankoop.Contract;
-import be.kdg.hifresh.domain.aankoop.Product;
+import be.kdg.hifresh.domain.recepten.Ingredient;
 import be.kdg.hifresh.domain.util.Munt;
 import be.kdg.hifresh.domain.util.PrijsAfspraak;
 import be.kdg.hifresh.domain.util.UtilFactory;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A manager class for handling contracts.
@@ -50,22 +48,25 @@ public class ContractManager extends Manager {
     }
     //endregion
 
-    public Map<Integer, Munt> getGemiddeldeAankoopPrijs(List<Product> products, LocalDate date) {
+    public Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
         double bedrag = 0;
         double hoeveelheid = 0;
+        double totalBedrag = 0;
 
-        Map<Integer, Munt> prices = new HashMap<>();
-
-        for (Product product : products) {
-            for (Contract contract : product.getContracten()) {
+        for (Ingredient ingredient : ingredients) {
+            for (Contract contract : ingredient.getProduct().getContracten()) {
                 for (PrijsAfspraak prijsAfspraak : contract.getGeldendePrijsAfspraken(date)) {
-                    bedrag += prijsAfspraak.getPrijs().getBedrag();
+                    bedrag += prijsAfspraak.getPrijs().getBedrag() * prijsAfspraak.getMaxHoeveelheid();
                     hoeveelheid += prijsAfspraak.getMaxHoeveelheid();
                 }
             }
-            prices.put(product.getId(), UtilFactory.createMunt((bedrag / hoeveelheid), "Euro"));
+            bedrag /= hoeveelheid;
+
+            totalBedrag += ingredient.getHoeveelheid() * bedrag;
+            bedrag = 0;
+            hoeveelheid = 0;
         }
 
-        return prices;
+        return UtilFactory.createMunt(totalBedrag, "Euro");
     }
 }

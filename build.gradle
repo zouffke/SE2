@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
+    id "com.appland.appmap" version "1.2.0"
 }
 
 group = 'be.kdg.cuke'
@@ -27,6 +28,11 @@ dependencies {
 
     testCompileOnly 'org.projectlombok:lombok:1.18.30'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+    testImplementation 'io.cucumber:cucumber-java:6.10.4'
+    testImplementation 'io.cucumber:cucumber-junit:6.10.4'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'com.appland:appmap-agent:1.8.0'
 }
 
 test {
@@ -36,5 +42,26 @@ test {
         exceptionFormat = 'full'
         showStandardStreams = true
     }
-    ignoreFailures=true
+    ignoreFailures = true
 }
+
+/*
+appmap {
+    configFile = file("$projectDir/appmap.yml")
+    outputDirectory = file("$buildDir/appmap")
+    skip = false
+    debug = "info"
+    debugFile = file("$buildDir/appmap/agent.log")
+    eventValueSize = 1024
+}
+
+tasks.register('cucumber') {
+    dependsOn assemble, compileTestJava
+    doLast {
+        javaexec {
+            main = "io.cucumber.core.cli.Main"
+            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
+            args = ['--plugin', 'pretty', '--glue', 'be.kdg.hifresh', 'src/test/resources']
+        }
+    }
+}*/

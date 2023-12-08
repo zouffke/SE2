@@ -21,6 +21,7 @@ public class Recept {
     /**
      * The list of sub-recipes associated with this recipe.
      */
+    @Getter
     private List<Recept> subrecepten;
 
     /**

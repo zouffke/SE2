@@ -144,8 +144,7 @@ public final class Controller {
      * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     public static Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.getPriceForRecept(
-                ContractController.getGemiddeldeAankoopPrijs(
-                        ReceptController.getAllProducts(receptId), date), receptId);
+        return ContractController.getGemiddeldeAankoopPrijs(
+                        ReceptController.getAllIngredients(receptId), date);
     }
 }

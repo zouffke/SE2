@@ -137,6 +137,6 @@ public class GemiddeldeAankoopprijsRaadplegen {
 
     @Then("krijg ik dat de gemiddelde aankoopprijs van recept {int} gelijk is aan {double}")
     public void krijgIkDatDeGemiddeldeAankoopprijsVanReceptGelijkIsAan(int arg0, double arg1) {
-        assertEquals(arg1, avgResult.getBedrag());
+        assertEquals(arg1, avgResult.getBedrag(), 0.0000001);
     }
 }

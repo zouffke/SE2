@@ -3,6 +3,7 @@ package be.kdg.hifresh.dal.aankoop;
 import be.kdg.hifresh.domain.aankoop.AankoopFactory;
 import be.kdg.hifresh.domain.aankoop.Contract;
 import be.kdg.hifresh.domain.aankoop.Product;
+import be.kdg.hifresh.domain.recepten.Ingredient;
 import be.kdg.hifresh.domain.util.Eenheid;
 import be.kdg.hifresh.domain.util.Munt;
 import be.kdg.hifresh.domain.util.UtilFactory;
@@ -80,7 +81,7 @@ public final class ContractController {
 
     //endregion
 
-    public static Map<Integer, Munt> getGemiddeldeAankoopPrijs(List<Product> products, LocalDate date) {
-        return manager.getGemiddeldeAankoopPrijs(products, date);
+    public static Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
+        return manager.getGemiddeldeAankoopPrijs(ingredients, date);
     }
 }

@@ -1,6 +1,7 @@
 package be.kdg.hifresh.dal.recepten;
 
 import be.kdg.hifresh.domain.aankoop.Product;
+import be.kdg.hifresh.domain.recepten.Ingredient;
 import be.kdg.hifresh.domain.recepten.Recept;
 import be.kdg.hifresh.domain.recepten.ReceptenFactory;
 import be.kdg.hifresh.domain.util.Munt;
@@ -23,12 +24,8 @@ public final class ReceptController {
     //endregion
 
     //TODO implement getGemiddeldeAankoopPrijs method
-    public static List<Product> getAllProducts(int receptId) throws InvocationTargetException, IllegalAccessException {
-        return manager.getAllProducts(receptId);
-    }
-
-    public static Munt getPriceForRecept(Map<Integer, Munt> prices, int receptId) throws InvocationTargetException, IllegalAccessException {
-        return manager.getPriceForRecept(prices, receptId);
+    public static List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
+        return manager.getAllIngredients(receptId);
     }
 
     //region setup functions

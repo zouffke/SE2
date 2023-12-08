@@ -3,7 +3,6 @@ package be.kdg.hifresh.dal.recepten;
 import be.kdg.hifresh.dal.Manager;
 import be.kdg.hifresh.dal.recepten.catalogs.IngredientCataloog;
 import be.kdg.hifresh.dal.recepten.catalogs.ReceptCataloog;
-import be.kdg.hifresh.domain.aankoop.Product;
 import be.kdg.hifresh.domain.recepten.Ingredient;
 import be.kdg.hifresh.domain.recepten.Recept;
 import be.kdg.hifresh.domain.util.Munt;
@@ -11,6 +10,7 @@ import be.kdg.hifresh.domain.util.UtilFactory;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -50,24 +50,19 @@ public class ReceptManager extends Manager {
     }
     //endregion
 
-    public List<Product> getAllProducts(int receptId) throws InvocationTargetException, IllegalAccessException {
-        return super.getObjFromCatalogById(receptId, receptCataloog)
-                .getIngredienten()
-                .stream()
-                .map(Ingredient::getProduct).toList();
-    }
+    public List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
+        Recept recept = super.getObjFromCatalogById(receptId, receptCataloog);
 
-    public Munt getPriceForRecept(Map<Integer, Munt> prices, int receptId) throws InvocationTargetException, IllegalAccessException {
-        double bedrag = 0;
+        List<Ingredient> ingredients = new ArrayList<>();
 
-        for (Ingredient ingr : super.getObjFromCatalogById(receptId, receptCataloog).getIngredienten()){
-            Munt munt = prices.get(ingr.getProduct().getId());
-
-            if (munt != null){
-                bedrag += munt.getBedrag() * ingr.getHoeveelheid();
+        if (recept.getSubrecepten() != null && !recept.getSubrecepten().isEmpty()) {
+            for (Recept subRecept : recept.getSubrecepten()) {
+                ingredients.addAll(getAllIngredients(subRecept.getId()));
             }
         }
 
-        return UtilFactory.createMunt(bedrag, "Euro");
+        ingredients.addAll(super.getObjFromCatalogById(receptId, receptCataloog).getIngredienten());
+
+        return ingredients;
     }
 }
