@@ -84,4 +84,8 @@ public final class ContractController {
     public static Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
         return manager.getGemiddeldeAankoopPrijs(ingredients, date);
     }
+
+    public static List<Product> getProductSuggesties(LocalDate date){
+        return manager.getProductSuggesties(date);
+    }
 }
