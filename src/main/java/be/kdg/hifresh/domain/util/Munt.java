@@ -2,7 +2,7 @@ package be.kdg.hifresh.domain.util;
 
 import lombok.Getter;
 
-public class Munt {
+public class Munt implements Comparable<Munt>{
 
     @Getter
     private double bedrag;
@@ -15,5 +15,10 @@ public class Munt {
 
     public void addBedrag(double bedrag) {
         this.bedrag += bedrag;
+    }
+
+    @Override
+    public int compareTo(Munt o) {
+        return Double.compare(this.bedrag, o.bedrag);
     }
 }

@@ -16,14 +16,6 @@ Feature: Suggesties krijgen voor ingredienten
             | recept_id | is_subrecept_van | invoegen_na_stap |
             | 4         | 3                | 1                |
 
-        Given ingredienten
-            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid |
-            | 1             | bloem           | 1          | 1         | 100         |
-            | 3             | kaas            | 3          | 2         | 20          |
-            | 4             | kaas            | 3          | 3         | 20          |
-            | 5             | kaas            | 3          | 4         | 40          |
-            | 6             | melk            | 2          | 4         | 100         |
-
         Given bereidingsstappen
             | bereidingsstap_id | bereidingsstap_naam      | bereidingsstap_beschrijving                  | recept_id | volgnummer |
             | 1                 | stap 1                   | stap 1                                       | 1         | 1          |
@@ -45,6 +37,14 @@ Feature: Suggesties krijgen voor ingredienten
             | 3          | kaas               |
             | 4          | zelfrijzende bloem |
 
+        Given ingredienten
+            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid |
+            | 1             | bloem           | 1          | 1         | 100         |
+            | 3             | kaas            | 3          | 2         | 20          |
+            | 4             | kaas            | 3          | 3         | 0.02        |
+            | 5             | kaas            | 3          | 4         | 0.04        |
+            | 6             | melk            | 2          | 4         | 0.1         |
+
         Given clausules
             | clausule_id | product_id | leverancier_id | distributiecentrum_id | aankoopprijs | hoeveelheid | start_datum | eind_datum |
             | 1           | 1          | 1              | 1                     | 1.50         | 100         | 2024-01-01  | 2024-01-31 |
@@ -57,19 +57,19 @@ Feature: Suggesties krijgen voor ingredienten
             | 8           | 1          | 2              | 2                     | 1.35         | 100         | 2024-03-01  | 2024-03-31 |
             | 9           | 1          | 1              | 1                     | 1.50         | 100         | 2024-03-01  | 2024-03-31 |
             | 10          | 1          | 2              | 2                     | 1.35         | 100         | 2024-03-01  | 2024-03-31 |
-            | 11          | 2          | 1              | 1                     | 1.50         | 80          | 2024-03-01  | 2024-03-31 |
+            | 11          | 2          | 1              | 1                     | 1.50         | 100         | 2024-03-01  | 2024-03-31 |
             | 12          | 2          | 2              | 2                     | 1.35         | 80          | 2024-03-01  | 2024-03-31 |
-            | 13          | 2          | 1              | 1                     | 1.50         | 80          | 2024-03-01  | 2024-03-31 |
+            | 13          | 2          | 1              | 1                     | 1.50         | 100         | 2024-03-01  | 2024-03-31 |
             | 14          | 2          | 2              | 2                     | 1.35         | 80          | 2024-03-01  | 2024-03-31 |
             | 15          | 3          | 1              | 1                     | 1.35         | 100         | 2024-03-01  | 2024-03-31 |
             | 16          | 3          | 2              | 2                     | 1.35         | 100         | 2024-03-01  | 2024-03-31 |
             | 17          | 3          | 1              | 1                     | 1.40         | 80          | 2024-03-01  | 2024-03-31 |
             | 18          | 3          | 2              | 2                     | 1.45         | 80          | 2024-03-01  | 2024-03-31 |
-    Scenario: Lijst gesorteerd op procentuele verschil tussen de huidige weekgemiddelde aankoopprijs
-        Given het is vandaag 2024-03-01
-        When de menuteamlid op suggesties klikt
-        Then krijg ik een lijst van 3 producten, gesorteerd op wekelijkse gemiddelde aankoopprijs
-        And product_id van item 1 in de lijst is 1
-        And product_id van item 2 in de lijst is 3
-        And product_id van item 3 in de lijst is 2
 
+    Scenario: Lijst gesorteerd op procentuele verschil tussen de huidige weekgemiddelde aankoopprijs
+        Given het is vandaag "2024"-"03"-"01"
+        When ik de suggesties raadpleeg
+        Then krijg ik een lijst van 3 producten, gesorteerd op wekelijkse gemiddelde aankoopprijs
+        And product 1 in de lijst is 1
+        And product 2 in de lijst is 2
+        And product 3 in de lijst is 3

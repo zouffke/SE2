@@ -4,16 +4,27 @@ import be.kdg.hifresh.dal.aankoop.ContractController;
 import be.kdg.hifresh.dal.aankoop.ContractManager;
 import be.kdg.hifresh.dal.recepten.ReceptController;
 import be.kdg.hifresh.dal.recepten.ReceptManager;
+import be.kdg.hifresh.domain.aankoop.Product;
 import be.kdg.hifresh.domain.util.Eenheid;
 import be.kdg.hifresh.domain.util.Munt;
+import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is a controller class that provides static methods to manage contracts and recipes.
  */
 public final class Controller {
+
+    @Getter
+    private static LocalDate today;
+
+    public static void setToday(LocalDate today) {
+        Controller.today = today;
+    }
 
     //region constructors
 
@@ -146,5 +157,9 @@ public final class Controller {
     public static Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) throws InvocationTargetException, IllegalAccessException {
         return ContractController.getGemiddeldeAankoopPrijs(
                         ReceptController.getAllIngredients(receptId), date);
+    }
+
+    public static List<Product> getProductSuggesties(LocalDate date){
+        return ContractController.getProductSuggesties(date);
     }
 }
