@@ -15,12 +15,14 @@ import java.util.List;
  * A manager class for handling recipes.
  * Extends the Manager class.
  * This class is responsible for managing the catalogs of recipes and ingredients, and the contract manager.
+ * It provides methods to get all ingredients of a recipe.
  *
  * @author Dandois Luca
  */
 @Getter
 public class ReceptManager extends Manager {
     //region vars
+
     /**
      * Catalog of recipes.
      */
@@ -37,9 +39,7 @@ public class ReceptManager extends Manager {
 
     /**
      * Constructor for ReceptManager.
-     * Initializes the recipe catalog, ingredient catalog, and contract manager.
-     *
-     * @author Dandois Luca
+     * Initializes the recipe catalog and ingredient catalog.
      */
     public ReceptManager() {
         this.receptCataloog = new ReceptCataloog();
@@ -47,6 +47,15 @@ public class ReceptManager extends Manager {
     }
     //endregion
 
+    /**
+     * Retrieves all ingredients of a recipe by its ID.
+     * If the recipe has sub-recipes, it retrieves the ingredients of the sub-recipes as well.
+     *
+     * @param receptId Recipe ID
+     * @return List of ingredients
+     * @throws InvocationTargetException if the underlying method throws an exception
+     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible
+     */
     public List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
         Recept recept = super.getObjFromCatalogById(receptId, receptCataloog);
 

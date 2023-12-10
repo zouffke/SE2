@@ -1,8 +1,9 @@
 package be.kdg.hifresh.businessLayer.aankoop;
 
-import java.util.*;
-import be.kdg.hifresh.businessLayer.verzending.*;
-import be.kdg.hifresh.businessLayer.util.*;
+import be.kdg.hifresh.businessLayer.util.Adres;
+import be.kdg.hifresh.businessLayer.verzending.MaaltijdBox;
+
+import java.util.List;
 
 /**
  * Represents a distribution center where FreshBox meals are assembled.
@@ -38,13 +39,14 @@ public class DistributieCentrum {
     //endregion
 
     //region constructors
+
     /**
      * Constructor for DistributieCentrum.
      *
-     * @param id The id of the distribution center.
+     * @param id   The id of the distribution center.
      * @param name The name of the distribution center.
      */
-    DistributieCentrum(int id, String name){
+    DistributieCentrum(int id, String name) {
         this.id = id;
         this.name = name;
     }

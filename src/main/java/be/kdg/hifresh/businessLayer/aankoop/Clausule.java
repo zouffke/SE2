@@ -53,7 +53,8 @@ public class Clausule {
     private double hoeveelheid;
     //endregion
 
-    //region contstructors
+    //region constructors
+
     /**
      * Constructor for Clausule.
      *
@@ -85,6 +86,12 @@ public class Clausule {
         return this.leveringen.add(levering);
     }
 
+    /**
+     * Checks if the clause is active on a given date.
+     *
+     * @param date The date to check.
+     * @return true if the clause is active on the given date, false otherwise.
+     */
     public boolean isActive(LocalDate date){
         return periode.isIn(date);
     }

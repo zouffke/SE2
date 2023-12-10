@@ -10,6 +10,7 @@ import java.util.*;
 public class Product {
 
     //region vars
+
     /**
      * The list of contracts associated with this product.
      */
@@ -28,7 +29,9 @@ public class Product {
     private final int id;
 
     //endregion
+
     //region constructors
+
     /**
      * Constructor for Product.
      *
@@ -40,8 +43,14 @@ public class Product {
         this.id = id;
         this.contracten = new ArrayList<>();
     }
+
     //endregion
 
+    /**
+     * Adds a contract to the list of contracts associated with this product.
+     *
+     * @param contract The contract to be added.
+     */
     public void addContract(Contract contract){
         this.contracten.add(contract);
     }

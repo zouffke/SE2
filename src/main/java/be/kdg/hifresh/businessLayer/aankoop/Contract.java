@@ -59,6 +59,12 @@ public class Contract {
         return this.clausules.add(clausule);
     }
 
+    /**
+     * Retrieves the price agreements that are valid on a given date.
+     *
+     * @param date The date for which to retrieve the price agreements.
+     * @return A list of price agreements that are valid on the given date.
+     */
     public List<PrijsAfspraak> getGeldendePrijsAfspraken(LocalDate date) {
         List<PrijsAfspraak> prijsAfspraaken = new ArrayList<>();
 

@@ -21,6 +21,8 @@ import java.util.Map;
 /**
  * A manager class for handling contracts.
  * Extends the Manager class.
+ * It provides methods to get average purchase price, get active products, get average weekly and yearly purchase price,
+ * get percentage difference, sort products based on score and get product suggestions.
  *
  * @author Dandois Luca
  */
@@ -53,6 +55,13 @@ public class ContractManager extends Manager {
     }
     //endregion
 
+    /**
+     * Calculates the average purchase price for a list of ingredients on a given date.
+     *
+     * @param ingredients List of ingredients.
+     * @param date The date for which to calculate the average purchase price.
+     * @return The average purchase price.
+     */
     public Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
         double totaalBedrag = 0;
         double totaalHoeveelheid = 0;
@@ -65,6 +74,13 @@ public class ContractManager extends Manager {
         return UtilFactory.createMunt(totaalBedrag * totaalHoeveelheid, "Euro");
     }
 
+    /**
+     * Calculates the average purchase price for a product on a given date.
+     *
+     * @param product The product for which to calculate the average purchase price.
+     * @param date The date for which to calculate the average purchase price.
+     * @return The average purchase price.
+     */
     private double getGemiddeldeAankoopPrijs(Product product, LocalDate date) {
         double bedrag = 0;
         double hoeveelheid = 0;
@@ -80,6 +96,12 @@ public class ContractManager extends Manager {
         return bedrag;
     }
 
+    /**
+     * Retrieves a list of active products on a given date.
+     *
+     * @param date The date for which to retrieve the active products.
+     * @return A list of active products.
+     */
     private List<Product> getActiveProducts(LocalDate date) {
         return contractCataloog.getList()
                 .stream()
@@ -88,6 +110,13 @@ public class ContractManager extends Manager {
                 .toList();
     }
 
+    /**
+     * Calculates the average weekly purchase price for a product on a given date.
+     *
+     * @param date The date for which to calculate the average weekly purchase price.
+     * @param product The product for which to calculate the average weekly purchase price.
+     * @return The average weekly purchase price.
+     */
     private Munt getGemiddeldeWeekAankoopPrijs(LocalDate date, Product product) {
         double bedrag = 0;
         double days = 0;
@@ -111,6 +140,13 @@ public class ContractManager extends Manager {
         return UtilFactory.createMunt(bedrag, "Euro");
     }
 
+    /**
+     * Calculates the average yearly purchase price for a product on a given date.
+     *
+     * @param date The date for which to calculate the average yearly purchase price.
+     * @param product The product for which to calculate the average yearly purchase price.
+     * @return The average yearly purchase price.
+     */
     private Munt getGemiddeldeJaarAankoopPrijs(LocalDate date, Product product) {
         double bedrag = 0;
         double weeks = 0;
@@ -131,10 +167,23 @@ public class ContractManager extends Manager {
         return UtilFactory.createMunt(bedrag / weeks, "Euro");
     }
 
+    /**
+     * Calculates the percentage difference between the weekly and yearly average purchase price.
+     *
+     * @param week The weekly average purchase price.
+     * @param year The yearly average purchase price.
+     * @return The percentage difference.
+     */
     private double getProcentueelVerschil(Munt week, Munt year) {
         return (1 - (week.getBedrag() / year.getBedrag()) * 100);
     }
 
+    /**
+     * Sorts a list of products based on their scores in descending order.
+     *
+     * @param scores A map where the keys are products and the values are their corresponding scores.
+     * @return A list of products sorted in descending order of their scores.
+     */
     private List<Product> sortOnScore(Map<Product, Double> scores) {
         List<Product> products = new ArrayList<>(scores.keySet());
 
@@ -143,6 +192,12 @@ public class ContractManager extends Manager {
         return products;
     }
 
+    /**
+     * Provides product suggestions for a given date.
+     *
+     * @param date The date for which to provide product suggestions.
+     * @return A list of product suggestions.
+     */
     public List<Product> getProductSuggesties(LocalDate date) {
         List<Product> products = getActiveProducts(date);
         Map<Product, Munt> weekAvg = new HashMap<>();

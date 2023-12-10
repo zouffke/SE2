@@ -28,10 +28,38 @@ public interface IManager {
      */
     <T> T getObjFromCatalog(int index, Catalog<T> catalog);
 
+    /**
+     * Retrieves the index of an object in a catalog.
+     *
+     * @param Obj The object whose index is to be retrieved.
+     * @param catalog The catalog from which the index will be retrieved.
+     * @param <T> The type of the object.
+     * @return The index of the object in the catalog.
+     */
     <T> int getIndexOfObjInCatalog(T Obj, Catalog<T> catalog);
 
+    /**
+     * Retrieves the index of an object in a catalog by its ID.
+     *
+     * @param objId The ID of the object whose index is to be retrieved.
+     * @param catalog The catalog from which the index will be retrieved.
+     * @param <T> The type of the object.
+     * @return The index of the object in the catalog.
+     * @throws InvocationTargetException if the underlying method throws an exception.
+     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
+     */
     <T> int getIndexOfObjByIdInCatalog(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException;
 
+    /**
+     * Retrieves an object from a catalog by its ID.
+     *
+     * @param objId The ID of the object to be retrieved.
+     * @param catalog The catalog from which the object will be retrieved.
+     * @param <T> The type of the object.
+     * @return The object with the specified ID.
+     * @throws InvocationTargetException if the underlying method throws an exception.
+     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
+     */
     <T> T getObjFromCatalogById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException;
 
     //endregion
@@ -48,6 +76,4 @@ public interface IManager {
      * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     <T, U> T GetObjTFromObjU(Class<T> objT, U objU) throws InvocationTargetException, IllegalAccessException;
-
-
 }

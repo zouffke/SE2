@@ -15,15 +15,24 @@ import java.util.List;
 
 /**
  * This is a controller class that provides static methods to manage contracts and recipes.
+ * It is a part of the application layer in the architecture.
  */
 public final class Controller {
 
     //region today section
 
     // * Variable set in Controller so the 2 feature files can access the date given without giving errors
+    /**
+     * The current date.
+     */
     @Getter
     private static LocalDate today;
 
+    /**
+     * Sets the current date.
+     *
+     * @param today The current date.
+     */
     public static void setToday(LocalDate today) {
         Controller.today = today;
     }
@@ -163,6 +172,12 @@ public final class Controller {
                         ReceptController.getAllIngredients(receptId), date);
     }
 
+    /**
+     * Provides product suggestions.
+     *
+     * @param date The date for which to provide product suggestions.
+     * @return     A list of product suggestions.
+     */
     public static List<Product> getProductSuggesties(LocalDate date){
         return ContractController.getProductSuggesties(date);
     }
