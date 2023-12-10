@@ -66,14 +66,14 @@ public class Contract {
      * @return A list of price agreements that are valid on the given date.
      */
     public List<PrijsAfspraak> getGeldendePrijsAfspraken(LocalDate date) {
-        List<PrijsAfspraak> prijsAfspraaken = new ArrayList<>();
+        List<PrijsAfspraak> prijsAfspraken = new ArrayList<>();
 
         for (Clausule clausule : this.clausules) {
             if (clausule.isActive(date)) {
-                prijsAfspraaken.add(clausule.getPrijsAfspraak());
+                prijsAfspraken.add(clausule.getPrijsAfspraak());
             }
         }
 
-        return prijsAfspraaken;
+        return prijsAfspraken;
     }
 }

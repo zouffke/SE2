@@ -87,8 +87,9 @@ public class ContractManager extends Manager {
 
         for (Contract contract : product.getContracten()) {
             for (PrijsAfspraak prijsAfspraak : contract.getGeldendePrijsAfspraken(date)) {
-                bedrag += prijsAfspraak.getPrijs().getBedrag() * prijsAfspraak.getMaxHoeveelheid();
-                hoeveelheid += prijsAfspraak.getMaxHoeveelheid();
+                double tempHoeveelheid = prijsAfspraak.getMaxHoeveelheid();
+                bedrag += prijsAfspraak.getPrijs().getBedrag() * tempHoeveelheid;
+                hoeveelheid += tempHoeveelheid;
             }
         }
         bedrag /= hoeveelheid;
@@ -128,7 +129,7 @@ public class ContractManager extends Manager {
             double dayAmt = this.getGemiddeldeAankoopPrijs(product, day);
 
             if (dayAmt > 0) {
-                bedrag += this.getGemiddeldeAankoopPrijs(product, day);
+                bedrag += dayAmt;
                 days++;
             }
         }
@@ -156,8 +157,10 @@ public class ContractManager extends Manager {
         while (week.isBefore(LocalDate.of(date.getYear() + 1, 1, 1))) {
             Munt munt = this.getGemiddeldeWeekAankoopPrijs(week, product);
 
-            if (munt.getBedrag() > 0) {
-                bedrag += munt.getBedrag();
+            double tempBedrag = munt.getBedrag();
+
+            if (tempBedrag > 0) {
+                bedrag += tempBedrag;
                 weeks++;
             }
 
