@@ -1,9 +1,9 @@
 package features;
 
-import be.kdg.hifresh.dal.Controller;
-import be.kdg.hifresh.dal.aankoop.ContractManager;
-import be.kdg.hifresh.dal.recepten.ReceptManager;
-import be.kdg.hifresh.domain.util.Eenheid;
+import be.kdg.hifresh.applicationLayer.Controller;
+import be.kdg.hifresh.persistenceLayer.aankoop.ContractManager;
+import be.kdg.hifresh.persistenceLayer.recepten.ReceptManager;
+import be.kdg.hifresh.businessLayer.util.Eenheid;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import org.junit.jupiter.api.Assertions;

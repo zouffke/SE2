@@ -1,7 +1,7 @@
 package features;
 
-import be.kdg.hifresh.dal.Controller;
-import be.kdg.hifresh.domain.aankoop.Product;
+import be.kdg.hifresh.applicationLayer.Controller;
+import be.kdg.hifresh.businessLayer.aankoop.Product;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

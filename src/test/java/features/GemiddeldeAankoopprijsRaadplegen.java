@@ -1,14 +1,12 @@
 package features;
 
-import be.kdg.hifresh.dal.Controller;
-import be.kdg.hifresh.domain.util.Munt;
-import io.cucumber.java.en.Given;
+import be.kdg.hifresh.applicationLayer.Controller;
+import be.kdg.hifresh.businessLayer.util.Munt;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 
 import java.lang.reflect.InvocationTargetException;
-import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
