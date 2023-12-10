@@ -4,29 +4,34 @@ import be.kdg.hifresh.dal.Controller;
 import be.kdg.hifresh.dal.aankoop.ContractManager;
 import be.kdg.hifresh.dal.recepten.ReceptManager;
 import be.kdg.hifresh.domain.util.Eenheid;
+import be.kdg.hifresh.domain.util.Munt;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class GemiddeldeAankoopprijsRaadplegen {
 
     private LocalDate today;
+    private Munt avgResult;
 
     @BeforeAll
     static void beforeAll() {
         Controller.setManagers(new ContractManager(), new ReceptManager());
     }
 
+
     @Given("recepten")
     public void recepten(DataTable dataTable) {
+        beforeAll();
         dataTable.asMaps().forEach(row -> assertTrue(Controller.addReceptToCatalog(
                 Integer.parseInt(row.get("recept_id")),
                 row.get("recept_naam"),
@@ -104,8 +109,8 @@ public class GemiddeldeAankoopprijsRaadplegen {
                 assertTrue(Controller.addClausule(
                         Integer.parseInt(r.get("clausule_id")),
                         Integer.parseInt(r.get("product_id")),
-                        LocalDateTime.parse(r.get("start_datum")),
-                        LocalDateTime.parse(r.get("eind_datum")),
+                        LocalDate.parse(r.get("start_datum")),
+                        LocalDate.parse(r.get("eind_datum")),
                         Double.parseDouble(r.get("hoeveelheid")),
                         Eenheid.Kilogram,
                         Double.parseDouble(r.get("aankoopprijs"))
@@ -116,14 +121,22 @@ public class GemiddeldeAankoopprijsRaadplegen {
         });
     }
 
-    @Given("het is vandaag {int}{int}{int}")
-    public void hetIsVandaag(int arg0, int arg1, int arg2) {
-        today = LocalDate.of(arg0, arg1, arg2);
+    @Given("het is vandaag {string}-{string}-{string}")
+    public void hetIsVandaag(String arg0, String arg1, String arg2) {
+        today = LocalDate.of(Integer.parseInt(arg0), Integer.parseInt(arg1), Integer.parseInt(arg2));
     }
-
 
     @When("ik de gemiddelde aankoopprijs van het recept {int} raadpleeg")
     public void ikDeGemiddeldeAankoopprijsVanHetReceptRaadpleeg(int arg0) {
-        //TODO
+        try {
+            avgResult = Controller.getGemiddeldeAankoopPrijs(arg0, today);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            Assertions.fail(e);
+        }
+    }
+
+    @Then("krijg ik dat de gemiddelde aankoopprijs van recept {int} gelijk is aan {double}")
+    public void krijgIkDatDeGemiddeldeAankoopprijsVanReceptGelijkIsAan(int arg0, double arg1) {
+        assertEquals(arg1, avgResult.getBedrag(), 0.0000001);
     }
 }

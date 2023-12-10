@@ -1,10 +1,18 @@
 package be.kdg.hifresh.dal.recepten;
 
 import be.kdg.hifresh.dal.Manager;
-import be.kdg.hifresh.dal.aankoop.ContractManager;
 import be.kdg.hifresh.dal.recepten.catalogs.IngredientCataloog;
 import be.kdg.hifresh.dal.recepten.catalogs.ReceptCataloog;
+import be.kdg.hifresh.domain.recepten.Ingredient;
+import be.kdg.hifresh.domain.recepten.Recept;
+import be.kdg.hifresh.domain.util.Munt;
+import be.kdg.hifresh.domain.util.UtilFactory;
 import lombok.Getter;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A manager class for handling recipes.
@@ -41,4 +49,20 @@ public class ReceptManager extends Manager {
         this.ingredientCataloog = new IngredientCataloog();
     }
     //endregion
+
+    public List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
+        Recept recept = super.getObjFromCatalogById(receptId, receptCataloog);
+
+        List<Ingredient> ingredients = new ArrayList<>();
+
+        if (recept.getSubrecepten() != null && !recept.getSubrecepten().isEmpty()) {
+            for (Recept subRecept : recept.getSubrecepten()) {
+                ingredients.addAll(getAllIngredients(subRecept.getId()));
+            }
+        }
+
+        ingredients.addAll(super.getObjFromCatalogById(receptId, receptCataloog).getIngredienten());
+
+        return ingredients;
+    }
 }

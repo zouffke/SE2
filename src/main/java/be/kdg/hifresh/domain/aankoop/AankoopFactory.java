@@ -1,8 +1,5 @@
 package be.kdg.hifresh.domain.aankoop;
 
-import be.kdg.hifresh.dal.aankoop.catalogs.ContractCataloog;
-import be.kdg.hifresh.dal.aankoop.ContractManager;
-import be.kdg.hifresh.dal.aankoop.catalogs.DistributieCentraCataloog;
 import be.kdg.hifresh.domain.util.Eenheid;
 import be.kdg.hifresh.domain.util.Periode;
 import be.kdg.hifresh.domain.util.PrijsAfspraak;

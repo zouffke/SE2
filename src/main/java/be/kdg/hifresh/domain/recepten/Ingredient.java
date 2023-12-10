@@ -13,11 +13,13 @@ public class Ingredient {
     /**
      * The product associated with this ingredient.
      */
+    @Getter
     private final Product product;
 
     /**
      * The quantity of this ingredient.
      */
+    @Getter
     private double hoeveelheid;
 
     /**
