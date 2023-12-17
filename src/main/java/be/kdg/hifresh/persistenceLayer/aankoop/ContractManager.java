@@ -64,14 +64,12 @@ public class ContractManager extends Manager {
      */
     public Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
         double totaalBedrag = 0;
-        double totaalHoeveelheid = 0;
 
         for (Ingredient ingredient : ingredients) {
-            totaalBedrag += this.getGemiddeldeAankoopPrijs(ingredient.getProduct(), date);
-            totaalHoeveelheid += ingredient.getHoeveelheid();
+            totaalBedrag += this.getGemiddeldeAankoopPrijs(ingredient.getProduct(), date) * ingredient.getHoeveelheid();
         }
 
-        return UtilFactory.createMunt(totaalBedrag * totaalHoeveelheid, "Euro");
+        return UtilFactory.createMunt(totaalBedrag, "Euro");
     }
 
     /**
