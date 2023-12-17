@@ -7,6 +7,7 @@ import java.util.*;
 /**
  * Represents a product that is delivered by a supplier and is needed for preparing a meal.
  */
+@Getter
 public class Product {
 
     //region vars
@@ -14,7 +15,6 @@ public class Product {
     /**
      * The list of contracts associated with this product.
      */
-    @Getter
     private final List<Contract> contracten;
 
     /**
@@ -25,7 +25,6 @@ public class Product {
     /**
      * The id of this product.
      */
-    @Getter
     private final int id;
 
     //endregion

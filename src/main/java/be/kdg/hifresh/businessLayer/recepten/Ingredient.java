@@ -7,20 +7,19 @@ import lombok.Getter;
 /**
  * Represents an ingredient needed for preparing a dish.
  */
+@Getter
 public class Ingredient {
     //region vars
 
     /**
      * The product associated with this ingredient.
      */
-    @Getter
     private final Product product;
 
     /**
      * The quantity of this ingredient.
      */
-    @Getter
-    private double hoeveelheid;
+    @Getter    private double hoeveelheid;
 
     /**
      * The unit of this ingredient.
@@ -30,7 +29,6 @@ public class Ingredient {
     /**
      * The id of this ingredient.
      */
-    @Getter
     private final int id;
     //endregion
     //region constructors
