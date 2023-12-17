@@ -41,10 +41,11 @@ public class Ingredient {
      * @param product The product associated with the ingredient.
      * @param hoeveelheid The quantity of the ingredient.
      */
-    Ingredient(int id, Product product, double hoeveelheid) {
+    Ingredient(int id, Product product, double hoeveelheid, Eenheid eenheid) {
         this.id = id;
         this.product = product;
         this.hoeveelheid = hoeveelheid;
+        this.eenheid = eenheid;
     }
     //endregion
 }

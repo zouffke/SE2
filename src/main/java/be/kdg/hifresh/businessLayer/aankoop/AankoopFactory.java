@@ -1,5 +1,6 @@
 package be.kdg.hifresh.businessLayer.aankoop;
 
+import be.kdg.hifresh.businessLayer.gebruiker.Leverancier;
 import be.kdg.hifresh.businessLayer.util.Eenheid;
 import be.kdg.hifresh.businessLayer.util.Periode;
 import be.kdg.hifresh.businessLayer.util.PrijsAfspraak;
@@ -9,7 +10,7 @@ import be.kdg.hifresh.businessLayer.util.PrijsAfspraak;
  *
  * @author Dandois Luca
  */
-public class AankoopFactory {
+public final class AankoopFactory {
     //region constructors
     /**
      * Private constructor to prevent instantiation of this utility class.
@@ -46,8 +47,8 @@ public class AankoopFactory {
      *
      * @author Dandois Luca
      */
-    public static Contract createContract(Product product) {
-        return new Contract(product);
+    public static Contract createContract(int id, Product product, Leverancier leverancier, DistributieCentrum distributieCentrum) {
+        return new Contract(id, product, leverancier, distributieCentrum);
     }
 
     /**

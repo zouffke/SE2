@@ -1,6 +1,6 @@
 package be.kdg.hifresh.applicationLayer.aankoop;
 
-import be.kdg.hifresh.persistenceLayer.aankoop.ContractManager;
+import be.kdg.hifresh.persistenceLayer.aankoop.AankoopManager;
 import be.kdg.hifresh.businessLayer.aankoop.AankoopFactory;
 import be.kdg.hifresh.businessLayer.aankoop.Contract;
 import be.kdg.hifresh.businessLayer.aankoop.Product;
@@ -18,7 +18,7 @@ import java.util.List;
  * This class is responsible for managing contracts.
  * It provides methods to add products, get products, add centrum to catalog, add clausule, get average purchase price and get product suggestions.
  */
-public final class ContractController {
+public final class AankoopController {
 
     //region vars
 
@@ -26,7 +26,7 @@ public final class ContractController {
      * ContractManager instance
      */
     @Setter
-    private static ContractManager manager;
+    private static AankoopManager manager;
 
     //endregion
 
@@ -35,7 +35,7 @@ public final class ContractController {
     /**
      * Private constructor to prevent instantiation
      */
-    private ContractController() {
+    private AankoopController() {
     }
 
     //endregion

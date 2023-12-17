@@ -1,11 +1,12 @@
 package be.kdg.hifresh.businessLayer.recepten;
 
 import be.kdg.hifresh.businessLayer.aankoop.Product;
+import be.kdg.hifresh.businessLayer.util.Eenheid;
 
 /**
  * A factory class for creating various objects related to recipes.
  */
-public class ReceptenFactory {
+public final class ReceptenFactory {
     //region constructors
     /**
      * Private constructor to prevent instantiation of this utility class.
@@ -35,8 +36,8 @@ public class ReceptenFactory {
      * @param hoeveelheid The quantity of the ingredient.
      * @return A new Ingredient object.
      */
-    public static Ingredient createIngredient(int id, Product product, double hoeveelheid) {
-        return new Ingredient(id, product, hoeveelheid);
+    public static Ingredient createIngredient(int id, Product product, double hoeveelheid, Eenheid eenheid) {
+        return new Ingredient(id, product, hoeveelheid, eenheid);
     }
 
     /**

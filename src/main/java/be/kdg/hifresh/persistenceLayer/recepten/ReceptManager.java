@@ -1,10 +1,11 @@
 package be.kdg.hifresh.persistenceLayer.recepten;
 
+import be.kdg.hifresh.businessLayer.recepten.Ingredient;
+import be.kdg.hifresh.businessLayer.recepten.Recept;
+import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.persistenceLayer.Manager;
 import be.kdg.hifresh.persistenceLayer.recepten.catalogs.IngredientCataloog;
 import be.kdg.hifresh.persistenceLayer.recepten.catalogs.ReceptCataloog;
-import be.kdg.hifresh.businessLayer.recepten.Ingredient;
-import be.kdg.hifresh.businessLayer.recepten.Recept;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,12 +27,12 @@ public class ReceptManager extends Manager {
     /**
      * Catalog of recipes.
      */
-    private final ReceptCataloog receptCataloog;
+    private final Catalog<Recept> receptCataloog;
 
     /**
      * Catalog of ingredients.
      */
-    private final IngredientCataloog ingredientCataloog;
+    private final Catalog<Ingredient> ingredientCataloog;
 
     //endregion
 
@@ -54,7 +55,7 @@ public class ReceptManager extends Manager {
      * @param receptId Recipe ID
      * @return List of ingredients
      * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible
+     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
         Recept recept = super.getObjFromCatalogById(receptId, receptCataloog);
