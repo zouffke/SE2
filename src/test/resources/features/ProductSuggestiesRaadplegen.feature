@@ -71,9 +71,9 @@ Feature: Suggesties krijgen voor ingredienten
             | 8           | 2           | 1.35         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
             | 9           | 1           | 1.50         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
             | 10          | 2           | 1.35         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
-            | 11          | 3           | 1.50         | 80          | liter    | 2024-03-01  | 2024-03-31 |
+            | 11          | 3           | 1.50         | 100         | liter    | 2024-03-01  | 2024-03-31 |
             | 12          | 4           | 1.35         | 80          | liter    | 2024-03-01  | 2024-03-31 |
-            | 13          | 3           | 1.50         | 80          | liter    | 2024-03-01  | 2024-03-31 |
+            | 13          | 3           | 1.50         | 100         | liter    | 2024-03-01  | 2024-03-31 |
             | 14          | 4           | 1.35         | 80          | liter    | 2024-03-01  | 2024-03-31 |
             | 15          | 5           | 1.35         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
             | 16          | 6           | 1.35         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
@@ -84,6 +84,6 @@ Feature: Suggesties krijgen voor ingredienten
         Given het is vandaag "2024"-"03"-"01"
         When ik de suggesties raadpleeg
         Then krijg ik een lijst van 3 producten, gesorteerd op wekelijkse gemiddelde aankoopprijs
-        And product 1 in de lijst is 2
-        And product 2 in de lijst is 1
+        And product 1 in de lijst is 1
+        And product 2 in de lijst is 2
         And product 3 in de lijst is 3

@@ -4,6 +4,7 @@ import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
 import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
 import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
 import be.kdg.hifresh.businessLayer.aankoop.Product;
+import be.kdg.hifresh.businessLayer.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.recepten.Recept;
 import be.kdg.hifresh.businessLayer.util.Eenheid;
 import be.kdg.hifresh.businessLayer.util.Munt;
@@ -209,5 +210,9 @@ public final class Controller {
 
     public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
         return ReceptController.getRecept(receptId);
+    }
+
+    public static Ingredient getIngredient(int ingredientId) throws InvocationTargetException, IllegalAccessException {
+        return ReceptController.getIngredient(ingredientId);
     }
 }

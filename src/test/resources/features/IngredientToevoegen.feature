@@ -71,9 +71,9 @@ Feature: Ingredient toevoegen aan recept
             | 8           | 2           | 1.35         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
             | 9           | 1           | 1.50         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
             | 10          | 2           | 1.35         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
-            | 11          | 3           | 1.50         | 80          | liter    | 2024-03-01  | 2024-03-31 |
+            | 11          | 3           | 1.50         | 100         | liter    | 2024-03-01  | 2024-03-31 |
             | 12          | 4           | 1.35         | 80          | liter    | 2024-03-01  | 2024-03-31 |
-            | 13          | 3           | 1.50         | 80          | liter    | 2024-03-01  | 2024-03-31 |
+            | 13          | 3           | 1.50         | 100         | liter    | 2024-03-01  | 2024-03-31 |
             | 14          | 4           | 1.35         | 80          | liter    | 2024-03-01  | 2024-03-31 |
             | 15          | 5           | 1.35         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
             | 16          | 6           | 1.35         | 100         | kilogram | 2024-03-01  | 2024-03-31 |
@@ -82,6 +82,6 @@ Feature: Ingredient toevoegen aan recept
 
 
     Scenario: Ingredient toevoegen aan recept
-        When ik product met id 2 toevoeg aan recept met id 1 met een hoeveelheid van 200 en eenheid "gram"
-        Then heeft het recept 3 ingredienten
-        And één van de ingredienten is product 2 met hoeveelheid 200 "gram"
+        When ik product met id 2 toevoeg aan recept met id 1 met een hoeveelheid van 0.2 en eenheid "kilogram"
+        Then heeft het recept 1, 3 ingredienten
+        And een van de ingredienten van recept 1 is product 2 met hoeveelheid 0.2 "kilogram"

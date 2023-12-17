@@ -153,4 +153,8 @@ public final class ReceptController {
     public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
         return manager.getObjFromCatalogById(receptId, manager.getReceptCataloog());
     }
+
+    public static Ingredient getIngredient(int ingredientId) throws InvocationTargetException, IllegalAccessException {
+        return manager.getObjFromCatalogById(ingredientId, manager.getIngredientCataloog());
+    }
 }
