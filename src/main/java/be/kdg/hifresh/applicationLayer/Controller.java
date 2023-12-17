@@ -4,6 +4,7 @@ import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
 import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
 import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
 import be.kdg.hifresh.businessLayer.aankoop.Product;
+import be.kdg.hifresh.businessLayer.recepten.Recept;
 import be.kdg.hifresh.businessLayer.util.Eenheid;
 import be.kdg.hifresh.businessLayer.util.Munt;
 import be.kdg.hifresh.persistenceLayer.aankoop.AankoopManager;
@@ -130,6 +131,10 @@ public final class Controller {
         ReceptController.addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch);
     }
 
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) throws InvocationTargetException, IllegalAccessException {
+        ReceptController.addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, volgnummer);
+    }
+
     /**
      * Adds a center to the catalog.
      *
@@ -200,5 +205,9 @@ public final class Controller {
                 GebruikerController.getLeverancier(leverancierId),
                 distributieCentrumId
         );
+    }
+
+    public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
+        return ReceptController.getRecept(receptId);
     }
 }

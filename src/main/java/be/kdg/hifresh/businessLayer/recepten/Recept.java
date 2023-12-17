@@ -43,7 +43,8 @@ public class Recept {
     /**
      * The list of preparation steps for this recipe.
      */
-    private List<BereidingsStap> stappen;
+    @Getter
+    private final List<BereidingsStap> stappen;
 
     /**
      * The name of this recipe.

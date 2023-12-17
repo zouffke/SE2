@@ -123,6 +123,10 @@ public final class ReceptController {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) throws InvocationTargetException, IllegalAccessException {
+        addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, manager.getObjFromCatalogById(receptId, manager.getReceptCataloog()).getNextVolgnummer());
+    }
+
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volnummer) throws InvocationTargetException, IllegalAccessException {
         Recept recept = manager.getObjFromCatalogById(
                 receptId,
                 manager.getReceptCataloog());
@@ -133,16 +137,20 @@ public final class ReceptController {
                         stapName,
                         stapBesch
                 ),
-                recept.getNextVolgnummer()
+                volnummer
         );
     }
 
     public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) throws InvocationTargetException, IllegalAccessException {
         BereidingsStap bereidingsStap = manager.getObjFromCatalogById(receptId, manager.getReceptCataloog()).getBereidingStap(volgNummer);
 
-        for (Integer id : ingredientIds){
+        for (Integer id : ingredientIds) {
             bereidingsStap.addIngredient(id);
         }
     }
     //endregion
+
+    public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
+        return manager.getObjFromCatalogById(receptId, manager.getReceptCataloog());
+    }
 }

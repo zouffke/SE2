@@ -1,5 +1,7 @@
 package be.kdg.hifresh.businessLayer.recepten;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class BereidingsStap {
     /**
      * The description of this preparation step.
      */
+    @Getter
     private String beschrijving;
 
     /**
