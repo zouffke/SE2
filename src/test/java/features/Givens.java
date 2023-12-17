@@ -7,6 +7,7 @@ import be.kdg.hifresh.persistenceLayer.gebruiker.GebruikerManager;
 import be.kdg.hifresh.persistenceLayer.recepten.ReceptManager;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.sl.In;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -14,6 +15,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -67,7 +69,7 @@ public class Givens {
                         Integer.parseInt(r.get("product_id")),
                         Integer.parseInt(r.get("recept_id")),
                         Double.parseDouble(r.get("hoeveelheid")),
-                        Eenheid.valueOf(r.get("eenheid")))
+                        Eenheid.valueOf(r.get("eenheid").toUpperCase()))
                 );
             } catch (InvocationTargetException | IllegalAccessException e) {
                 Assertions.fail(e);
@@ -119,7 +121,16 @@ public class Givens {
     @Given("contract")
     public void contract(DataTable dataTable) {
         dataTable.asMaps().forEach(r -> {
-
+            try{
+                assertTrue(Controller.addContract(
+                        Integer.parseInt(r.get("contract_id")),
+                        Integer.parseInt(r.get("product_id")),
+                        Integer.parseInt(r.get("leverancier_id")),
+                        Integer.parseInt(r.get("distributiecentrum_id"))
+                ));
+            } catch (InvocationTargetException | IllegalAccessException e) {
+                Assertions.fail(e);
+            }
         });
     }
 
@@ -129,11 +140,11 @@ public class Givens {
             try {
                 assertTrue(Controller.addClausule(
                         Integer.parseInt(r.get("clausule_id")),
-                        Integer.parseInt(r.get("product_id")),
+                        Integer.parseInt(r.get("contract_id")),
                         LocalDate.parse(r.get("start_datum")),
                         LocalDate.parse(r.get("eind_datum")),
                         Double.parseDouble(r.get("hoeveelheid")),
-                        Eenheid.Kilogram,
+                        Eenheid.valueOf(r.get("eenheid").toUpperCase()),
                         Double.parseDouble(r.get("aankoopprijs"))
                 ));
             } catch (InvocationTargetException | IllegalAccessException e) {

@@ -2,6 +2,7 @@ package be.kdg.hifresh.businessLayer.aankoop;
 
 import be.kdg.hifresh.businessLayer.util.Adres;
 import be.kdg.hifresh.businessLayer.verzending.MaaltijdBox;
+import lombok.Getter;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ public class DistributieCentrum {
     /**
      * The id of this distribution center.
      */
+    @Getter
     private final int id;
 
     /**

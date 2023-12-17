@@ -31,6 +31,7 @@ public class Contract {
      */
     @Getter
     private List<Clausule> clausules;
+    @Getter
     private final int id;
     //endregion
 

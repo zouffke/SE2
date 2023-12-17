@@ -138,9 +138,7 @@ public final class ReceptController {
     }
 
     public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) throws InvocationTargetException, IllegalAccessException {
-        BereidingsStap bereidingsStap = manager.getObjFromCatalog(
-                manager.getIndexOfObjByIdInCatalog(receptId, manager.getReceptCataloog()),
-                manager.getReceptCataloog()).getBereidingStap(volgNummer);
+        BereidingsStap bereidingsStap = manager.getObjFromCatalogById(receptId, manager.getReceptCataloog()).getBereidingStap(volgNummer);
 
         for (Integer id : ingredientIds){
             bereidingsStap.addIngredient(id);

@@ -145,7 +145,7 @@ public final class Controller {
      * Adds a clause.
      *
      * @param id          The id of the clause.
-     * @param prodId      The id of the product.
+     * @param contractId  The id of the contract.
      * @param start       The start date of the clause.
      * @param end         The end date of the clause.
      * @param hoeveelheid The quantity of the product.
@@ -155,8 +155,8 @@ public final class Controller {
      * @throws InvocationTargetException if the called method throws an exception.
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static boolean addClausule(int id, int prodId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
-        return AankoopController.addClausule(id, prodId, start, end, hoeveelheid, eenheid, bedrag);
+    public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
+        return AankoopController.addClausule(id, contractId, start, end, hoeveelheid, eenheid, bedrag);
     }
 
     public static boolean addLeverancier(int id, String name) {
@@ -191,5 +191,14 @@ public final class Controller {
 
     public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) throws InvocationTargetException, IllegalAccessException {
         ReceptController.addIngredientToBereidingstap(receptId, volgNummer, ingredientIds);
+    }
+
+    public static boolean addContract(int id, int productId, int leverancierId, int distributieCentrumId) throws InvocationTargetException, IllegalAccessException {
+        return AankoopController.addContract(
+                id,
+                productId,
+                GebruikerController.getLeverancier(leverancierId),
+                distributieCentrumId
+        );
     }
 }

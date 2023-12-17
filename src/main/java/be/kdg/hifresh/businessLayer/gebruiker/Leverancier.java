@@ -1,6 +1,7 @@
 package be.kdg.hifresh.businessLayer.gebruiker;
 
 import be.kdg.hifresh.businessLayer.aankoop.Contract;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Leverancier extends Rol {
     private List<Contract> contracts;
     private int reputatie;
 
+    @Getter
     private final int id;
     private String name;
 

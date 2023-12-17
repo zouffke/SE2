@@ -1,19 +1,17 @@
 package be.kdg.hifresh.persistenceLayer.aankoop;
 
-import be.kdg.hifresh.businessLayer.aankoop.DistributieCentrum;
-import be.kdg.hifresh.businessLayer.gebruiker.Leverancier;
-import be.kdg.hifresh.persistenceLayer.Catalog;
-import be.kdg.hifresh.persistenceLayer.Manager;
-import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.ContractCataloog;
-import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.DistributieCentraCataloog;
 import be.kdg.hifresh.businessLayer.aankoop.Contract;
+import be.kdg.hifresh.businessLayer.aankoop.DistributieCentrum;
 import be.kdg.hifresh.businessLayer.aankoop.Product;
 import be.kdg.hifresh.businessLayer.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.util.Munt;
 import be.kdg.hifresh.businessLayer.util.PrijsAfspraak;
 import be.kdg.hifresh.businessLayer.util.UtilFactory;
+import be.kdg.hifresh.persistenceLayer.Catalog;
+import be.kdg.hifresh.persistenceLayer.Manager;
+import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.ContractCataloog;
+import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.DistributieCentraCataloog;
 import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.ProductCataloog;
-import be.kdg.hifresh.persistenceLayer.gebruiker.catalogs.LeverancierCataloog;
 import lombok.Getter;
 
 import java.time.DayOfWeek;

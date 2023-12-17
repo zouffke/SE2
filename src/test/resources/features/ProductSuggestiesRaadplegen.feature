@@ -30,12 +30,12 @@ Feature: Suggesties krijgen voor ingredienten
             | 4         | Bechamelsaus | Lekkere Bechamelsaus |
 
         Given ingredienten
-            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid | eenheid |
-            | 1             | bloem           | 1          | 1         | 100         | gram    |
-            | 3             | kaas            | 3          | 2         | 20          | gram    |
-            | 4             | kaas            | 3          | 3         | 20          | gram    |
-            | 5             | kaas            | 3          | 4         | 40          | gram    |
-            | 6             | melk            | 2          | 4         | 100         | ml      |
+            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid | eenheid  |
+            | 1             | bloem           | 1          | 1         | 0.1         | kilogram |
+            | 3             | kaas            | 3          | 2         | 0.02        | kilogram |
+            | 4             | kaas            | 3          | 3         | 0.02        | kilogram |
+            | 5             | kaas            | 3          | 4         | 0.04        | kilogram |
+            | 6             | melk            | 2          | 4         | 0.1         | liter    |
 
         Given bereidingsstappen
             | bereidingsstap_id | bereidingsstap_naam      | bereidingsstap_beschrijving                  | recept_id | volgnummer | ingredient_ids |
@@ -84,6 +84,6 @@ Feature: Suggesties krijgen voor ingredienten
         Given het is vandaag "2024"-"03"-"01"
         When ik de suggesties raadpleeg
         Then krijg ik een lijst van 3 producten, gesorteerd op wekelijkse gemiddelde aankoopprijs
-        And product 1 in de lijst is 1
-        And product 2 in de lijst is 2
+        And product 1 in de lijst is 2
+        And product 2 in de lijst is 1
         And product 3 in de lijst is 3

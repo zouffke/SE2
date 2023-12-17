@@ -29,12 +29,12 @@ Feature: Ingredient zoeken
             | 4         | Bechamelsaus | Lekkere Bechamelsaus |
 
         Given ingredienten
-            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid | eenheid |
-            | 1             | bloem           | 1          | 1         | 100         | gram    |
-            | 3             | kaas            | 3          | 2         | 20          | gram    |
-            | 4             | kaas            | 3          | 3         | 20          | gram    |
-            | 5             | kaas            | 3          | 4         | 40          | gram    |
-            | 6             | melk            | 2          | 4         | 100         | ml      |
+            | ingredient_id | ingredient_naam | product_id | recept_id | hoeveelheid | eenheid  |
+            | 1             | bloem           | 1          | 1         | 0.1         | kilogram |
+            | 3             | kaas            | 3          | 2         | 0.02        | kilogram |
+            | 4             | kaas            | 3          | 3         | 0.02        | kilogram |
+            | 5             | kaas            | 3          | 4         | 0.04        | kilogram |
+            | 6             | melk            | 2          | 4         | 0.1         | liter    |
 
         Given bereidingsstappen
             | bereidingsstap_id | bereidingsstap_naam      | bereidingsstap_beschrijving                  | recept_id | volgnummer | ingredient_ids |

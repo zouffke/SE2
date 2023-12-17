@@ -8,10 +8,10 @@ public enum Eenheid {
     /**
      * Represents the unit of measurement Kilogram.
      */
-    Kilogram,
+    KILOGRAM,
 
     /**
      * Represents the unit of measurement Liter.
      */
-    Liter
+    LITER
 }
