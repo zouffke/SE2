@@ -7,7 +7,6 @@ import be.kdg.hifresh.persistenceLayer.gebruiker.GebruikerManager;
 import be.kdg.hifresh.persistenceLayer.recepten.ReceptManager;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.sl.In;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -15,7 +14,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -36,7 +34,7 @@ public class Givens {
 
     @Given("distributiecentra")
     public void distributiecentra(DataTable dataTable) {
-        dataTable.asMaps().forEach(r -> assertTrue(Controller.addCentrumToCatalog(
+        dataTable.asMaps().forEach(r -> assertTrue(Controller.addCentrum(
                 Integer.parseInt(r.get("distributiecentrum_id")),
                 r.get("distributiecentrum_naam"))
         ));
@@ -53,7 +51,7 @@ public class Givens {
 
     @Given("recepten")
     public void recepten(DataTable dataTable) {
-        dataTable.asMaps().forEach(row -> assertTrue(Controller.addReceptToCatalog(
+        dataTable.asMaps().forEach(row -> assertTrue(Controller.addRecept(
                 Integer.parseInt(row.get("recept_id")),
                 row.get("recept_naam"),
                 row.get("recept_beschrijving"))

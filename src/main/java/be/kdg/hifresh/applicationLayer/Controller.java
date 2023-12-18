@@ -75,8 +75,8 @@ public final class Controller {
      * @param beschrijving The description of the recipe.
      * @return True if the recipe was added successfully, false otherwise.
      */
-    public static boolean addReceptToCatalog(int id, String name, String beschrijving) {
-        return ReceptController.addReceptToCatalog(id, name, beschrijving);
+    public static boolean addRecept(int id, String name, String beschrijving) {
+        return ReceptController.addRecept(id, name, beschrijving);
     }
 
     /**
@@ -115,7 +115,7 @@ public final class Controller {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.addIngredientToRecept(ingrId, AankoopController.getProductFromCatalog(prodId), receptId, amt, eenheid);
+        return ReceptController.addIngredientToRecept(ingrId, AankoopController.getProduct(prodId), receptId, amt, eenheid);
     }
 
     /**
@@ -143,8 +143,8 @@ public final class Controller {
      * @param name The name of the center.
      * @return True if the center was added successfully, false otherwise.
      */
-    public static boolean addCentrumToCatalog(int id, String name) {
-        return AankoopController.addCentrumToCatalog(id, name);
+    public static boolean addCentrum(int id, String name) {
+        return AankoopController.addCentrum(id, name);
     }
 
     /**
@@ -212,7 +212,15 @@ public final class Controller {
         return ReceptController.getRecept(receptId);
     }
 
-    public static Ingredient getIngredient(int ingredientId) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.getIngredient(ingredientId);
+    public static List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
+        return AankoopController.getProductsByName(name);
+    }
+
+    public static List<Product> getActiveProducts(LocalDate date){
+        return AankoopController.getActiveProducts(date);
+    }
+
+    public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date){
+       return AankoopController.sortOnAvgPrice(list, date);
     }
 }

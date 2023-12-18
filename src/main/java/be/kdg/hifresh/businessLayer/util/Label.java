@@ -5,6 +5,6 @@ package be.kdg.hifresh.businessLayer.util;
  */
 public class Label {
 
-	private String naam;
+	private String name;
 
 }

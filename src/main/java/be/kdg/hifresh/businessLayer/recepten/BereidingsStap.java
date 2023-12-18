@@ -14,7 +14,7 @@ public class BereidingsStap {
     /**
      * The name of this preparation step.
      */
-    private String naam;
+    private String name;
 
     /**
      * The description of this preparation step.
@@ -31,12 +31,12 @@ public class BereidingsStap {
     /**
      * Constructor for BereidingsStap.
      *
-     * @param naam The name of the preparation step.
+     * @param name The name of the preparation step.
      * @param beschrijving The description of the preparation step.
      * @param id The id of the preparation step.
      */
-    BereidingsStap(String naam, String beschrijving, int id){
-        this.naam = naam;
+    BereidingsStap(String name, String beschrijving, int id){
+        this.name = name;
         this.beschrijving = beschrijving;
         this.id = id;
         this.ingredient_ids = new ArrayList<>();

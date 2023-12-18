@@ -20,12 +20,12 @@ public final class ReceptenFactory {
      * Creates a new BereidingsStap object.
      *
      * @param id The id of the preparation step.
-     * @param naam The name of the preparation step.
+     * @param name The name of the preparation step.
      * @param beschrijving The description of the preparation step.
      * @return A new BereidingsStap object.
      */
-    public static BereidingsStap createBereidingsStap(int id, String naam, String beschrijving) {
-        return new BereidingsStap(naam, beschrijving, id);
+    public static BereidingsStap createBereidingsStap(int id, String name, String beschrijving) {
+        return new BereidingsStap(name, beschrijving, id);
     }
 
     /**
@@ -44,12 +44,12 @@ public final class ReceptenFactory {
      * Creates a new Recept object.
      *
      * @param id The id of the recipe.
-     * @param naam The name of the recipe.
+     * @param name The name of the recipe.
      * @param beschrijving The description of the recipe.
      * @return A new Recept object.
      */
-    public static Recept createRecept(int id, String naam, String beschrijving) {
-        return new Recept(naam, id, beschrijving);
+    public static Recept createRecept(int id, String name, String beschrijving) {
+        return new Recept(name, id, beschrijving);
     }
     //endregion
 }

@@ -51,7 +51,7 @@ public class Recept {
     /**
      * The name of this recipe.
      */
-    private String naam;
+    private String name;
 
     /**
      * The time required to prepare this recipe.
@@ -79,12 +79,12 @@ public class Recept {
     /**
      * Constructor for Recept.
      *
-     * @param naam The name of the recipe.
+     * @param name The name of the recipe.
      * @param id The id of the recipe.
      * @param beschrijving The description of the recipe.
      */
-    Recept(String naam, int id, String beschrijving){
-        this.naam = naam;
+    Recept(String name, int id, String beschrijving){
+        this.name = name;
         this.id = id;
         this.beschrijving = beschrijving;
         this.stappen = new ArrayList<>();

@@ -20,7 +20,7 @@ public class Product {
     /**
      * The name of this product.
      */
-    private String naam;
+    private String name;
 
     /**
      * The id of this product.
@@ -34,11 +34,11 @@ public class Product {
     /**
      * Constructor for Product.
      *
-     * @param naam The name of the product.
+     * @param name The name of the product.
      * @param id The id of the product.
      */
-    Product(String naam, int id){
-        this.naam = naam;
+    Product(String name, int id){
+        this.name = name;
         this.id = id;
         this.contracten = new ArrayList<>();
     }

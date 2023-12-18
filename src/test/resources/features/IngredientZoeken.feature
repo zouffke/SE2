@@ -91,12 +91,13 @@ Feature: Ingredient zoeken
         Given we zoeken op datum van "2024"-"01"-"15"
         When ik zoek naar producten die beschikbaar zijn
         Then krijg ik een lijst terug met 2 producten
-        And product_id van het product is 1
+        And product_id van item 1 uit de lijst is 1
+        And product_id van item 2 uit de lijst is 2
 
     Scenario: Lijst gesorteerd op gemiddelde aankoopprijs opvragen
         Given we zoeken op datum van "2024"-"03"-"15"
         When ik zoek naar product die beschikbaar zijn, stijgend gesorteerd op gemiddelde aankoopprijs
         Then krijg ik een lijst terug met 3 producten
-        And product_id van item 1 in de lijst is 3
-        And product_id van item 2 in de lijst is 1
-        And product_id van item 3 in de lijst is 2
+        And product_id van item 1 uit de lijst is 3
+        And product_id van item 2 uit de lijst is 1
+        And product_id van item 3 uit de lijst is 2

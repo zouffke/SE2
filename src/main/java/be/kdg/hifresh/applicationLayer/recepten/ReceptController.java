@@ -60,8 +60,8 @@ public final class ReceptController {
      * @param beschrijving Recipe description
      * @return true if the recipe was added successfully, false otherwise
      */
-    public static boolean addReceptToCatalog(int id, String name, String beschrijving) {
-        return manager.addObjtoCatalog(
+    public static boolean addRecept(int id, String name, String beschrijving) {
+        return manager.add(
                 ReceptenFactory.createRecept(id, name, beschrijving),
                 manager.getReceptCataloog()
         );
@@ -77,11 +77,11 @@ public final class ReceptController {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public static boolean addSubreceptToRecept(int subReceptId, int receptId) throws InvocationTargetException, IllegalAccessException {
-        return manager.getObjFromCatalogById(
+        return manager.getById(
                 receptId,
                 manager.getReceptCataloog()
         ).addSubrecept(
-                manager.getObjFromCatalogById(
+                manager.getById(
                         subReceptId,
                         manager.getReceptCataloog())
         );
@@ -99,7 +99,7 @@ public final class ReceptController {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public static boolean addIngredientToRecept(int ingrId, Product product, int receptId, double amt, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
-        return manager.getObjFromCatalogById(
+        return manager.getById(
                         receptId,
                         manager.getReceptCataloog())
                 .addIngredient(
@@ -123,11 +123,11 @@ public final class ReceptController {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) throws InvocationTargetException, IllegalAccessException {
-        addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, manager.getObjFromCatalogById(receptId, manager.getReceptCataloog()).getNextVolgnummer());
+        addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, manager.getById(receptId, manager.getReceptCataloog()).getNextVolgnummer());
     }
 
     public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volnummer) throws InvocationTargetException, IllegalAccessException {
-        Recept recept = manager.getObjFromCatalogById(
+        Recept recept = manager.getById(
                 receptId,
                 manager.getReceptCataloog());
 
@@ -142,7 +142,7 @@ public final class ReceptController {
     }
 
     public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) throws InvocationTargetException, IllegalAccessException {
-        BereidingsStap bereidingsStap = manager.getObjFromCatalogById(receptId, manager.getReceptCataloog()).getBereidingStap(volgNummer);
+        BereidingsStap bereidingsStap = manager.getById(receptId, manager.getReceptCataloog()).getBereidingStap(volgNummer);
 
         for (Integer id : ingredientIds) {
             bereidingsStap.addIngredient(id);
@@ -151,10 +151,6 @@ public final class ReceptController {
     //endregion
 
     public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
-        return manager.getObjFromCatalogById(receptId, manager.getReceptCataloog());
-    }
-
-    public static Ingredient getIngredient(int ingredientId) throws InvocationTargetException, IllegalAccessException {
-        return manager.getObjFromCatalogById(ingredientId, manager.getIngredientCataloog());
+        return manager.getById(receptId, manager.getReceptCataloog());
     }
 }

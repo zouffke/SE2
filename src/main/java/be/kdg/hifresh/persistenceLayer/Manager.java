@@ -20,8 +20,8 @@ public abstract class Manager implements IManager {
      * @return true if the object was added successfully, false otherwise.
      */
     @Override
-    public <T> boolean addObjtoCatalog(T object, Catalog<T> catalog) {
-        return catalog.addObjToCatalog(object);
+    public <T> boolean add(T object, Catalog<T> catalog) {
+        return catalog.add(object);
     }
 
     /**
@@ -33,8 +33,8 @@ public abstract class Manager implements IManager {
      * @return The object at the specified index.
      */
     @Override
-    public <T> T getObjFromCatalog(int index, Catalog<T> catalog) {
-        return catalog.getObjFromCatalog(index);
+    public <T> T get(int index, Catalog<T> catalog) {
+        return catalog.get(index);
     }
 
     /**
@@ -46,8 +46,8 @@ public abstract class Manager implements IManager {
      * @return The index of the object in the catalog.
      */
     @Override
-    public <T> int getIndexOfObjInCatalog(T obj, Catalog<T> catalog) {
-        return catalog.getIndexOfObj(obj);
+    public <T> int indexOf(T obj, Catalog<T> catalog) {
+        return catalog.indexOf(obj);
     }
 
     /**
@@ -61,8 +61,8 @@ public abstract class Manager implements IManager {
      * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     @Override
-    public <T> int getIndexOfObjByIdInCatalog(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
-        return catalog.getIndexOfObjById(objId);
+    public <T> int indexById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
+        return catalog.indexById(objId);
     }
 
     /**
@@ -76,31 +76,9 @@ public abstract class Manager implements IManager {
      * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     @Override
-    public <T> T getObjFromCatalogById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
-        return catalog.getObjFromCatalog(catalog.getIndexOfObjById(objId));
+    public <T> T getById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
+        return catalog.get(catalog.indexById(objId));
     }
 
     //endregion
-
-    /**
-     * Retrieves an object of type T associated with an object of type U.
-     *
-     * @param objT The class of the object to be retrieved.
-     * @param objU The object associated with the object to be retrieved.
-     * @param <T>  The type of the object to be retrieved.
-     * @param <U>  The type of the associated object.
-     * @return The object of type T associated with the object of type U.
-     * @throws InvocationTargetException if the underlying method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
-     */
-    @Override
-    @SuppressWarnings("unchecked")
-    public <T, U> T GetObjTFromObjU(Class<T> objT, U objU) throws InvocationTargetException, IllegalAccessException {
-        for (Method m : objU.getClass().getDeclaredMethods()) {
-            if (m.getName().toLowerCase().equals("get" + objT.getSimpleName().toLowerCase())) {
-                return (T) m.invoke(objT);
-            }
-        }
-        return null;
-    }
 }

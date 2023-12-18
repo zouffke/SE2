@@ -51,7 +51,7 @@ public final class AankoopController {
      * @return true if the product was added successfully, false otherwise
      */
     public static boolean addProduct(int prodId, String name) {
-        return manager.addObjtoCatalog(
+        return manager.add(
                 AankoopFactory.createProduct(prodId, name),
                 manager.getProductCatalog());
     }
@@ -64,8 +64,8 @@ public final class AankoopController {
      * @throws InvocationTargetException if the underlying method throws an exception
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static Product getProductFromCatalog(int prodId) throws InvocationTargetException, IllegalAccessException {
-        return manager.getObjFromCatalogById(
+    public static Product getProduct(int prodId) throws InvocationTargetException, IllegalAccessException {
+        return manager.getById(
                 prodId,
                 manager.getProductCatalog());
     }
@@ -77,8 +77,8 @@ public final class AankoopController {
      * @param name Distribution center name
      * @return true if the distribution center was added successfully, false otherwise
      */
-    public static boolean addCentrumToCatalog(int id, String name) {
-        return manager.addObjtoCatalog(
+    public static boolean addCentrum(int id, String name) {
+        return manager.add(
                 AankoopFactory.createDistributieCentrum(
                         id,
                         name
@@ -102,7 +102,7 @@ public final class AankoopController {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
-        Contract contract = manager.getObjFromCatalogById(
+        Contract contract = manager.getById(
                 contractId,
                 manager.getContractCataloog()
         );
@@ -123,12 +123,12 @@ public final class AankoopController {
     }
 
     public static boolean addContract(int id, int productId, Leverancier leverancier, int distributieCentrumId) throws InvocationTargetException, IllegalAccessException {
-        return manager.addObjtoCatalog(
+        return manager.add(
                 AankoopFactory.createContract(
                         id,
-                        manager.getObjFromCatalogById(productId, manager.getProductCatalog()),
+                        manager.getById(productId, manager.getProductCatalog()),
                         leverancier,
-                        manager.getObjFromCatalogById(distributieCentrumId, manager.getDcCataloog())
+                        manager.getById(distributieCentrumId, manager.getDcCataloog())
                 ),
                 manager.getContractCataloog()
         );
@@ -155,5 +155,17 @@ public final class AankoopController {
      */
     public static List<Product> getProductSuggesties(LocalDate date) {
         return manager.getProductSuggesties(date);
+    }
+
+    public static List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
+        return manager.getProductsByName(name);
+    }
+
+    public static List<Product> getActiveProducts(LocalDate date){
+        return manager.getActiveProducts(date);
+    }
+
+    public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date){
+       return manager.sortOnAvgPrice(list, date);
     }
 }

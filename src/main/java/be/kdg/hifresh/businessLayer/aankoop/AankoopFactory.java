@@ -90,13 +90,13 @@ public final class AankoopFactory {
      * Creates a new Product object.
      *
      * @param id The id of the product.
-     * @param naam The name of the product.
+     * @param name The name of the product.
      * @return A new Product object.
      *
      * @author Dandois Luca
      */
-    public static Product createProduct(int id, String naam) {
-        return new Product(naam, id);
+    public static Product createProduct(int id, String name) {
+        return new Product(name, id);
     }
     //endregion
 }

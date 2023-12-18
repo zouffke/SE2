@@ -6,6 +6,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * An abstract class that represents a catalog of objects of type T.
@@ -33,7 +34,7 @@ public abstract class Catalog<T> {
      * @param obj The object to be added to the catalog.
      * @return true if the object was added successfully, false otherwise.
      */
-    public boolean addObjToCatalog(T obj) {
+    public boolean add(T obj) {
         return this.list.add(obj);
     }
 
@@ -43,8 +44,11 @@ public abstract class Catalog<T> {
      * @param index The index of the object to be retrieved.
      * @return The object at the specified index.
      */
-    public T getObjFromCatalog(int index) {
+    public T get(int index) {
         return this.list.get(index);
+    }
+    public List<T> getAll(){
+        return new ArrayList<>(list);
     }
 
     /**
@@ -53,7 +57,7 @@ public abstract class Catalog<T> {
      * @param obj The object whose index is to be returned.
      * @return The index of the object, or -1 if the object is not found.
      */
-    public int getIndexOfObj(T obj) {
+    public int indexOf(T obj) {
         return this.list.indexOf(obj);
     }
 
@@ -65,7 +69,7 @@ public abstract class Catalog<T> {
      * @throws InvocationTargetException if the underlying method getId throws an exception.
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public int getIndexOfObjById(int objId) throws InvocationTargetException, IllegalAccessException {
+    public int indexById(int objId) throws InvocationTargetException, IllegalAccessException {
         for (T t : list) {
             for (Method m : t.getClass().getDeclaredMethods()) {
                 if (m.getName().equals("getId")) {
@@ -76,5 +80,20 @@ public abstract class Catalog<T> {
             }
         }
         return -1;
+    }
+
+    public List<T> getByName(String name) throws InvocationTargetException, IllegalAccessException {
+        List<T> filtered = new ArrayList<>();
+        for (T t: list){
+            for (Method m : t.getClass().getDeclaredMethods()) {
+                if (m.getName().equals("getName")){
+                    String result = (String) m.invoke(t);
+                    if (result.toUpperCase().contains(name.toUpperCase())){
+                        filtered.add(t);
+                    }
+                }
+            }
+        }
+        return filtered;
     }
 }

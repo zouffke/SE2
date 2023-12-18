@@ -14,12 +14,10 @@ import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.DistributieCentraCataloo
 import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.ProductCataloog;
 import lombok.Getter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A manager class for handling contracts.
@@ -64,7 +62,7 @@ public class AankoopManager extends Manager {
      * Calculates the average purchase price for a list of ingredients on a given date.
      *
      * @param ingredients List of ingredients.
-     * @param date The date for which to calculate the average purchase price.
+     * @param date        The date for which to calculate the average purchase price.
      * @return The average purchase price.
      */
     public Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
@@ -81,7 +79,7 @@ public class AankoopManager extends Manager {
      * Calculates the average purchase price for a product on a given date.
      *
      * @param product The product for which to calculate the average purchase price.
-     * @param date The date for which to calculate the average purchase price.
+     * @param date    The date for which to calculate the average purchase price.
      * @return The average purchase price.
      */
     private double getGemiddeldeAankoopPrijs(Product product, LocalDate date) {
@@ -106,18 +104,19 @@ public class AankoopManager extends Manager {
      * @param date The date for which to retrieve the active products.
      * @return A list of active products.
      */
-    private List<Product> getActiveProducts(LocalDate date) {
+    public List<Product> getActiveProducts(LocalDate date) {
         return contractCataloog.getList()
                 .stream()
                 .filter(contract -> contract.getClausules() != null && contract.getClausules().stream().anyMatch(clausule -> clausule.isActive(date)))
                 .map(Contract::getProduct)
+                .distinct()
                 .toList();
     }
 
     /**
      * Calculates the average weekly purchase price for a product on a given date.
      *
-     * @param date The date for which to calculate the average weekly purchase price.
+     * @param date    The date for which to calculate the average weekly purchase price.
      * @param product The product for which to calculate the average weekly purchase price.
      * @return The average weekly purchase price.
      */
@@ -147,7 +146,7 @@ public class AankoopManager extends Manager {
     /**
      * Calculates the average yearly purchase price for a product on a given date.
      *
-     * @param date The date for which to calculate the average yearly purchase price.
+     * @param date    The date for which to calculate the average yearly purchase price.
      * @param product The product for which to calculate the average yearly purchase price.
      * @return The average yearly purchase price.
      */
@@ -218,5 +217,15 @@ public class AankoopManager extends Manager {
         }
 
         return this.sortOnScore(score);
+    }
+
+    public List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
+        return this.productCatalog.getByName(name);
+    }
+
+    public List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
+        return list.stream().sorted(Comparator.comparing(
+                p -> getGemiddeldeAankoopPrijs(p, date)
+        )).toList();
     }
 }
