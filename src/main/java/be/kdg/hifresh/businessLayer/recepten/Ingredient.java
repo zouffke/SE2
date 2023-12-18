@@ -14,36 +14,38 @@ public class Ingredient {
     /**
      * The product associated with this ingredient.
      */
-    private final Product product;
+    private final Product PRODUCT;
 
     /**
      * The quantity of this ingredient.
      */
-    @Getter    private double hoeveelheid;
+    @Getter
+    private final double HOEVEELHEID;
 
     /**
      * The unit of this ingredient.
      */
-    private Eenheid eenheid;
+    private final Eenheid EENHEID;
 
     /**
      * The id of this ingredient.
      */
-    private final int id;
+    private final int ID;
     //endregion
     //region constructors
+
     /**
      * Constructor for Ingredient.
      *
-     * @param id The id of the ingredient.
-     * @param product The product associated with the ingredient.
+     * @param id          The id of the ingredient.
+     * @param product     The product associated with the ingredient.
      * @param hoeveelheid The quantity of the ingredient.
      */
     Ingredient(int id, Product product, double hoeveelheid, Eenheid eenheid) {
-        this.id = id;
-        this.product = product;
-        this.hoeveelheid = hoeveelheid;
-        this.eenheid = eenheid;
+        this.ID = id;
+        this.PRODUCT = product;
+        this.HOEVEELHEID = hoeveelheid;
+        this.EENHEID = eenheid;
     }
     //endregion
 }

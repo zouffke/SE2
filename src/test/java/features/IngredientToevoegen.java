@@ -1,9 +1,7 @@
 package features;
 
 import be.kdg.hifresh.applicationLayer.Controller;
-import be.kdg.hifresh.businessLayer.aankoop.Product;
 import be.kdg.hifresh.businessLayer.recepten.Ingredient;
-import be.kdg.hifresh.businessLayer.recepten.Recept;
 import be.kdg.hifresh.businessLayer.util.Eenheid;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -27,14 +25,14 @@ public class IngredientToevoegen {
                     arg2,
                     Eenheid.valueOf(arg3.toUpperCase())
             ));
-        } catch (InvocationTargetException | IllegalAccessException e){
+        } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
     }
 
     @Then("heeft het recept {int}, {int} ingredienten")
     public void heeftHetReceptIngredienten(int arg0, int arg1) {
-        try{
+        try {
             assertEquals(arg1, Controller.getRecept(arg0).getIngredienten().size());
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
@@ -43,19 +41,19 @@ public class IngredientToevoegen {
 
     @And("een van de ingredienten van recept {int} is product {int} met hoeveelheid {double} {string}")
     public void eenVanDeIngredientenVanReceptIsProductMetHoeveelheid(int arg0, int arg1, double arg2, String arg3) {
-        try{
+        try {
             List<Ingredient> ingredients = Controller.getRecept(arg0).getIngredienten();
 
-            for (Ingredient ingredient : ingredients){
-                if (ingredient.getProduct().getId() == 2){
-                    assertEquals(Eenheid.valueOf(arg3.toUpperCase()), ingredient.getEenheid());
-                    assertEquals(arg2, ingredient.getHoeveelheid());
+            for (Ingredient ingredient : ingredients) {
+                if (ingredient.getPRODUCT().getID() == 2) {
+                    assertEquals(Eenheid.valueOf(arg3.toUpperCase()), ingredient.getEENHEID());
+                    assertEquals(arg2, ingredient.getHOEVEELHEID());
                     return;
                 }
             }
             Assertions.fail();
 
-        } catch (InvocationTargetException | IllegalAccessException e){
+        } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
     }

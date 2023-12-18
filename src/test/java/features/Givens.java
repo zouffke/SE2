@@ -18,11 +18,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Givens {
-    @BeforeAll
-    static void beforeAll() {
-        Controller.setManagers(new AankoopManager(), new ReceptManager(), new GebruikerManager());
-    }
-
     @Given("producten")
     public void producten(DataTable dataTable) {
         beforeAll();
@@ -30,6 +25,11 @@ public class Givens {
                 Integer.parseInt(r.get("product_id")),
                 r.get("product_naam"))
         ));
+    }
+
+    @BeforeAll
+    static void beforeAll() {
+        Controller.setManagers(new AankoopManager(), new ReceptManager(), new GebruikerManager());
     }
 
     @Given("distributiecentra")
@@ -88,7 +88,7 @@ public class Givens {
                 );
 
                 List<String> ingredientIds = this.getItemFromList(r.get("ingredient_ids"));
-                if (!ingredientIds.get(0).equals("-")){
+                if (!ingredientIds.get(0).equals("-")) {
                     Controller.addIngredientToBereidingstap(
                             Integer.parseInt(r.get("recept_id")),
                             Integer.parseInt(r.get("volgnummer")),
@@ -100,6 +100,14 @@ public class Givens {
                 Assertions.fail(e);
             }
         });
+    }
+
+    private List<String> getItemFromList(String list) {
+        return getItemFromList(list, ",");
+    }
+
+    private List<String> getItemFromList(String list, String delim) {
+        return Arrays.stream(list.split(delim)).toList();
     }
 
     @Given("subrecepten")
@@ -120,7 +128,7 @@ public class Givens {
     @Given("contract")
     public void contract(DataTable dataTable) {
         dataTable.asMaps().forEach(r -> {
-            try{
+            try {
                 assertTrue(Controller.addContract(
                         Integer.parseInt(r.get("contract_id")),
                         Integer.parseInt(r.get("product_id")),
@@ -160,13 +168,5 @@ public class Givens {
     @Given("we zoeken op datum van {string}-{string}-{string}")
     public void weZoekenOpDatumVan(String arg0, String arg1, String arg2) {
         Controller.setToday(LocalDate.of(Integer.parseInt(arg0), Integer.parseInt(arg1), Integer.parseInt(arg2)));
-    }
-
-    private List<String> getItemFromList(String list) {
-        return getItemFromList(list, ",");
-    }
-
-    private List<String> getItemFromList(String list, String delim) {
-        return Arrays.stream(list.split(delim)).toList();
     }
 }

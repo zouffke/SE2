@@ -4,7 +4,6 @@ import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
 import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
 import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
 import be.kdg.hifresh.businessLayer.aankoop.Product;
-import be.kdg.hifresh.businessLayer.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.recepten.Recept;
 import be.kdg.hifresh.businessLayer.util.Eenheid;
 import be.kdg.hifresh.businessLayer.util.Munt;
@@ -33,12 +32,9 @@ public final class Controller {
     private static LocalDate today;
 
     /**
-     * Sets the current date.
-     *
-     * @param today The current date.
+     * Private constructor to prevent instantiation of this utility class.
      */
-    public static void setToday(LocalDate today) {
-        Controller.today = today;
+    private Controller() {
     }
 
     //endregion
@@ -46,9 +42,12 @@ public final class Controller {
     //region constructors
 
     /**
-     * Private constructor to prevent instantiation of this utility class.
+     * Sets the current date.
+     *
+     * @param today The current date.
      */
-    private Controller() {
+    public static void setToday(LocalDate today) {
+        Controller.today = today;
     }
 
     //endregion
@@ -216,11 +215,11 @@ public final class Controller {
         return AankoopController.getProductsByName(name);
     }
 
-    public static List<Product> getActiveProducts(LocalDate date){
+    public static List<Product> getActiveProducts(LocalDate date) {
         return AankoopController.getActiveProducts(date);
     }
 
-    public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date){
-       return AankoopController.sortOnAvgPrice(list, date);
+    public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
+        return AankoopController.sortOnAvgPrice(list, date);
     }
 }

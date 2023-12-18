@@ -53,7 +53,7 @@ public final class AankoopController {
     public static boolean addProduct(int prodId, String name) {
         return manager.add(
                 AankoopFactory.createProduct(prodId, name),
-                manager.getProductCatalog());
+                manager.getPRODUCT_CATALOG());
     }
 
     /**
@@ -67,7 +67,7 @@ public final class AankoopController {
     public static Product getProduct(int prodId) throws InvocationTargetException, IllegalAccessException {
         return manager.getById(
                 prodId,
-                manager.getProductCatalog());
+                manager.getPRODUCT_CATALOG());
     }
 
     /**
@@ -83,7 +83,7 @@ public final class AankoopController {
                         id,
                         name
                 ),
-                manager.getDcCataloog()
+                manager.getDC_CATALOG()
         );
     }
 
@@ -104,7 +104,7 @@ public final class AankoopController {
     public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
         Contract contract = manager.getById(
                 contractId,
-                manager.getContractCataloog()
+                manager.getCONTRACT_CATALOG()
         );
 
         return contract.addClausule(
@@ -126,11 +126,11 @@ public final class AankoopController {
         return manager.add(
                 AankoopFactory.createContract(
                         id,
-                        manager.getById(productId, manager.getProductCatalog()),
+                        manager.getById(productId, manager.getPRODUCT_CATALOG()),
                         leverancier,
-                        manager.getById(distributieCentrumId, manager.getDcCataloog())
+                        manager.getById(distributieCentrumId, manager.getDC_CATALOG())
                 ),
-                manager.getContractCataloog()
+                manager.getCONTRACT_CATALOG()
         );
     }
 
@@ -161,11 +161,11 @@ public final class AankoopController {
         return manager.getProductsByName(name);
     }
 
-    public static List<Product> getActiveProducts(LocalDate date){
+    public static List<Product> getActiveProducts(LocalDate date) {
         return manager.getActiveProducts(date);
     }
 
-    public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date){
-       return manager.sortOnAvgPrice(list, date);
+    public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
+        return manager.sortOnAvgPrice(list, date);
     }
 }

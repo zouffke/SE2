@@ -1,7 +1,7 @@
 package be.kdg.hifresh.persistenceLayer.recepten.catalogs;
 
-import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.businessLayer.recepten.Recept;
+import be.kdg.hifresh.persistenceLayer.Catalog;
 
 /**
  * A catalog class for managing Recept objects.

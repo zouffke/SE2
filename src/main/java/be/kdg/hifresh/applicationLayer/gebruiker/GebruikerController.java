@@ -20,11 +20,11 @@ public final class GebruikerController {
 
     //region setup functions
     public static boolean addLeverancier(int id, String name) {
-        return manager.add(GebruikerFactory.createLeverancier(id, name), manager.getLeverancierCatalog());
+        return manager.add(GebruikerFactory.createLeverancier(id, name), manager.getLEVERANCIER_CATALOG());
     }
     //endregion
 
     public static Leverancier getLeverancier(int leverancierId) throws InvocationTargetException, IllegalAccessException {
-        return manager.getById(leverancierId, manager.getLeverancierCatalog());
+        return manager.getById(leverancierId, manager.getLEVERANCIER_CATALOG());
     }
 }

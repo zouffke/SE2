@@ -1,7 +1,6 @@
 package be.kdg.hifresh.persistenceLayer;
 
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 /**
  * An abstract class that provides a base for all manager classes.
@@ -40,9 +39,9 @@ public abstract class Manager implements IManager {
     /**
      * Retrieves the index of an object in a catalog.
      *
-     * @param obj The object whose index is to be retrieved.
+     * @param obj     The object whose index is to be retrieved.
      * @param catalog The catalog from which the index will be retrieved.
-     * @param <T> The type of the object.
+     * @param <T>     The type of the object.
      * @return The index of the object in the catalog.
      */
     @Override
@@ -53,12 +52,12 @@ public abstract class Manager implements IManager {
     /**
      * Retrieves the index of an object in a catalog by its ID.
      *
-     * @param objId The ID of the object whose index is to be retrieved.
+     * @param objId   The ID of the object whose index is to be retrieved.
      * @param catalog The catalog from which the index will be retrieved.
-     * @param <T> The type of the object.
+     * @param <T>     The type of the object.
      * @return The index of the object in the catalog.
      * @throws InvocationTargetException if the underlying method throws an exception.
-     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
+     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     @Override
     public <T> int indexById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
@@ -68,12 +67,12 @@ public abstract class Manager implements IManager {
     /**
      * Retrieves an object from a catalog by its ID.
      *
-     * @param objId The ID of the object to be retrieved.
+     * @param objId   The ID of the object to be retrieved.
      * @param catalog The catalog from which the object will be retrieved.
-     * @param <T> The type of the object.
+     * @param <T>     The type of the object.
      * @return The object with the specified ID.
      * @throws InvocationTargetException if the underlying method throws an exception.
-     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
+     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     @Override
     public <T> T getById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {

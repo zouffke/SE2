@@ -34,7 +34,7 @@ public class IngredientZoeken {
 
     @And("product_id van item {int} uit de lijst is {int}")
     public void product_idVanItemUitDeLijstIs(int arg0, int arg1) {
-        assertEquals(arg1, products.get(arg0 - 1).getId());
+        assertEquals(arg1, products.get(arg0 - 1).getID());
     }
 
 

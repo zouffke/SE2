@@ -6,8 +6,12 @@ import lombok.Getter;
  * Represents a currency amount.
  * This class implements the Comparable interface to allow for comparison between different instances of Munt.
  */
-public class Munt implements Comparable<Munt>{
+public class Munt implements Comparable<Munt> {
 
+    /**
+     * The unit of the currency (e.g., Euro, Dollar).
+     */
+    private final String EENHEID;
     /**
      * The amount of money.
      */
@@ -15,19 +19,14 @@ public class Munt implements Comparable<Munt>{
     private double bedrag;
 
     /**
-     * The unit of the currency (e.g., Euro, Dollar).
-     */
-    private String eenheid;
-
-    /**
      * Constructor for Munt.
      *
-     * @param bedrag The amount of money.
+     * @param bedrag  The amount of money.
      * @param eenheid The unit of the currency.
      */
     Munt(double bedrag, String eenheid) {
         this.bedrag = bedrag;
-        this.eenheid = eenheid;
+        this.EENHEID = eenheid;
     }
 
     /**

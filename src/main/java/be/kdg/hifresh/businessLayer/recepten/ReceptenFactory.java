@@ -8,6 +8,7 @@ import be.kdg.hifresh.businessLayer.util.Eenheid;
  */
 public final class ReceptenFactory {
     //region constructors
+
     /**
      * Private constructor to prevent instantiation of this utility class.
      */
@@ -16,11 +17,12 @@ public final class ReceptenFactory {
     //endregion
 
     //region create methods
+
     /**
      * Creates a new BereidingsStap object.
      *
-     * @param id The id of the preparation step.
-     * @param name The name of the preparation step.
+     * @param id           The id of the preparation step.
+     * @param name         The name of the preparation step.
      * @param beschrijving The description of the preparation step.
      * @return A new BereidingsStap object.
      */
@@ -31,8 +33,8 @@ public final class ReceptenFactory {
     /**
      * Creates a new Ingredient object.
      *
-     * @param id The id of the ingredient.
-     * @param product The product associated with the ingredient.
+     * @param id          The id of the ingredient.
+     * @param product     The product associated with the ingredient.
      * @param hoeveelheid The quantity of the ingredient.
      * @return A new Ingredient object.
      */
@@ -43,8 +45,8 @@ public final class ReceptenFactory {
     /**
      * Creates a new Recept object.
      *
-     * @param id The id of the recipe.
-     * @param name The name of the recipe.
+     * @param id           The id of the recipe.
+     * @param name         The name of the recipe.
      * @param beschrijving The description of the recipe.
      * @return A new Recept object.
      */

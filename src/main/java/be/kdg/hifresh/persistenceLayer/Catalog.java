@@ -6,7 +6,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Predicate;
 
 /**
  * An abstract class that represents a catalog of objects of type T.
@@ -47,7 +46,8 @@ public abstract class Catalog<T> {
     public T get(int index) {
         return this.list.get(index);
     }
-    public List<T> getAll(){
+
+    public List<T> getAll() {
         return new ArrayList<>(list);
     }
 
@@ -72,7 +72,7 @@ public abstract class Catalog<T> {
     public int indexById(int objId) throws InvocationTargetException, IllegalAccessException {
         for (T t : list) {
             for (Method m : t.getClass().getDeclaredMethods()) {
-                if (m.getName().equals("getId")) {
+                if (m.getName().equals("getID")) {
                     if ((int) m.invoke(t) == objId) {
                         return list.indexOf(t);
                     }
@@ -84,11 +84,11 @@ public abstract class Catalog<T> {
 
     public List<T> getByName(String name) throws InvocationTargetException, IllegalAccessException {
         List<T> filtered = new ArrayList<>();
-        for (T t: list){
+        for (T t : list) {
             for (Method m : t.getClass().getDeclaredMethods()) {
-                if (m.getName().equals("getName")){
+                if (m.getName().equals("getNAME")) {
                     String result = (String) m.invoke(t);
-                    if (result.toUpperCase().contains(name.toUpperCase())){
+                    if (result.toUpperCase().contains(name.toUpperCase())) {
                         filtered.add(t);
                     }
                 }

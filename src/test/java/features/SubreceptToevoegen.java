@@ -25,7 +25,7 @@ public class SubreceptToevoegen {
     @Then("heeft recept {int} een subrecept met id {int}")
     public void heeftReceptEenSubreceptMetId(int arg0, int arg1) {
         try {
-            assertEquals(arg1, Controller.getRecept(arg0).getSubrecepten().get(0).getId());
+            assertEquals(arg1, Controller.getRecept(arg0).getSUB_RECEPTEN().get(0).getID());
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
@@ -35,7 +35,7 @@ public class SubreceptToevoegen {
     @And("recept {int} is een subrecept van recept {int}")
     public void receptIsEenSubreceptVanRecept(int arg0, int arg1) {
         try {
-            assertEquals(arg1, Controller.getRecept(arg0).getSuperRecepten().get(0).getId());
+            assertEquals(arg1, Controller.getRecept(arg0).getSUPER_RECEPTEN().get(0).getID());
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
