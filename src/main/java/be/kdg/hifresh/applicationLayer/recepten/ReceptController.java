@@ -76,14 +76,15 @@ public final class ReceptController {
      * @throws InvocationTargetException if the underlying method throws an exception
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) throws InvocationTargetException, IllegalAccessException {
         return manager.getById(
                 receptId,
                 manager.getReceptCataloog()
         ).addSubrecept(
                 manager.getById(
                         subReceptId,
-                        manager.getReceptCataloog())
+                        manager.getReceptCataloog()),
+                stap
         );
     }
 

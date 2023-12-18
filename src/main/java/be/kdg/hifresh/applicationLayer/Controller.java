@@ -88,8 +88,8 @@ public final class Controller {
      * @throws InvocationTargetException if the called method throws an exception.
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.addSubreceptToRecept(subReceptId, receptId);
+    public static boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) throws InvocationTargetException, IllegalAccessException {
+        return ReceptController.addSubreceptToRecept(subReceptId, receptId, stap);
     }
 
     /**

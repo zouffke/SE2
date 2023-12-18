@@ -5,6 +5,7 @@ import be.kdg.hifresh.businessLayer.aankoop.Product;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.jupiter.api.Assertions;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
@@ -20,7 +21,7 @@ public class IngredientZoeken {
         try {
             products = Controller.getProductsByName(arg0);
         } catch (InvocationTargetException | IllegalAccessException e) {
-            throw new RuntimeException(e);
+            Assertions.fail(e);
         }
     }
 

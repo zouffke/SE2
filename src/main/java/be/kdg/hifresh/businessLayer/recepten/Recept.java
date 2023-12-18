@@ -1,13 +1,12 @@
 package be.kdg.hifresh.businessLayer.recepten;
 
-import be.kdg.hifresh.businessLayer.verkoop.*;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.time.Duration;
-import java.util.*;
-import be.kdg.hifresh.businessLayer.util.*;
+import be.kdg.hifresh.businessLayer.util.Label;
+import be.kdg.hifresh.businessLayer.verkoop.Maaltijd;
 import lombok.Getter;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a recipe for preparing a dish.
@@ -25,6 +24,8 @@ public class Recept {
      */
     @Getter
     private List<Recept> subrecepten;
+    @Getter
+    private List<Recept> superRecepten;
 
     /**
      * The list of ingredients needed for this recipe.
@@ -88,6 +89,8 @@ public class Recept {
         this.id = id;
         this.beschrijving = beschrijving;
         this.stappen = new ArrayList<>();
+        subrecepten = new ArrayList<>();
+        this.superRecepten = new ArrayList<>();
     }
     //endregion
 
@@ -97,12 +100,19 @@ public class Recept {
      * @param recept The sub-recipe to be added.
      * @return true if the sub-recipe was added successfully, false otherwise.
      */
-    public boolean addSubrecept(Recept recept){
-        if (subrecepten == null) {
-            subrecepten = new ArrayList<>();
+    public boolean addSubrecept(Recept recept, int stap){
+        List<BereidingsStap> subStappen = recept.getStappen();
+        if (!subStappen.isEmpty()){
+            for (int i = 0; i < subStappen.size(); i++){
+                this.stappen.add(stap + i, subStappen.get(i));
+            }
         }
-
+        recept.addSuperRecept(this);
         return subrecepten.add(recept);
+    }
+
+    private void addSuperRecept(Recept recept){
+        this.superRecepten.add(recept);
     }
 
     /**

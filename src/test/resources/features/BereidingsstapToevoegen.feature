@@ -79,11 +79,11 @@ Feature: Bereidingsstap toevoegen aan recept
 
     Scenario: Bereidingsstap toevoegen aan recept
         When ik een bereidingsstap "Stap 4" "Klop de eieren los" toevoeg aan recept met id 1
-        Then heeft het recept 1 3 bereidingsstappen
+        Then heeft het recept 1, 3 bereidingsstappen
         And de laatste bereidingstap voor recept 1 heeft beschrijving "Klop de eieren los"
 
     Scenario: Bereidingsstap tussenvoegen aan recept
         When ik een bereidingsstap "Stap 4" "Klop de eieren los" toevoeg aan recept met id 1 na stap 2
-        Then heeft het recept 1 3 bereidingsstappen
+        Then heeft het recept 1, 3 bereidingsstappen
         And de bereidingsstap 2 voor recept 1 heeft beschrijving "stap 2"
         And de bereidingsstap 3 voor recept 1 heeft beschrijving "Klop de eieren los"

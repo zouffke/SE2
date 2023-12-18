@@ -108,7 +108,8 @@ public class Givens {
             try {
                 assertTrue(Controller.addSubreceptToRecept(
                         Integer.parseInt(row.get("recept_id")),
-                        Integer.parseInt(row.get("is_subrecept_van")))
+                        Integer.parseInt(row.get("is_subrecept_van")),
+                        Integer.parseInt(row.get("invoegen_na_stap")))
                 );
             } catch (InvocationTargetException | IllegalAccessException e) {
                 Assertions.fail(e);

@@ -27,7 +27,7 @@ public class BereidingsStapToevoegen {
         }
     }
 
-    @Then("heeft het recept {int} {int} bereidingsstappen")
+    @Then("heeft het recept {int}, {int} bereidingsstappen")
     public void heeftHetReceptBereidingsstappen(int arg0, int arg1) {
         try {
             assertEquals(arg1, Controller.getRecept(arg0).getStappen().size());

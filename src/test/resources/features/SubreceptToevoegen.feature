@@ -45,11 +45,6 @@ Feature: Een subrecept toevoegen aan een recept
             | 4                 | stap 2 Lasagne           | Zet op een zacht vuurtje gedurende 5 minuten | 3         | 2          | -              |
             | 5                 | stap 1 Bechamelsaus      | Maak de bechamelsaus, zoek online op         | 4         | 1          | 5,6            |
 
-        Given subrecepten
-            | recept_id | is_subrecept_van | invoegen_na_stap |
-            | 4         | 3                | 1                |
-
-
         Given contract
             | contract_id | product_id | leverancier_id | distributiecentrum_id |
             | 1           | 1          | 1              | 1                     |
@@ -84,7 +79,7 @@ Feature: Een subrecept toevoegen aan een recept
     Scenario: Subrecept toevoegen aan recept
         When ik het recept 4 toevoeg aan recept met id 3 na stap 1
         Then heeft recept 3 een subrecept met id 4
-        And heeft recept 3 heeft 3 bereidingsstappen
+        And heeft het recept 3, 3 bereidingsstappen
         And de bereidingsstap 1 voor recept 3 heeft beschrijving "Doe de kaas in de pan"
         And de bereidingsstap 2 voor recept 3 heeft beschrijving "Maak de bechamelsaus, zoek online op"
         And de bereidingsstap 3 voor recept 3 heeft beschrijving "Zet op een zacht vuurtje gedurende 5 minuten"
