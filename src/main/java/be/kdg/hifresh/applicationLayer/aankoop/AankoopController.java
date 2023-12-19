@@ -9,7 +9,7 @@ import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
 import be.kdg.hifresh.businessLayer.domain.util.Munt;
 import be.kdg.hifresh.businessLayer.domain.util.UtilFactory;
 import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
-import be.kdg.hifresh.businessLayer.services.aankoop.IProductSuggestionsStrat;
+import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;

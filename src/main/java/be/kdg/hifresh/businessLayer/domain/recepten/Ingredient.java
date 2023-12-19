@@ -31,6 +31,8 @@ public class Ingredient {
      * The id of this ingredient.
      */
     private final int ID;
+
+    private final int RECEPT_ID;
     //endregion
     //region constructors
 
@@ -41,11 +43,12 @@ public class Ingredient {
      * @param product     The product associated with the ingredient.
      * @param hoeveelheid The quantity of the ingredient.
      */
-    Ingredient(int id, Product product, double hoeveelheid, Eenheid eenheid) {
+    Ingredient(int id, Product product, double hoeveelheid, Eenheid eenheid, int receptId) {
         this.ID = id;
         this.PRODUCT = product;
         this.HOEVEELHEID = hoeveelheid;
         this.EENHEID = eenheid;
+        this.RECEPT_ID = receptId;
     }
     //endregion
 }

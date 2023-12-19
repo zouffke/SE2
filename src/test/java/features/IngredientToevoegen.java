@@ -33,7 +33,7 @@ public class IngredientToevoegen {
     @Then("heeft het recept {int}, {int} ingredienten")
     public void heeftHetReceptIngredienten(int arg0, int arg1) {
         try {
-            assertEquals(arg1, Controller.getRecept(arg0).getIngredienten().size());
+            assertEquals(arg1, Controller.getRecept(arg0).getINGREDIENTEN().size());
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
@@ -42,7 +42,7 @@ public class IngredientToevoegen {
     @And("een van de ingredienten van recept {int} is product {int} met hoeveelheid {double} {string}")
     public void eenVanDeIngredientenVanReceptIsProductMetHoeveelheid(int arg0, int arg1, double arg2, String arg3) {
         try {
-            List<Ingredient> ingredients = Controller.getRecept(arg0).getIngredienten();
+            List<Ingredient> ingredients = Controller.getRecept(arg0).getINGREDIENTEN();
 
             for (Ingredient ingredient : ingredients) {
                 if (ingredient.getPRODUCT().getID() == 2) {

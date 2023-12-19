@@ -54,7 +54,7 @@ public final class GemiddeldeAankoopPrijs {
      * @param product The product for which to calculate the average weekly purchase price.
      * @return The average weekly purchase price.
      */
-    static Munt getGemiddeldeWeekAankoopPrijs(LocalDate date, Product product) {
+   public static Munt getGemiddeldeWeekAankoopPrijs(LocalDate date, Product product) {
         double bedrag = 0;
         double days = 0;
 
@@ -84,7 +84,7 @@ public final class GemiddeldeAankoopPrijs {
      * @param product The product for which to calculate the average yearly purchase price.
      * @return The average yearly purchase price.
      */
-    static Munt getGemiddeldeJaarAankoopPrijs(LocalDate date, Product product) {
+    public static Munt getGemiddeldeJaarAankoopPrijs(LocalDate date, Product product) {
         double bedrag = 0;
         double weeks = 0;
 

@@ -26,8 +26,8 @@ public final class ReceptenFactory {
      * @param beschrijving The description of the preparation step.
      * @return A new BereidingsStap object.
      */
-    public static BereidingsStap createBereidingsStap(int id, String name, String beschrijving) {
-        return new BereidingsStap(name, beschrijving, id);
+    public static BereidingsStap createBereidingsStap(int id, String name, String beschrijving, int volgnummer) {
+        return new BereidingsStap(name, beschrijving, id, volgnummer);
     }
 
     /**
@@ -38,8 +38,8 @@ public final class ReceptenFactory {
      * @param hoeveelheid The quantity of the ingredient.
      * @return A new Ingredient object.
      */
-    public static Ingredient createIngredient(int id, Product product, double hoeveelheid, Eenheid eenheid) {
-        return new Ingredient(id, product, hoeveelheid, eenheid);
+    public static Ingredient createIngredient(int id, Product product, double hoeveelheid, Eenheid eenheid, int receptId) {
+        return new Ingredient(id, product, hoeveelheid, eenheid, receptId);
     }
 
     /**

@@ -100,7 +100,7 @@ public final class ReceptController {
      * @throws InvocationTargetException if the underlying method throws an exception
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static boolean addIngredientToRecept(int ingrId, Product product, int receptId, double amt, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addIngredientToRecept(int ingrId, Product product, int receptId, double amt, Eenheid eenheid, int receptId) throws InvocationTargetException, IllegalAccessException {
         return manager.getById(
                         receptId,
                         manager.getReceptCataloog())
@@ -109,7 +109,8 @@ public final class ReceptController {
                                 ingrId,
                                 product,
                                 amt,
-                                eenheid
+                                eenheid,
+                                receptId
                         )
                 );
     }
@@ -128,7 +129,7 @@ public final class ReceptController {
         addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, manager.getById(receptId, manager.getReceptCataloog()).getNextVolgnummer());
     }
 
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volnummer) throws InvocationTargetException, IllegalAccessException {
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) throws InvocationTargetException, IllegalAccessException {
         Recept recept = manager.getById(
                 receptId,
                 manager.getReceptCataloog());
@@ -137,9 +138,9 @@ public final class ReceptController {
                 ReceptenFactory.createBereidingsStap(
                         stapId,
                         stapName,
-                        stapBesch
-                ),
-                volnummer
+                        stapBesch,
+                        volgnummer
+                )
         );
     }
 

@@ -68,7 +68,7 @@ public class ReceptManager extends Manager {
             }
         }
 
-        ingredients.addAll(super.getById(receptId, receptCataloog).getIngredienten());
+        ingredients.addAll(super.getById(receptId, receptCataloog).getINGREDIENTEN());
 
         return ingredients;
     }

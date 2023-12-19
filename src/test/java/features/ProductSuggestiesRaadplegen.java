@@ -2,7 +2,7 @@ package features;
 
 import be.kdg.hifresh.applicationLayer.Controller;
 import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
-import be.kdg.hifresh.businessLayer.services.aankoop.PercentDiffProductSuggestionsStrat;
+import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.PercentDiffProductSuggestionsStrat;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

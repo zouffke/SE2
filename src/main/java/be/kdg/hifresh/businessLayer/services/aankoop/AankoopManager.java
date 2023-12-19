@@ -5,8 +5,7 @@ import be.kdg.hifresh.businessLayer.domain.aankoop.DistributieCentrum;
 import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
 import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.domain.util.Munt;
-import be.kdg.hifresh.businessLayer.domain.util.PrijsAfspraak;
-import be.kdg.hifresh.businessLayer.domain.util.UtilFactory;
+import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
 import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.businessLayer.services.Manager;
 import be.kdg.hifresh.persistenceLayer.aankoop.ContractCataloog;
@@ -15,7 +14,6 @@ import be.kdg.hifresh.persistenceLayer.aankoop.ProductCataloog;
 import lombok.Getter;
 
 import java.lang.reflect.InvocationTargetException;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 

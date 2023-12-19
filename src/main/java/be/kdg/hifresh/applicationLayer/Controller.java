@@ -8,7 +8,7 @@ import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
 import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
 import be.kdg.hifresh.businessLayer.domain.util.Munt;
 import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
-import be.kdg.hifresh.businessLayer.services.aankoop.IProductSuggestionsStrat;
+import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
 import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
 import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import lombok.Getter;
@@ -115,7 +115,7 @@ public final class Controller {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.addIngredientToRecept(ingrId, AankoopController.getProduct(prodId), receptId, amt, eenheid);
+        return ReceptController.addIngredientToRecept(ingrId, AankoopController.getProduct(prodId), receptId, amt, eenheid, receptId);
     }
 
     /**

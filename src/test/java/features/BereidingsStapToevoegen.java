@@ -40,7 +40,7 @@ public class BereidingsStapToevoegen {
     public void deLaatsteBereidingstapVoorReceptHeeftBeschrijving(int arg0, String arg1) {
         try {
             Recept recept = Controller.getRecept(arg0);
-            assertEquals(arg1, recept.getBereidingStap(recept.getSTAPPEN().size()).getBESCHRIJVING());
+            assertEquals(arg1, recept.getBereidingStap(recept.getStappen().size()).getBESCHRIJVING());
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }

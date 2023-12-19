@@ -1,4 +1,4 @@
-package be.kdg.hifresh.businessLayer.services.aankoop;
+package be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions;
 
 import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
 
