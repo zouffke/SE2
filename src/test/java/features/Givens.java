@@ -1,10 +1,10 @@
 package features;
 
 import be.kdg.hifresh.applicationLayer.Controller;
-import be.kdg.hifresh.businessLayer.util.Eenheid;
-import be.kdg.hifresh.persistenceLayer.aankoop.AankoopManager;
-import be.kdg.hifresh.persistenceLayer.gebruiker.GebruikerManager;
-import be.kdg.hifresh.persistenceLayer.recepten.ReceptManager;
+import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
+import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
+import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
+import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import org.junit.jupiter.api.Assertions;

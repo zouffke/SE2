@@ -1,14 +1,15 @@
 package be.kdg.hifresh.applicationLayer.aankoop;
 
-import be.kdg.hifresh.businessLayer.aankoop.AankoopFactory;
-import be.kdg.hifresh.businessLayer.aankoop.Contract;
-import be.kdg.hifresh.businessLayer.aankoop.Product;
-import be.kdg.hifresh.businessLayer.gebruiker.Leverancier;
-import be.kdg.hifresh.businessLayer.recepten.Ingredient;
-import be.kdg.hifresh.businessLayer.util.Eenheid;
-import be.kdg.hifresh.businessLayer.util.Munt;
-import be.kdg.hifresh.businessLayer.util.UtilFactory;
-import be.kdg.hifresh.persistenceLayer.aankoop.AankoopManager;
+import be.kdg.hifresh.businessLayer.domain.aankoop.AankoopFactory;
+import be.kdg.hifresh.businessLayer.domain.aankoop.Contract;
+import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
+import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
+import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
+import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
+import be.kdg.hifresh.businessLayer.domain.util.Munt;
+import be.kdg.hifresh.businessLayer.domain.util.UtilFactory;
+import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
+import be.kdg.hifresh.businessLayer.services.aankoop.IProductSuggestionsStrat;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -153,8 +154,8 @@ public final class AankoopController {
      * @param date Date
      * @return List of product suggestions
      */
-    public static List<Product> getProductSuggesties(LocalDate date) {
-        return manager.getProductSuggesties(date);
+    public static List<Product> getProductSuggesties(IProductSuggestionsStrat productSuggestionsStrat,LocalDate date) {
+        return manager.getProductSuggesties(productSuggestionsStrat, date);
     }
 
     public static List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {

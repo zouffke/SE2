@@ -1,7 +1,8 @@
 package features;
 
 import be.kdg.hifresh.applicationLayer.Controller;
-import be.kdg.hifresh.businessLayer.aankoop.Product;
+import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
+import be.kdg.hifresh.businessLayer.services.aankoop.PercentDiffProductSuggestionsStrat;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -15,7 +16,7 @@ public class ProductSuggestiesRaadplegen {
 
     @When("ik de suggesties raadpleeg")
     public void ikDeSuggestiesRaadpleeg() {
-        products = Controller.getProductSuggesties(Controller.getToday());
+        products = Controller.getProductSuggesties(new PercentDiffProductSuggestionsStrat(), Controller.getToday());
     }
 
     @Then("krijg ik een lijst van {int} producten, gesorteerd op wekelijkse gemiddelde aankoopprijs")

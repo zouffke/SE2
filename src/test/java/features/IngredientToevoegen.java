@@ -1,8 +1,8 @@
 package features;
 
 import be.kdg.hifresh.applicationLayer.Controller;
-import be.kdg.hifresh.businessLayer.recepten.Ingredient;
-import be.kdg.hifresh.businessLayer.util.Eenheid;
+import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
+import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;

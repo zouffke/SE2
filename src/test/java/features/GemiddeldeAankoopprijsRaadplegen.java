@@ -1,7 +1,7 @@
 package features;
 
 import be.kdg.hifresh.applicationLayer.Controller;
-import be.kdg.hifresh.businessLayer.util.Munt;
+import be.kdg.hifresh.businessLayer.domain.util.Munt;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.jupiter.api.Assertions;

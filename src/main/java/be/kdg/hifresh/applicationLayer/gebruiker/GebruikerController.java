@@ -1,8 +1,8 @@
 package be.kdg.hifresh.applicationLayer.gebruiker;
 
-import be.kdg.hifresh.businessLayer.gebruiker.GebruikerFactory;
-import be.kdg.hifresh.businessLayer.gebruiker.Leverancier;
-import be.kdg.hifresh.persistenceLayer.gebruiker.GebruikerManager;
+import be.kdg.hifresh.businessLayer.domain.gebruiker.GebruikerFactory;
+import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
+import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;

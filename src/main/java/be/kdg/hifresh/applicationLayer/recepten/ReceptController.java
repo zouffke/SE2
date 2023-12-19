@@ -1,12 +1,13 @@
 package be.kdg.hifresh.applicationLayer.recepten;
 
-import be.kdg.hifresh.businessLayer.aankoop.Product;
-import be.kdg.hifresh.businessLayer.recepten.BereidingsStap;
-import be.kdg.hifresh.businessLayer.recepten.Ingredient;
-import be.kdg.hifresh.businessLayer.recepten.Recept;
-import be.kdg.hifresh.businessLayer.recepten.ReceptenFactory;
-import be.kdg.hifresh.businessLayer.util.Eenheid;
-import be.kdg.hifresh.persistenceLayer.recepten.ReceptManager;
+import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
+import be.kdg.hifresh.businessLayer.domain.recepten.BereidingsStap;
+import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
+import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
+import be.kdg.hifresh.businessLayer.domain.recepten.ReceptenFactory;
+import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
+import be.kdg.hifresh.businessLayer.services.IManager;
+import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;

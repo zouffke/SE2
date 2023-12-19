@@ -1,7 +1,7 @@
 package features;
 
 import be.kdg.hifresh.applicationLayer.Controller;
-import be.kdg.hifresh.businessLayer.recepten.Recept;
+import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
