@@ -54,21 +54,8 @@ public class ReceptManager extends Manager {
      *
      * @param receptId Recipe ID
      * @return List of ingredients
-     * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
-        Recept recept = super.getById(receptId, receptCataloog);
-        List<Ingredient> ingredients = new ArrayList<>();
-        List<Recept> subRecepts = recept.getSubrecepts();
-
-        if (!subRecepts.isEmpty()){
-            for (Recept subRecept : subRecepts){
-                ingredients.addAll(this.getAllIngredients(subRecept.getID()));
-            }
-        }
-
-        ingredients.addAll(recept.getIngredients());
-        return ingredients;
+    public List<Ingredient> getAllIngredients(int receptId) {
+        return super.getById(receptId, receptCataloog).getIngredients();
     }
 }

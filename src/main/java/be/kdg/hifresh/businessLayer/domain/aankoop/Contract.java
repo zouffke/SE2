@@ -2,11 +2,14 @@ package be.kdg.hifresh.businessLayer.domain.aankoop;
 
 import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
 import be.kdg.hifresh.businessLayer.domain.util.PrijsAfspraak;
+import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
 import lombok.Getter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a contract between HiFresh and a supplier for the delivery of products.
@@ -33,6 +36,7 @@ public class Contract {
     private final List<Clausule> CLAUSULES;
     @Getter
     private final int ID;
+    private final MessageBroker messageBroker;
     //endregion
 
     //region constructors
@@ -42,7 +46,7 @@ public class Contract {
      *
      * @param product The product associated with the contract.
      */
-    Contract(int id, Product product, Leverancier leverancier, DistributieCentrum distributieCentrum) {
+    Contract(int id, Product product, Leverancier leverancier, DistributieCentrum distributieCentrum, MessageBroker messageBroker) {
         this.PRODUCT = product;
         product.addContract(this);
         this.CLAUSULES = new ArrayList<>();
@@ -50,6 +54,7 @@ public class Contract {
         leverancier.addContract(this);
         this.DISTRIBUTIE_CENTRUM = distributieCentrum;
         this.ID = id;
+        this.messageBroker = messageBroker;
     }
     //endregion
 
@@ -59,7 +64,8 @@ public class Contract {
      * @param clausule The clause to be added.
      * @return true if the clause was added successfully, false otherwise.
      */
-    public boolean addClausule(Clausule clausule) {
+    public boolean addClausule(Clausule clausule) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+        messageBroker.send(LEVERANCIER, Map.of("getID", DISTRIBUTIE_CENTRUM.getID()), "Nieuw contract", String.format("Er is een nieuw contract toegevoegd voor %s", PRODUCT.getNAME()));
         return this.CLAUSULES.add(clausule);
     }
 

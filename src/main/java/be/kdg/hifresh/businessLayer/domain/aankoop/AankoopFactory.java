@@ -4,6 +4,7 @@ import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
 import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
 import be.kdg.hifresh.businessLayer.domain.util.Periode;
 import be.kdg.hifresh.businessLayer.domain.util.PrijsAfspraak;
+import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
 
 /**
  * A factory class for creating various objects related to purchases.
@@ -47,8 +48,8 @@ public final class AankoopFactory {
      * @return A new Contract object.
      * @author Dandois Luca
      */
-    public static Contract createContract(int id, Product product, Leverancier leverancier, DistributieCentrum distributieCentrum) {
-        return new Contract(id, product, leverancier, distributieCentrum);
+    public static Contract createContract(int id, Product product, Leverancier leverancier, DistributieCentrum distributieCentrum, MessageBroker messageBroker){
+        return new Contract(id, product, leverancier, distributieCentrum, messageBroker);
     }
 
     /**

@@ -4,6 +4,7 @@ import be.kdg.hifresh.applicationLayer.Controller;
 import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
 import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
 import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
+import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
 import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
@@ -18,6 +19,12 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Givens {
+    @BeforeAll
+    static void beforeAll() {
+        Controller.setMessageBroker(new MessageBroker());
+        Controller.setManagers(new AankoopManager(), new ReceptManager(), new GebruikerManager(Controller.getMessageBroker()));
+    }
+
     @Given("producten")
     public void producten(DataTable dataTable) {
         beforeAll();
@@ -25,11 +32,6 @@ public class Givens {
                 Integer.parseInt(r.get("product_id")),
                 r.get("product_naam"))
         ));
-    }
-
-    @BeforeAll
-    static void beforeAll() {
-        Controller.setManagers(new AankoopManager(), new ReceptManager(), new GebruikerManager());
     }
 
     @Given("distributiecentra")
@@ -154,7 +156,7 @@ public class Givens {
                         Eenheid.valueOf(r.get("eenheid").toUpperCase()),
                         Double.parseDouble(r.get("aankoopprijs"))
                 ));
-            } catch (InvocationTargetException | IllegalAccessException e) {
+            } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException e) {
                 Assertions.fail(e);
             }
         });

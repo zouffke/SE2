@@ -10,8 +10,10 @@ import be.kdg.hifresh.businessLayer.domain.util.Munt;
 import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
 import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
 import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
+import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
 import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
@@ -31,6 +33,9 @@ public final class Controller {
      */
     @Getter
     private static LocalDate today;
+    @Setter
+    @Getter
+    private static MessageBroker messageBroker;
 
     /**
      * Private constructor to prevent instantiation of this utility class.
@@ -146,7 +151,7 @@ public final class Controller {
      * @throws InvocationTargetException if the called method throws an exception.
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return AankoopController.addClausule(id, contractId, start, end, hoeveelheid, eenheid, bedrag);
     }
 
@@ -189,7 +194,8 @@ public final class Controller {
                 id,
                 productId,
                 GebruikerController.getLeverancier(leverancierId),
-                distributieCentrumId
+                distributieCentrumId,
+                messageBroker
         );
     }
 
