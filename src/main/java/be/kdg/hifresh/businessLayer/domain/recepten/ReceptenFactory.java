@@ -38,8 +38,8 @@ public final class ReceptenFactory {
      * @param hoeveelheid The quantity of the ingredient.
      * @return A new Ingredient object.
      */
-    public static Ingredient createIngredient(int id, Product product, double hoeveelheid, Eenheid eenheid, int receptId) {
-        return new Ingredient(id, product, hoeveelheid, eenheid, receptId);
+    public static Ingredient createIngredient(int id, Product product, double hoeveelheid, Eenheid eenheid) {
+        return new Ingredient(id, product, hoeveelheid, eenheid);
     }
 
     /**

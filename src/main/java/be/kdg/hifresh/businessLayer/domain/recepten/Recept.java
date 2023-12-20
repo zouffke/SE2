@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Represents a recipe for preparing a dish.
@@ -58,9 +59,26 @@ public class Recept extends Bereiding {
     }
 
     public List<BereidingsStap> getStappen() {
-        return BEREIDINGEN.stream()
-                .filter(bereiding -> bereiding instanceof BereidingsStap)
-                .map(bereiding -> (BereidingsStap) bereiding)
+        return Stream.concat(
+                        BEREIDINGEN.stream()
+                                .filter(BereidingsStap.class::isInstance)
+                                .map(BereidingsStap.class::cast),
+                        getSubrecepts().stream()
+                                .flatMap(subRecept -> subRecept.getStappen().stream())
+                )
+                .collect(Collectors.toList());
+    }
+
+    public BereidingsStap getStap(int volgnummer){
+        return getStappen().stream()
+                .filter(stap -> stap.getVolgNummer() == volgnummer)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Ingredient> getIngredients(){
+        return this.getStappen().stream()
+                .flatMap(stap -> stap.getINGREDIENTS().stream())
                 .collect(Collectors.toList());
     }
 
@@ -87,8 +105,8 @@ public class Recept extends Bereiding {
      * @param ingredient The ingredient to be added.
      * @return true if the ingredient was added successfully, false otherwise.
      */
-    public boolean addIngredient(Ingredient ingredient) {
-        return this.INGREDIENTEN.add(ingredient);
+    public boolean addIngredient(Ingredient ingredient, int volgnummer) {
+        return this.getStap(volgnummer).addIngredient(ingredient);
     }
 
     /**
@@ -107,15 +125,8 @@ public class Recept extends Bereiding {
      */
     public int getNextVolgnummer() {
         return this.getStappen().stream()
-                .map(BereidingsStap::getVolgNummer)
-                .max(Comparator.naturalOrder())
-                .orElse(1);
-    }
-
-    public BereidingsStap getBereidingStap(int volgnummer) {
-        return this.getStappen().stream()
-                .filter(s -> s.getVolgNummer() == volgnummer)
-                .findFirst()
-                .orElse(null);
+                .mapToInt(BereidingsStap::getVolgNummer)
+                .max()
+                .orElse(0) + 1;
     }
 }

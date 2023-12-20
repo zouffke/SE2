@@ -58,11 +58,9 @@ public abstract class Manager implements IManager {
      * @param catalog The catalog from which the index will be retrieved.
      * @param <T>     The type of the object.
      * @return The index of the object in the catalog.
-     * @throws InvocationTargetException if the underlying method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     @Override
-    public <T> int indexById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
+    public <T> int indexById(int objId, Catalog<T> catalog) {
         return catalog.indexById(objId);
     }
 
@@ -73,11 +71,9 @@ public abstract class Manager implements IManager {
      * @param catalog The catalog from which the object will be retrieved.
      * @param <T>     The type of the object.
      * @return The object with the specified ID.
-     * @throws InvocationTargetException if the underlying method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     @Override
-    public <T> T getById(int objId, Catalog<T> catalog) throws InvocationTargetException, IllegalAccessException {
+    public <T> T getById(int objId, Catalog<T> catalog) {
         return catalog.get(catalog.indexById(objId));
     }
 

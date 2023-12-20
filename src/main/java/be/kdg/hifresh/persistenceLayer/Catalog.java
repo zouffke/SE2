@@ -5,7 +5,10 @@ import lombok.Getter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * An abstract class that represents a catalog of objects of type T.
@@ -66,20 +69,23 @@ public abstract class Catalog<T> {
      *
      * @param objId The id of the object.
      * @return The index of the object with the specified id, or -1 if no such object is found.
-     * @throws InvocationTargetException if the underlying method getId throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public int indexById(int objId) throws InvocationTargetException, IllegalAccessException {
-        for (T t : list) {
-            for (Method m : t.getClass().getDeclaredMethods()) {
-                if (m.getName().equals("getID")) {
-                    if ((int) m.invoke(t) == objId) {
-                        return list.indexOf(t);
-                    }
-                }
-            }
-        }
-        return -1;
+    public int indexById(int objId) {
+        return IntStream.range(0, list.size())
+                .filter(i -> {
+                    T t = list.get(i);
+                    return Stream.concat(Arrays.stream(t.getClass().getDeclaredMethods()),
+                                    Stream.of(t.getClass().getSuperclass().getDeclaredMethods()))
+                            .anyMatch(m -> {
+                                try {
+                                    return m.getName().equals("getID") && (int) m.invoke(t) == objId;
+                                } catch (IllegalAccessException | InvocationTargetException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            });
+                })
+                .findFirst()
+                .orElse(-1);
     }
 
     public List<T> getByName(String name) throws InvocationTargetException, IllegalAccessException {

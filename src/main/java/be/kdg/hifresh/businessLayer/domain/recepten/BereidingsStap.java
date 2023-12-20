@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class BereidingsStap extends Bereiding {
     //region vars
-    private final List<Integer> INGREDIENT_IDS;
+    @Getter
+    private final List<Ingredient> INGREDIENTS;
 
     @Getter
     @Setter
@@ -27,11 +28,15 @@ public class BereidingsStap extends Bereiding {
      */
     BereidingsStap(String name, String beschrijving, int id, int volgNummer) {
         super(id, name, beschrijving);
-        this.INGREDIENT_IDS = new ArrayList<>();
+        this.INGREDIENTS = new ArrayList<>();
         this.volgNummer = volgNummer;
     }
 
-    public boolean addIngredient(int id) {
-        return this.INGREDIENT_IDS.add(id);
+    boolean addIngredient(Ingredient ingredient) {
+        return this.INGREDIENTS.add(ingredient);
+    }
+
+    public boolean addAllIngredients(List<Ingredient> ingredients){
+        return this.INGREDIENTS.addAll(ingredients);
     }
 }
