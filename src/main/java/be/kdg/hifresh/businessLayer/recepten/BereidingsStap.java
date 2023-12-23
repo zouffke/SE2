@@ -1,5 +1,8 @@
 package be.kdg.hifresh.businessLayer.recepten;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Represents a step in the preparation of a recipe.
  */
@@ -20,6 +23,7 @@ public class BereidingsStap {
      * The id of this preparation step.
      */
     private final int id;
+    private List<Integer> ingredient_ids;
     //endregion
     /**
      * Constructor for BereidingsStap.
@@ -32,5 +36,10 @@ public class BereidingsStap {
         this.naam = naam;
         this.beschrijving = beschrijving;
         this.id = id;
+        this.ingredient_ids = new ArrayList<>();
+    }
+
+    public boolean addIngredient(int id){
+        return this.ingredient_ids.add(id);
     }
 }

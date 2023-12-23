@@ -17,7 +17,8 @@ public class Contract {
     /**
      * The supplier associated with this contract.
      */
-    private Leverancier leverancier;
+    private final Leverancier leverancier;
+    private final DistributieCentrum distributieCentrum;
 
     /**
      * The product associated with this contract.
@@ -30,6 +31,8 @@ public class Contract {
      */
     @Getter
     private List<Clausule> clausules;
+    @Getter
+    private final int id;
     //endregion
 
     //region constructors
@@ -39,9 +42,14 @@ public class Contract {
      *
      * @param product The product associated with the contract.
      */
-    Contract(Product product) {
+    Contract(int id, Product product, Leverancier leverancier, DistributieCentrum distributieCentrum) {
         this.product = product;
         product.addContract(this);
+        this.clausules = new ArrayList<>();
+        this.leverancier = leverancier;
+        leverancier.addContract(this);
+        this.distributieCentrum = distributieCentrum;
+        this.id = id;
     }
     //endregion
 
@@ -52,10 +60,6 @@ public class Contract {
      * @return true if the clause was added successfully, false otherwise.
      */
     public boolean addClausule(Clausule clausule) {
-        if (this.clausules == null) {
-            this.clausules = new ArrayList<>();
-        }
-
         return this.clausules.add(clausule);
     }
 

@@ -1,10 +1,12 @@
 package be.kdg.hifresh.applicationLayer.recepten;
 
-import be.kdg.hifresh.persistenceLayer.recepten.ReceptManager;
 import be.kdg.hifresh.businessLayer.aankoop.Product;
+import be.kdg.hifresh.businessLayer.recepten.BereidingsStap;
 import be.kdg.hifresh.businessLayer.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.recepten.Recept;
 import be.kdg.hifresh.businessLayer.recepten.ReceptenFactory;
+import be.kdg.hifresh.businessLayer.util.Eenheid;
+import be.kdg.hifresh.persistenceLayer.recepten.ReceptManager;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -40,10 +42,11 @@ public final class ReceptController {
 
     /**
      * Retrieves all ingredients of a recipe by its ID
+     *
      * @param receptId Recipe ID
      * @return List of ingredients
      * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible
+     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public static List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
         return manager.getAllIngredients(receptId);
@@ -51,8 +54,9 @@ public final class ReceptController {
 
     /**
      * Adds a recipe to the catalog
-     * @param id Recipe ID
-     * @param name Recipe name
+     *
+     * @param id           Recipe ID
+     * @param name         Recipe name
      * @param beschrijving Recipe description
      * @return true if the recipe was added successfully, false otherwise
      */
@@ -65,11 +69,12 @@ public final class ReceptController {
 
     /**
      * Adds a sub-recipe to a recipe
+     *
      * @param subReceptId Sub-recipe ID
-     * @param receptId Recipe ID
+     * @param receptId    Recipe ID
      * @return true if the sub-recipe was added successfully, false otherwise
      * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible
+     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public static boolean addSubreceptToRecept(int subReceptId, int receptId) throws InvocationTargetException, IllegalAccessException {
         return manager.getObjFromCatalogById(
@@ -84,15 +89,16 @@ public final class ReceptController {
 
     /**
      * Adds an ingredient to a recipe
-     * @param ingrId Ingredient ID
-     * @param product Product object
+     *
+     * @param ingrId   Ingredient ID
+     * @param product  Product object
      * @param receptId Recipe ID
-     * @param amt Amount
+     * @param amt      Amount
      * @return true if the ingredient was added successfully, false otherwise
      * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible
+     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static boolean addIngredientToRecept(int ingrId, Product product, int receptId, double amt) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addIngredientToRecept(int ingrId, Product product, int receptId, double amt, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
         return manager.getObjFromCatalogById(
                         receptId,
                         manager.getReceptCataloog())
@@ -100,19 +106,21 @@ public final class ReceptController {
                         ReceptenFactory.createIngredient(
                                 ingrId,
                                 product,
-                                amt
+                                amt,
+                                eenheid
                         )
                 );
     }
 
     /**
      * Adds a preparation step to a recipe
-     * @param receptId Recipe ID
-     * @param stapId Step ID
-     * @param stapName Step name
+     *
+     * @param receptId  Recipe ID
+     * @param stapId    Step ID
+     * @param stapName  Step name
      * @param stapBesch Step description
      * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible
+     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) throws InvocationTargetException, IllegalAccessException {
         Recept recept = manager.getObjFromCatalogById(
@@ -129,5 +137,12 @@ public final class ReceptController {
         );
     }
 
+    public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) throws InvocationTargetException, IllegalAccessException {
+        BereidingsStap bereidingsStap = manager.getObjFromCatalogById(receptId, manager.getReceptCataloog()).getBereidingStap(volgNummer);
+
+        for (Integer id : ingredientIds){
+            bereidingsStap.addIngredient(id);
+        }
+    }
     //endregion
 }

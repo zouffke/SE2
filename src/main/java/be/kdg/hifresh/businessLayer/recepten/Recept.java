@@ -123,10 +123,6 @@ public class Recept {
      * @param volgnummer The position at which the preparation step will be added.
      */
     public void addBereidingsStap(BereidingsStap stap, int volgnummer){
-        if (this.stappen == null){
-            this.stappen = new ArrayList<>();
-        }
-
         this.stappen.add(volgnummer - 1, stap);
     }
 
@@ -146,5 +142,9 @@ public class Recept {
      */
     public int getNextVolgnummer(){
         return this.stappen.size() + 1;
+    }
+
+    public BereidingsStap getBereidingStap(int volnummer){
+        return this.stappen.get(volnummer - 1);
     }
 }

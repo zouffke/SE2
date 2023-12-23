@@ -1,14 +1,17 @@
 package be.kdg.hifresh.persistenceLayer.aankoop;
 
-import be.kdg.hifresh.persistenceLayer.Manager;
-import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.ContractCataloog;
-import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.DistributieCentraCataloog;
 import be.kdg.hifresh.businessLayer.aankoop.Contract;
+import be.kdg.hifresh.businessLayer.aankoop.DistributieCentrum;
 import be.kdg.hifresh.businessLayer.aankoop.Product;
 import be.kdg.hifresh.businessLayer.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.util.Munt;
 import be.kdg.hifresh.businessLayer.util.PrijsAfspraak;
 import be.kdg.hifresh.businessLayer.util.UtilFactory;
+import be.kdg.hifresh.persistenceLayer.Catalog;
+import be.kdg.hifresh.persistenceLayer.Manager;
+import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.ContractCataloog;
+import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.DistributieCentraCataloog;
+import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.ProductCataloog;
 import lombok.Getter;
 
 import java.time.DayOfWeek;
@@ -27,18 +30,19 @@ import java.util.Map;
  * @author Dandois Luca
  */
 @Getter
-public class ContractManager extends Manager {
+public class AankoopManager extends Manager {
 
     //region vars
     /**
      * Catalog of contracts.
      */
-    private final ContractCataloog contractCataloog;
+    private final Catalog<Contract> contractCataloog;
 
     /**
      * Catalog of distribution centers.
      */
-    private final DistributieCentraCataloog dcCataloog;
+    private final Catalog<DistributieCentrum> dcCataloog;
+    private final Catalog<Product> productCatalog;
     //endregion
 
     //region constructors
@@ -49,9 +53,10 @@ public class ContractManager extends Manager {
      *
      * @author Dandois Luca
      */
-    public ContractManager() {
+    public AankoopManager() {
         this.contractCataloog = new ContractCataloog();
         this.dcCataloog = new DistributieCentraCataloog();
+        this.productCatalog = new ProductCataloog();
     }
     //endregion
 
