@@ -63,10 +63,8 @@ public final class AankoopController {
      *
      * @param prodId Product ID
      * @return Product object
-     * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static Product getProduct(int prodId) throws InvocationTargetException, IllegalAccessException {
+    public static Product getProduct(int prodId) {
         return manager.getById(
                 prodId,
                 manager.getPRODUCT_CATALOG());

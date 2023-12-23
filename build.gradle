@@ -1,16 +1,17 @@
 plugins {
     id 'java'
     id 'idea'
-    id "com.appland.appmap" version "1.2.0"
+    id 'org.springframework.boot' version '3.0.0'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
 group = 'be.kdg.cuke'
-version = '1.0.0'
+
 sourceCompatibility = '17'
 targetCompatibility = '17'
 def cucumberVersion = "7.5.0"
 def jUnitVersion = "5.9.1"
-
+version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
@@ -19,6 +20,8 @@ repositories {
 dependencies {
     testImplementation "io.cucumber:cucumber-java:${cucumberVersion}"
     testImplementation "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-junit:${cucumberVersion}"
+    testImplementation "io.cucumber:cucumber-spring:${cucumberVersion}"
 
     testImplementation "org.junit.platform:junit-platform-suite:1.9.0"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${jUnitVersion}"
@@ -32,36 +35,18 @@ dependencies {
     testImplementation 'io.cucumber:cucumber-java:6.10.4'
     testImplementation 'io.cucumber:cucumber-junit:6.10.4'
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'com.appland:appmap-agent:1.8.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 test {
     useJUnitPlatform()
     testLogging {
-        events "passed", "skipped", "failed"
         exceptionFormat = 'full'
         showStandardStreams = true
     }
-    ignoreFailures = true
+    ignoreFailures=true
 }
 
-/*
-appmap {
-    configFile = file("$projectDir/appmap.yml")
-    outputDirectory = file("$buildDir/appmap")
-    skip = false
-    debug = "info"
-    debugFile = file("$buildDir/appmap/agent.log")
-    eventValueSize = 1024
-}
-
-tasks.register('cucumber') {
-    dependsOn assemble, compileTestJava
-    doLast {
-        javaexec {
-            main = "io.cucumber.core.cli.Main"
-            classpath = configurations.cucumberRuntime + sourceSets.main.output + sourceSets.test.output
-            args = ['--plugin', 'pretty', '--glue', 'be.kdg.hifresh', 'src/test/resources']
-        }
-    }
-}*/

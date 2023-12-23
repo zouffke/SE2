@@ -5,26 +5,26 @@ import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
+@CucumberContextConfiguration
 public class BereidingsStapToevoegen {
 
     @When("ik een bereidingsstap {string} {string} toevoeg aan recept met id {int}")
     public void ikEenBereidingsstapToevoegAanReceptMetId(String arg0, String arg1, int arg2) {
-        try {
-            Controller.addBereidingsStapToRecept(
-                    arg2,
-                    6,
-                    arg0,
-                    arg1
-            );
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            Assertions.fail(e);
-        }
+        Controller.addBereidingsStapToRecept(
+                arg2,
+                6,
+                arg0,
+                arg1
+        );
     }
 
     @Then("heeft het recept {int}, {int} bereidingsstappen")

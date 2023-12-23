@@ -50,20 +50,6 @@ public abstract class Catalog<T> {
         return this.list.get(index);
     }
 
-    public List<T> getAll() {
-        return new ArrayList<>(list);
-    }
-
-    /**
-     * Returns the index of the specified object in the catalog.
-     *
-     * @param obj The object whose index is to be returned.
-     * @return The index of the object, or -1 if the object is not found.
-     */
-    public int indexOf(T obj) {
-        return this.list.indexOf(obj);
-    }
-
     /**
      * Returns the index of the object with the specified id in the catalog.
      *

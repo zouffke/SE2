@@ -2,11 +2,9 @@ package be.kdg.hifresh.businessLayer.domain.recepten;
 
 import be.kdg.hifresh.businessLayer.domain.util.Label;
 import be.kdg.hifresh.businessLayer.domain.verkoop.Maaltijd;
-import lombok.Getter;
 
 import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -21,18 +19,22 @@ public class Recept extends Bereiding {
     /**
      * The meal associated with this recipe.
      */
+    @SuppressWarnings("unused")
     private Maaltijd maaltijd;
     /**
      * The list of labels associated with this recipe.
      */
+    @SuppressWarnings("unused")
     private List<Label> labels;
     /**
      * The time required to prepare this recipe.
      */
+    @SuppressWarnings("unused")
     private Duration bereidingstijd;
     /**
      * The photo of this recipe.
      */
+    @SuppressWarnings("unused")
     private String foto;
     //endregion
 
@@ -103,10 +105,9 @@ public class Recept extends Bereiding {
      * Adds an ingredient to the list of ingredients needed for this recipe.
      *
      * @param ingredient The ingredient to be added.
-     * @return true if the ingredient was added successfully, false otherwise.
      */
-    public boolean addIngredient(Ingredient ingredient, int volgnummer) {
-        return this.getStap(volgnummer).addIngredient(ingredient);
+    public void addIngredient(Ingredient ingredient, int volgnummer) {
+        this.getStap(volgnummer).addIngredient(ingredient);
     }
 
     /**

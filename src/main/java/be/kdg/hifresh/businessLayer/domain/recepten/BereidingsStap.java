@@ -9,12 +9,11 @@ import java.util.List;
 /**
  * Represents a step in the preparation of a recipe.
  */
+@Getter
 public class BereidingsStap extends Bereiding {
     //region vars
-    @Getter
     private final List<Ingredient> INGREDIENTS;
 
-    @Getter
     @Setter
     private int volgNummer;
     //endregion
@@ -32,11 +31,8 @@ public class BereidingsStap extends Bereiding {
         this.volgNummer = volgNummer;
     }
 
-    boolean addIngredient(Ingredient ingredient) {
-        return this.INGREDIENTS.add(ingredient);
+    void addIngredient(Ingredient ingredient) {
+        this.INGREDIENTS.add(ingredient);
     }
 
-    public boolean addAllIngredients(List<Ingredient> ingredients){
-        return this.INGREDIENTS.addAll(ingredients);
-    }
 }

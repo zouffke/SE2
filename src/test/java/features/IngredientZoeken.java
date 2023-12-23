@@ -5,7 +5,9 @@ import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
@@ -13,6 +15,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
+@CucumberContextConfiguration
 public class IngredientZoeken {
     private List<Product> products;
 

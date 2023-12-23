@@ -1,8 +1,6 @@
 package be.kdg.hifresh.applicationLayer.recepten;
 
-import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
 import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
-import be.kdg.hifresh.businessLayer.domain.recepten.BereidingsStap;
 import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
 import be.kdg.hifresh.businessLayer.domain.recepten.ReceptenFactory;
@@ -10,7 +8,6 @@ import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
 import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import lombok.Setter;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -46,10 +43,8 @@ public final class ReceptController {
      *
      * @param receptId Recipe ID
      * @return List of ingredients
-     * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
+    public static List<Ingredient> getAllIngredients(int receptId) {
         return manager.getAllIngredients(receptId);
     }
 
@@ -89,14 +84,12 @@ public final class ReceptController {
      * @param stapId    Step ID
      * @param stapName  Step name
      * @param stapBesch Step description
-     * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) throws InvocationTargetException, IllegalAccessException {
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
         addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, manager.getById(receptId, manager.getReceptCataloog()).getNextVolgnummer());
     }
 
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) throws InvocationTargetException, IllegalAccessException {
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) {
         Recept recept = manager.getById(
                 receptId,
                 manager.getReceptCataloog());
@@ -111,7 +104,7 @@ public final class ReceptController {
         );
     }
 
-    public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) throws InvocationTargetException, IllegalAccessException {
+    public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) {
         Recept recept = manager.getById(receptId, manager.getReceptCataloog());
 
         for (Integer id : ingredientIds) {
@@ -120,11 +113,11 @@ public final class ReceptController {
     }
     //endregion
 
-    public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
+    public static Recept getRecept(int receptId) {
         return manager.getById(receptId, manager.getReceptCataloog());
     }
 
-    public static boolean addIngredient(int ingrId, String name, Product product, double hoeveelheid, Eenheid eenheid) {
+    public static boolean addIngredient(int ingrId, Product product, double hoeveelheid, Eenheid eenheid) {
         return manager.add(
                 ReceptenFactory.createIngredient(
                         ingrId,

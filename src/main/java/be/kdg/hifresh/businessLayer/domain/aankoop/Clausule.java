@@ -75,16 +75,6 @@ public class Clausule {
     //endregion
 
     /**
-     * Adds a delivery to the list of deliveries associated with this clause.
-     *
-     * @param levering The delivery to be added.
-     * @return true if the delivery was added successfully, false otherwise.
-     */
-    boolean addLevering(Levering levering) {
-        return this.LEVERINGEN.add(levering);
-    }
-
-    /**
      * Checks if the clause is active on a given date.
      *
      * @param date The date to check.

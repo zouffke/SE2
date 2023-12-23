@@ -8,8 +8,6 @@ import be.kdg.hifresh.persistenceLayer.recepten.IngredientCataloog;
 import be.kdg.hifresh.persistenceLayer.recepten.ReceptCataloog;
 import lombok.Getter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

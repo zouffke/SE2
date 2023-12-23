@@ -6,11 +6,15 @@ import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.PercentD
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
+@CucumberContextConfiguration
 public class ProductSuggestiesRaadplegen {
     private List<Product> products;
 

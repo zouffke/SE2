@@ -20,18 +20,22 @@ public class DistributieCentrum {
     /**
      * The name of this distribution center.
      */
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private final String NAME;
     /**
      * The list of deliveries to this distribution center.
      */
+    @SuppressWarnings("unused")
     private List<Levering> leveringen;
     /**
      * The list of meal boxes assembled at this distribution center.
      */
+    @SuppressWarnings("unused")
     private List<MaaltijdBox> maaltijdBoxen;
     /**
      * The address of this distribution center.
      */
+    @SuppressWarnings("unused")
     private Adres adres;
 
     //endregion

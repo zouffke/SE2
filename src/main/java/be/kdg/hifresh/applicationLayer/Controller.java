@@ -90,10 +90,8 @@ public final class Controller {
      * @param subReceptId The id of the sub-recipe.
      * @param receptId    The id of the recipe.
      * @return True if the sub-recipe was added successfully, false otherwise.
-     * @throws InvocationTargetException if the called method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) {
         return ReceptController.addSubreceptToRecept(subReceptId, receptId, stap);
     }
 
@@ -115,14 +113,12 @@ public final class Controller {
      * @param stapId    The id of the step.
      * @param stapName  The name of the step.
      * @param stapBesch The description of the step.
-     * @throws InvocationTargetException if the called method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) throws InvocationTargetException, IllegalAccessException {
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
         ReceptController.addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch);
     }
 
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) throws InvocationTargetException, IllegalAccessException {
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) {
         ReceptController.addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, volgnummer);
     }
 
@@ -167,10 +163,8 @@ public final class Controller {
      * @param receptId The id of the recipe.
      * @param date     The date of the purchase.
      * @return The average purchase price.
-     * @throws InvocationTargetException if the called method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) throws InvocationTargetException, IllegalAccessException {
+    public static Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) {
         return AankoopController.getGemiddeldeAankoopPrijs(
                 ReceptController.getAllIngredients(receptId), date);
     }
@@ -185,11 +179,11 @@ public final class Controller {
         return AankoopController.getProductSuggesties(productSuggestionsStrat, date);
     }
 
-    public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) throws InvocationTargetException, IllegalAccessException {
+    public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) {
         ReceptController.addIngredientToBereidingstap(receptId, volgNummer, ingredientIds);
     }
 
-    public static boolean addContract(int id, int productId, int leverancierId, int distributieCentrumId) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addContract(int id, int productId, int leverancierId, int distributieCentrumId) {
         return AankoopController.addContract(
                 id,
                 productId,
@@ -199,7 +193,7 @@ public final class Controller {
         );
     }
 
-    public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
+    public static Recept getRecept(int receptId) {
         return ReceptController.getRecept(receptId);
     }
 
@@ -215,10 +209,9 @@ public final class Controller {
         return AankoopController.sortOnAvgPrice(list, date);
     }
 
-    public static boolean addIngredient(int id, String name, int prodId, double hoeveelheid, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addIngredient(int id, int prodId, double hoeveelheid, Eenheid eenheid) {
         return ReceptController.addIngredient(
                 id,
-                name,
                 AankoopController.getProduct(prodId),
                 hoeveelheid,
                 eenheid

@@ -8,8 +8,10 @@ import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
 import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
@@ -18,6 +20,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
+@CucumberContextConfiguration
 public class Givens {
     @BeforeAll
     static void beforeAll() {
@@ -62,54 +66,39 @@ public class Givens {
 
     @Given("ingredienten")
     public void ingredienten(DataTable dataTable) {
-        dataTable.asMaps().forEach(r -> {
-            try {
-                assertTrue(Controller.addIngredient(
-                        Integer.parseInt(r.get("ingredient_id")),
-                        r.get("ingredient_naam"),
-                        Integer.parseInt(r.get("product_id")),
-                        Double.parseDouble(r.get("hoeveelheid")),
-                        Eenheid.valueOf(r.get("eenheid").toUpperCase()))
-                );
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                Assertions.fail(e);
-            }
-        });
+        dataTable.asMaps().forEach(r -> assertTrue(Controller.addIngredient(
+                Integer.parseInt(r.get("ingredient_id")),
+                Integer.parseInt(r.get("product_id")),
+                Double.parseDouble(r.get("hoeveelheid")),
+                Eenheid.valueOf(r.get("eenheid").toUpperCase()))
+        ));
     }
 
     @Given("bereidingsstappen")
     public void bereidingsstappen(DataTable dataTable) {
         dataTable.asMaps().forEach(r -> {
-            try {
-                Controller.addBereidingsStapToRecept(
+            Controller.addBereidingsStapToRecept(
+                    Integer.parseInt(r.get("recept_id")),
+                    Integer.parseInt(r.get("bereidingsstap_id")),
+                    r.get("bereidingsstap_naam"),
+                    r.get("bereidingsstap_beschrijving")
+
+            );
+
+            List<String> ingredientIds = this.getItemFromList(r.get("ingredient_ids"));
+            if (!ingredientIds.get(0).equals("-")) {
+                Controller.addIngredientToBereidingstap(
                         Integer.parseInt(r.get("recept_id")),
-                        Integer.parseInt(r.get("bereidingsstap_id")),
-                        r.get("bereidingsstap_naam"),
-                        r.get("bereidingsstap_beschrijving")
-
+                        Integer.parseInt(r.get("volgnummer")),
+                        ingredientIds.stream().map(Integer::parseInt).toList()
                 );
-
-                List<String> ingredientIds = this.getItemFromList(r.get("ingredient_ids"));
-                if (!ingredientIds.get(0).equals("-")) {
-                    Controller.addIngredientToBereidingstap(
-                            Integer.parseInt(r.get("recept_id")),
-                            Integer.parseInt(r.get("volgnummer")),
-                            ingredientIds.stream().map(Integer::parseInt).toList()
-                    );
-                }
-
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                Assertions.fail(e);
             }
+
         });
     }
 
     private List<String> getItemFromList(String list) {
-        return getItemFromList(list, ",");
-    }
-
-    private List<String> getItemFromList(String list, String delim) {
-        return Arrays.stream(list.split(delim)).toList();
+        return Arrays.stream(list.split(",")).toList();
     }
 
     @Given("subrecepten")

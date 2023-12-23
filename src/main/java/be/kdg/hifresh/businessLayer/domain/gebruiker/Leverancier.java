@@ -13,7 +13,9 @@ public class Leverancier extends Rol {
     private final List<Contract> CONTRACTS;
     @Getter
     private final int ID;
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private final String NAME;
+    @SuppressWarnings("unused")
     private int reputatie;
 
     Leverancier(int id, String name) {
@@ -22,7 +24,7 @@ public class Leverancier extends Rol {
         this.CONTRACTS = new ArrayList<>();
     }
 
-    public boolean addContract(Contract contract) {
-        return this.CONTRACTS.add(contract);
+    public void addContract(Contract contract) {
+        this.CONTRACTS.add(contract);
     }
 }

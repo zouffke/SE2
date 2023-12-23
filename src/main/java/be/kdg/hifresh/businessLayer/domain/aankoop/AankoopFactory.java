@@ -65,26 +65,6 @@ public final class AankoopFactory {
     }
 
     /**
-     * Creates a new InkoopOrder object.
-     *
-     * @return A new InkoopOrder object.
-     * @author Dandois Luca
-     */
-    public static InkoopOrder createInkoopOrder() {
-        return new InkoopOrder();
-    }
-
-    /**
-     * Creates a new Levering object.
-     *
-     * @return A new Levering object.
-     * @author Dandois Luca
-     */
-    public static Levering createLevering() {
-        return new Levering();
-    }
-
-    /**
      * Creates a new Product object.
      *
      * @param id   The id of the product.

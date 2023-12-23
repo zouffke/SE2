@@ -6,5 +6,5 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface IProductSuggestionsStrat {
-    public List<Product> getProductSuggesties(LocalDate date, List<Product> products);
+    List<Product> getProductSuggesties(LocalDate date, List<Product> products);
 }

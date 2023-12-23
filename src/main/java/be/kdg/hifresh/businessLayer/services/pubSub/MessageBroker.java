@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class MessageBroker {
-    private List<Object> subscribers;
+    private final List<Object> subscribers;
 
     public MessageBroker() {
         this.subscribers = new ArrayList<>();
@@ -52,11 +52,8 @@ public class MessageBroker {
                 .collect(Collectors.toList());
     }
 
-    public boolean subscribe(Object object) {
-        return subscribers.add(object);
+    public void subscribe(Object object) {
+        subscribers.add(object);
     }
 
-    public boolean unsubscribe(Object object) {
-        return subscribers.remove(object);
-    }
 }
