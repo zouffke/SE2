@@ -83,5 +83,3 @@ Feature: Een subrecept toevoegen aan een recept
     And de bereidingsstap 1 voor recept 3 heeft beschrijving "Doe de kaas in de pan"
     And de bereidingsstap 2 voor recept 3 heeft beschrijving "Maak de bechamelsaus, zoek online op"
     And de bereidingsstap 3 voor recept 3 heeft beschrijving "Zet op een zacht vuurtje gedurende 5 minuten"
-    And recept 4 is een subrecept van recept 3
-

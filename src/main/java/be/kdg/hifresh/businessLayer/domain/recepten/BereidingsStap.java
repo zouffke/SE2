@@ -1,6 +1,7 @@
 package be.kdg.hifresh.businessLayer.domain.recepten;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,25 +9,14 @@ import java.util.List;
 /**
  * Represents a step in the preparation of a recipe.
  */
-public class BereidingsStap {
+public class BereidingsStap extends Bereiding {
     //region vars
-
-    /**
-     * The name of this preparation step.
-     */
-    private final String NAME;
-
-    /**
-     * The description of this preparation step.
-     */
     @Getter
-    private final String BESCHRIJVING;
+    private final List<Ingredient> INGREDIENTS;
 
-    /**
-     * The id of this preparation step.
-     */
-    private final int ID;
-    private final List<Integer> INGREDIENT_IDS;
+    @Getter
+    @Setter
+    private int volgNummer;
     //endregion
 
     /**
@@ -36,14 +26,17 @@ public class BereidingsStap {
      * @param beschrijving The description of the preparation step.
      * @param id           The id of the preparation step.
      */
-    BereidingsStap(String name, String beschrijving, int id) {
-        this.NAME = name;
-        this.BESCHRIJVING = beschrijving;
-        this.ID = id;
-        this.INGREDIENT_IDS = new ArrayList<>();
+    BereidingsStap(String name, String beschrijving, int id, int volgNummer) {
+        super(id, name, beschrijving);
+        this.INGREDIENTS = new ArrayList<>();
+        this.volgNummer = volgNummer;
     }
 
-    public boolean addIngredient(int id) {
-        return this.INGREDIENT_IDS.add(id);
+    boolean addIngredient(Ingredient ingredient) {
+        return this.INGREDIENTS.add(ingredient);
+    }
+
+    public boolean addAllIngredients(List<Ingredient> ingredients){
+        return this.INGREDIENTS.addAll(ingredients);
     }
 }

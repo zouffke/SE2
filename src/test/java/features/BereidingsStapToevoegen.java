@@ -30,7 +30,7 @@ public class BereidingsStapToevoegen {
     @Then("heeft het recept {int}, {int} bereidingsstappen")
     public void heeftHetReceptBereidingsstappen(int arg0, int arg1) {
         try {
-            assertEquals(arg1, Controller.getRecept(arg0).getSTAPPEN().size());
+            assertEquals(arg1, Controller.getRecept(arg0).getStappen().size());
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
@@ -40,7 +40,7 @@ public class BereidingsStapToevoegen {
     public void deLaatsteBereidingstapVoorReceptHeeftBeschrijving(int arg0, String arg1) {
         try {
             Recept recept = Controller.getRecept(arg0);
-            assertEquals(arg1, recept.getBereidingStap(recept.getSTAPPEN().size()).getBESCHRIJVING());
+            assertEquals(arg1, recept.getStap(recept.getStappen().size()).getBESCHRIJVING());
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
@@ -65,7 +65,7 @@ public class BereidingsStapToevoegen {
     public void deBereidingsstapVoorReceptHeeftBeschrijving(int arg0, int arg1, String arg2) {
         try {
             Recept recept = Controller.getRecept(arg1);
-            assertEquals(arg2, recept.getBereidingStap(arg0).getBESCHRIJVING());
+            assertEquals(arg2, recept.getStap(arg0).getBESCHRIJVING());
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }

@@ -82,6 +82,6 @@ Feature: Ingredient toevoegen aan recept
 
 
   Scenario: Ingredient toevoegen aan recept
-    When ik product met id 2 toevoeg aan recept met id 1 met een hoeveelheid van 0.2 en eenheid "kilogram"
-    Then heeft het recept 1, 2 ingredienten
+    When ik product met id 2 toevoeg aan recept met id 1 met een hoeveelheid van 0.2 en eenheid "kilogram" op stap 2
+    Then heeft het recept 1, 3 ingredienten
     And een van de ingredienten van recept 1 is product 2 met hoeveelheid 0.2 "kilogram"

@@ -1,7 +1,8 @@
-package be.kdg.hifresh.businessLayer.services.aankoop;
+package be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions;
 
 import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
 import be.kdg.hifresh.businessLayer.domain.util.Munt;
+import be.kdg.hifresh.businessLayer.services.aankoop.GemiddeldeAankoopPrijs;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

@@ -2,8 +2,8 @@ package be.kdg.hifresh.businessLayer.services.recepten;
 
 import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
-import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.businessLayer.services.Manager;
+import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.persistenceLayer.recepten.IngredientCataloog;
 import be.kdg.hifresh.persistenceLayer.recepten.ReceptCataloog;
 import lombok.Getter;
@@ -59,17 +59,16 @@ public class ReceptManager extends Manager {
      */
     public List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
         Recept recept = super.getById(receptId, receptCataloog);
-
         List<Ingredient> ingredients = new ArrayList<>();
+        List<Recept> subRecepts = recept.getSubrecepts();
 
-        if (recept.getSUB_RECEPTEN() != null && !recept.getSUB_RECEPTEN().isEmpty()) {
-            for (Recept subRecept : recept.getSUB_RECEPTEN()) {
-                ingredients.addAll(getAllIngredients(subRecept.getID()));
+        if (!subRecepts.isEmpty()){
+            for (Recept subRecept : subRecepts){
+                ingredients.addAll(this.getAllIngredients(subRecept.getID()));
             }
         }
 
-        ingredients.addAll(super.getById(receptId, receptCataloog).getIngredienten());
-
+        ingredients.addAll(recept.getIngredients());
         return ingredients;
     }
 }

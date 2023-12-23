@@ -26,8 +26,8 @@ public final class ReceptenFactory {
      * @param beschrijving The description of the preparation step.
      * @return A new BereidingsStap object.
      */
-    public static BereidingsStap createBereidingsStap(int id, String name, String beschrijving) {
-        return new BereidingsStap(name, beschrijving, id);
+    public static BereidingsStap createBereidingsStap(int id, String name, String beschrijving, int volgnummer) {
+        return new BereidingsStap(name, beschrijving, id, volgnummer);
     }
 
     /**

@@ -62,10 +62,10 @@ public class Givens {
     public void ingredienten(DataTable dataTable) {
         dataTable.asMaps().forEach(r -> {
             try {
-                assertTrue(Controller.addIngredientToRecept(
+                assertTrue(Controller.addIngredient(
                         Integer.parseInt(r.get("ingredient_id")),
+                        r.get("ingredient_naam"),
                         Integer.parseInt(r.get("product_id")),
-                        Integer.parseInt(r.get("recept_id")),
                         Double.parseDouble(r.get("hoeveelheid")),
                         Eenheid.valueOf(r.get("eenheid").toUpperCase()))
                 );

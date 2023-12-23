@@ -8,7 +8,7 @@ import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
 import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
 import be.kdg.hifresh.businessLayer.domain.util.Munt;
 import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
-import be.kdg.hifresh.businessLayer.services.aankoop.IProductSuggestionsStrat;
+import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
 import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
 import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import lombok.Getter;
@@ -101,21 +101,6 @@ public final class Controller {
      */
     public static boolean addProduct(int prodId, String name) {
         return AankoopController.addProduct(prodId, name);
-    }
-
-    /**
-     * Adds an ingredient to a recipe.
-     *
-     * @param ingrId   The id of the ingredient.
-     * @param prodId   The id of the product.
-     * @param receptId The id of the recipe.
-     * @param amt      The amount of the ingredient.
-     * @return True if the ingredient was added successfully, false otherwise.
-     * @throws InvocationTargetException if the called method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
-     */
-    public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.addIngredientToRecept(ingrId, AankoopController.getProduct(prodId), receptId, amt, eenheid);
     }
 
     /**
@@ -222,5 +207,15 @@ public final class Controller {
 
     public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
         return AankoopController.sortOnAvgPrice(list, date);
+    }
+
+    public static boolean addIngredient(int id, String name, int prodId, double hoeveelheid, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
+        return ReceptController.addIngredient(
+                id,
+                name,
+                AankoopController.getProduct(prodId),
+                hoeveelheid,
+                eenheid
+        );
     }
 }
