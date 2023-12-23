@@ -9,12 +9,12 @@ import lombok.Getter;
 @Getter
 public class GebruikerManager extends Manager {
     //region vars
-    private final Catalog<Leverancier> leverancierCatalog;
+    private final Catalog<Leverancier> LEVERANCIER_CATALOG;
     //endregion
 
     //region constructors
     public GebruikerManager() {
-        this.leverancierCatalog = new LeverancierCataloog();
+        this.LEVERANCIER_CATALOG = new LeverancierCataloog();
     }
     //endregion
 }

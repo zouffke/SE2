@@ -7,45 +7,45 @@ import lombok.Getter;
 /**
  * Represents an ingredient needed for preparing a dish.
  */
+@Getter
 public class Ingredient {
     //region vars
 
     /**
      * The product associated with this ingredient.
      */
-    @Getter
-    private final Product product;
+    private final Product PRODUCT;
 
     /**
      * The quantity of this ingredient.
      */
     @Getter
-    private double hoeveelheid;
+    private final double HOEVEELHEID;
 
     /**
      * The unit of this ingredient.
      */
-    private Eenheid eenheid;
+    private final Eenheid EENHEID;
 
     /**
      * The id of this ingredient.
      */
-    @Getter
-    private final int id;
+    private final int ID;
     //endregion
     //region constructors
+
     /**
      * Constructor for Ingredient.
      *
-     * @param id The id of the ingredient.
-     * @param product The product associated with the ingredient.
+     * @param id          The id of the ingredient.
+     * @param product     The product associated with the ingredient.
      * @param hoeveelheid The quantity of the ingredient.
      */
     Ingredient(int id, Product product, double hoeveelheid, Eenheid eenheid) {
-        this.id = id;
-        this.product = product;
-        this.hoeveelheid = hoeveelheid;
-        this.eenheid = eenheid;
+        this.ID = id;
+        this.PRODUCT = product;
+        this.HOEVEELHEID = hoeveelheid;
+        this.EENHEID = eenheid;
     }
     //endregion
 }

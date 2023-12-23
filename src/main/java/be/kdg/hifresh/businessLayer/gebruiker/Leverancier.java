@@ -10,20 +10,19 @@ import java.util.List;
  * Bedrijf dat ingredienten levert.
  */
 public class Leverancier extends Rol {
-    private List<Contract> contracts;
+    private final List<Contract> CONTRACTS;
+    @Getter
+    private final int ID;
+    private final String NAME;
     private int reputatie;
 
-    @Getter
-    private final int id;
-    private String name;
-
     Leverancier(int id, String name) {
-        this.id = id;
-        this.name = name;
-        this.contracts = new ArrayList<>();
+        this.ID = id;
+        this.NAME = name;
+        this.CONTRACTS = new ArrayList<>();
     }
 
-    public boolean addContract(Contract contract){
-        return this.contracts.add(contract);
+    public boolean addContract(Contract contract) {
+        return this.CONTRACTS.add(contract);
     }
 }

@@ -1,7 +1,7 @@
 package be.kdg.hifresh.persistenceLayer.aankoop.catalogs;
 
-import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.businessLayer.aankoop.DistributieCentrum;
+import be.kdg.hifresh.persistenceLayer.Catalog;
 
 /**
  * A catalog class for managing DistributieCentrum objects.
@@ -15,7 +15,7 @@ public class DistributieCentraCataloog extends Catalog<DistributieCentrum> {
      *
      * @author Dandois Luca
      */
-    public DistributieCentraCataloog(){
+    public DistributieCentraCataloog() {
         super();
     }
 }

@@ -32,7 +32,7 @@ public class ReceptManager extends Manager {
     /**
      * Catalog of ingredients.
      */
-    private final Catalog<Ingredient> ingredientCataloog;
+    private final Catalog<Ingredient> INGREDIENT_CATALOG;
 
     //endregion
 
@@ -44,7 +44,7 @@ public class ReceptManager extends Manager {
      */
     public ReceptManager() {
         this.receptCataloog = new ReceptCataloog();
-        this.ingredientCataloog = new IngredientCataloog();
+        this.INGREDIENT_CATALOG = new IngredientCataloog();
     }
     //endregion
 
@@ -58,17 +58,17 @@ public class ReceptManager extends Manager {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
     public List<Ingredient> getAllIngredients(int receptId) throws InvocationTargetException, IllegalAccessException {
-        Recept recept = super.getObjFromCatalogById(receptId, receptCataloog);
+        Recept recept = super.getById(receptId, receptCataloog);
 
         List<Ingredient> ingredients = new ArrayList<>();
 
-        if (recept.getSubrecepten() != null && !recept.getSubrecepten().isEmpty()) {
-            for (Recept subRecept : recept.getSubrecepten()) {
-                ingredients.addAll(getAllIngredients(subRecept.getId()));
+        if (recept.getSUB_RECEPTEN() != null && !recept.getSUB_RECEPTEN().isEmpty()) {
+            for (Recept subRecept : recept.getSUB_RECEPTEN()) {
+                ingredients.addAll(getAllIngredients(subRecept.getID()));
             }
         }
 
-        ingredients.addAll(super.getObjFromCatalogById(receptId, receptCataloog).getIngredienten());
+        ingredients.addAll(super.getById(receptId, receptCataloog).getIngredienten());
 
         return ingredients;
     }

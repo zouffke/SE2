@@ -11,21 +11,21 @@ public class PrijsAfspraak {
     /**
      * The price of the product.
      */
-    private Munt prijs;
+    private final Munt PRIJS;
 
     /**
      * The maximum quantity of the product for which this price agreement applies.
      */
-    private double maxHoeveelheid;
+    private final double MAX_HOEVEELHEID;
 
     /**
      * Constructor for PrijsAfspraak.
      *
-     * @param prijs The price of the product.
+     * @param prijs          The price of the product.
      * @param maxHoeveelheid The maximum quantity of the product for which this price agreement applies.
      */
-    PrijsAfspraak(Munt prijs, double maxHoeveelheid){
-        this.prijs = prijs;
-        this.maxHoeveelheid = maxHoeveelheid;
+    PrijsAfspraak(Munt prijs, double maxHoeveelheid) {
+        this.PRIJS = prijs;
+        this.MAX_HOEVEELHEID = maxHoeveelheid;
     }
 }

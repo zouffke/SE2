@@ -4,6 +4,7 @@ import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
 import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
 import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
 import be.kdg.hifresh.businessLayer.aankoop.Product;
+import be.kdg.hifresh.businessLayer.recepten.Recept;
 import be.kdg.hifresh.businessLayer.util.Eenheid;
 import be.kdg.hifresh.businessLayer.util.Munt;
 import be.kdg.hifresh.persistenceLayer.aankoop.AankoopManager;
@@ -31,12 +32,9 @@ public final class Controller {
     private static LocalDate today;
 
     /**
-     * Sets the current date.
-     *
-     * @param today The current date.
+     * Private constructor to prevent instantiation of this utility class.
      */
-    public static void setToday(LocalDate today) {
-        Controller.today = today;
+    private Controller() {
     }
 
     //endregion
@@ -44,9 +42,12 @@ public final class Controller {
     //region constructors
 
     /**
-     * Private constructor to prevent instantiation of this utility class.
+     * Sets the current date.
+     *
+     * @param today The current date.
      */
-    private Controller() {
+    public static void setToday(LocalDate today) {
+        Controller.today = today;
     }
 
     //endregion
@@ -73,8 +74,8 @@ public final class Controller {
      * @param beschrijving The description of the recipe.
      * @return True if the recipe was added successfully, false otherwise.
      */
-    public static boolean addReceptToCatalog(int id, String name, String beschrijving) {
-        return ReceptController.addReceptToCatalog(id, name, beschrijving);
+    public static boolean addRecept(int id, String name, String beschrijving) {
+        return ReceptController.addRecept(id, name, beschrijving);
     }
 
     /**
@@ -86,8 +87,8 @@ public final class Controller {
      * @throws InvocationTargetException if the called method throws an exception.
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.addSubreceptToRecept(subReceptId, receptId);
+    public static boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) throws InvocationTargetException, IllegalAccessException {
+        return ReceptController.addSubreceptToRecept(subReceptId, receptId, stap);
     }
 
     /**
@@ -113,7 +114,7 @@ public final class Controller {
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
     public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.addIngredientToRecept(ingrId, AankoopController.getProductFromCatalog(prodId), receptId, amt, eenheid);
+        return ReceptController.addIngredientToRecept(ingrId, AankoopController.getProduct(prodId), receptId, amt, eenheid);
     }
 
     /**
@@ -130,6 +131,10 @@ public final class Controller {
         ReceptController.addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch);
     }
 
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) throws InvocationTargetException, IllegalAccessException {
+        ReceptController.addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, volgnummer);
+    }
+
     /**
      * Adds a center to the catalog.
      *
@@ -137,8 +142,8 @@ public final class Controller {
      * @param name The name of the center.
      * @return True if the center was added successfully, false otherwise.
      */
-    public static boolean addCentrumToCatalog(int id, String name) {
-        return AankoopController.addCentrumToCatalog(id, name);
+    public static boolean addCentrum(int id, String name) {
+        return AankoopController.addCentrum(id, name);
     }
 
     /**
@@ -200,5 +205,21 @@ public final class Controller {
                 GebruikerController.getLeverancier(leverancierId),
                 distributieCentrumId
         );
+    }
+
+    public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
+        return ReceptController.getRecept(receptId);
+    }
+
+    public static List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
+        return AankoopController.getProductsByName(name);
+    }
+
+    public static List<Product> getActiveProducts(LocalDate date) {
+        return AankoopController.getActiveProducts(date);
+    }
+
+    public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
+        return AankoopController.sortOnAvgPrice(list, date);
     }
 }

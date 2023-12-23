@@ -8,6 +8,7 @@ import be.kdg.hifresh.businessLayer.util.Eenheid;
  */
 public final class ReceptenFactory {
     //region constructors
+
     /**
      * Private constructor to prevent instantiation of this utility class.
      */
@@ -16,23 +17,24 @@ public final class ReceptenFactory {
     //endregion
 
     //region create methods
+
     /**
      * Creates a new BereidingsStap object.
      *
-     * @param id The id of the preparation step.
-     * @param naam The name of the preparation step.
+     * @param id           The id of the preparation step.
+     * @param name         The name of the preparation step.
      * @param beschrijving The description of the preparation step.
      * @return A new BereidingsStap object.
      */
-    public static BereidingsStap createBereidingsStap(int id, String naam, String beschrijving) {
-        return new BereidingsStap(naam, beschrijving, id);
+    public static BereidingsStap createBereidingsStap(int id, String name, String beschrijving) {
+        return new BereidingsStap(name, beschrijving, id);
     }
 
     /**
      * Creates a new Ingredient object.
      *
-     * @param id The id of the ingredient.
-     * @param product The product associated with the ingredient.
+     * @param id          The id of the ingredient.
+     * @param product     The product associated with the ingredient.
      * @param hoeveelheid The quantity of the ingredient.
      * @return A new Ingredient object.
      */
@@ -43,13 +45,13 @@ public final class ReceptenFactory {
     /**
      * Creates a new Recept object.
      *
-     * @param id The id of the recipe.
-     * @param naam The name of the recipe.
+     * @param id           The id of the recipe.
+     * @param name         The name of the recipe.
      * @param beschrijving The description of the recipe.
      * @return A new Recept object.
      */
-    public static Recept createRecept(int id, String naam, String beschrijving) {
-        return new Recept(naam, id, beschrijving);
+    public static Recept createRecept(int id, String name, String beschrijving) {
+        return new Recept(name, id, beschrijving);
     }
     //endregion
 }

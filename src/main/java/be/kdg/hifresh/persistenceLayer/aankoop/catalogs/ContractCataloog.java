@@ -1,7 +1,7 @@
 package be.kdg.hifresh.persistenceLayer.aankoop.catalogs;
 
-import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.businessLayer.aankoop.Contract;
+import be.kdg.hifresh.persistenceLayer.Catalog;
 
 /**
  * A catalog class for managing Contract objects.

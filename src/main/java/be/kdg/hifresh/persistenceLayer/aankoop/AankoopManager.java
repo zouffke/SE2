@@ -14,12 +14,10 @@ import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.DistributieCentraCataloo
 import be.kdg.hifresh.persistenceLayer.aankoop.catalogs.ProductCataloog;
 import lombok.Getter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A manager class for handling contracts.
@@ -36,13 +34,13 @@ public class AankoopManager extends Manager {
     /**
      * Catalog of contracts.
      */
-    private final Catalog<Contract> contractCataloog;
+    private final Catalog<Contract> CONTRACT_CATALOG;
 
     /**
      * Catalog of distribution centers.
      */
-    private final Catalog<DistributieCentrum> dcCataloog;
-    private final Catalog<Product> productCatalog;
+    private final Catalog<DistributieCentrum> DC_CATALOG;
+    private final Catalog<Product> PRODUCT_CATALOG;
     //endregion
 
     //region constructors
@@ -54,9 +52,9 @@ public class AankoopManager extends Manager {
      * @author Dandois Luca
      */
     public AankoopManager() {
-        this.contractCataloog = new ContractCataloog();
-        this.dcCataloog = new DistributieCentraCataloog();
-        this.productCatalog = new ProductCataloog();
+        this.CONTRACT_CATALOG = new ContractCataloog();
+        this.DC_CATALOG = new DistributieCentraCataloog();
+        this.PRODUCT_CATALOG = new ProductCataloog();
     }
     //endregion
 
@@ -64,14 +62,14 @@ public class AankoopManager extends Manager {
      * Calculates the average purchase price for a list of ingredients on a given date.
      *
      * @param ingredients List of ingredients.
-     * @param date The date for which to calculate the average purchase price.
+     * @param date        The date for which to calculate the average purchase price.
      * @return The average purchase price.
      */
     public Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
         double totaalBedrag = 0;
 
         for (Ingredient ingredient : ingredients) {
-            totaalBedrag += this.getGemiddeldeAankoopPrijs(ingredient.getProduct(), date) * ingredient.getHoeveelheid();
+            totaalBedrag += this.getGemiddeldeAankoopPrijs(ingredient.getPRODUCT(), date) * ingredient.getHOEVEELHEID();
         }
 
         return UtilFactory.createMunt(totaalBedrag, "Euro");
@@ -81,17 +79,17 @@ public class AankoopManager extends Manager {
      * Calculates the average purchase price for a product on a given date.
      *
      * @param product The product for which to calculate the average purchase price.
-     * @param date The date for which to calculate the average purchase price.
+     * @param date    The date for which to calculate the average purchase price.
      * @return The average purchase price.
      */
     private double getGemiddeldeAankoopPrijs(Product product, LocalDate date) {
         double bedrag = 0;
         double hoeveelheid = 0;
 
-        for (Contract contract : product.getContracten()) {
+        for (Contract contract : product.getCONTRACTEN()) {
             for (PrijsAfspraak prijsAfspraak : contract.getGeldendePrijsAfspraken(date)) {
-                double tempHoeveelheid = prijsAfspraak.getMaxHoeveelheid();
-                bedrag += prijsAfspraak.getPrijs().getBedrag() * tempHoeveelheid;
+                double tempHoeveelheid = prijsAfspraak.getMAX_HOEVEELHEID();
+                bedrag += prijsAfspraak.getPRIJS().getBedrag() * tempHoeveelheid;
                 hoeveelheid += tempHoeveelheid;
             }
         }
@@ -101,23 +99,46 @@ public class AankoopManager extends Manager {
     }
 
     /**
+     * Provides product suggestions for a given date.
+     *
+     * @param date The date for which to provide product suggestions.
+     * @return A list of product suggestions.
+     */
+    public List<Product> getProductSuggesties(LocalDate date) {
+        List<Product> products = getActiveProducts(date);
+        Map<Product, Munt> weekAvg = new HashMap<>();
+        Map<Product, Munt> yearAvg = new HashMap<>();
+        Map<Product, Double> score = new HashMap<>();
+
+        for (Product product : products) {
+            weekAvg.put(product, getGemiddeldeWeekAankoopPrijs(date, product));
+            yearAvg.put(product, getGemiddeldeJaarAankoopPrijs(date, product));
+
+            score.put(product, this.getProcentueelVerschil(weekAvg.get(product), yearAvg.get(product)));
+        }
+
+        return this.sortOnScore(score);
+    }
+
+    /**
      * Retrieves a list of active products on a given date.
      *
      * @param date The date for which to retrieve the active products.
      * @return A list of active products.
      */
-    private List<Product> getActiveProducts(LocalDate date) {
-        return contractCataloog.getList()
+    public List<Product> getActiveProducts(LocalDate date) {
+        return CONTRACT_CATALOG.getList()
                 .stream()
-                .filter(contract -> contract.getClausules() != null && contract.getClausules().stream().anyMatch(clausule -> clausule.isActive(date)))
-                .map(Contract::getProduct)
+                .filter(contract -> contract.getCLAUSULES() != null && contract.getCLAUSULES().stream().anyMatch(clausule -> clausule.isActive(date)))
+                .map(Contract::getPRODUCT)
+                .distinct()
                 .toList();
     }
 
     /**
      * Calculates the average weekly purchase price for a product on a given date.
      *
-     * @param date The date for which to calculate the average weekly purchase price.
+     * @param date    The date for which to calculate the average weekly purchase price.
      * @param product The product for which to calculate the average weekly purchase price.
      * @return The average weekly purchase price.
      */
@@ -147,7 +168,7 @@ public class AankoopManager extends Manager {
     /**
      * Calculates the average yearly purchase price for a product on a given date.
      *
-     * @param date The date for which to calculate the average yearly purchase price.
+     * @param date    The date for which to calculate the average yearly purchase price.
      * @param product The product for which to calculate the average yearly purchase price.
      * @return The average yearly purchase price.
      */
@@ -198,25 +219,13 @@ public class AankoopManager extends Manager {
         return products;
     }
 
-    /**
-     * Provides product suggestions for a given date.
-     *
-     * @param date The date for which to provide product suggestions.
-     * @return A list of product suggestions.
-     */
-    public List<Product> getProductSuggesties(LocalDate date) {
-        List<Product> products = getActiveProducts(date);
-        Map<Product, Munt> weekAvg = new HashMap<>();
-        Map<Product, Munt> yearAvg = new HashMap<>();
-        Map<Product, Double> score = new HashMap<>();
+    public List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
+        return this.PRODUCT_CATALOG.getByName(name);
+    }
 
-        for (Product product : products) {
-            weekAvg.put(product, getGemiddeldeWeekAankoopPrijs(date, product));
-            yearAvg.put(product, getGemiddeldeJaarAankoopPrijs(date, product));
-
-            score.put(product, this.getProcentueelVerschil(weekAvg.get(product), yearAvg.get(product)));
-        }
-
-        return this.sortOnScore(score);
+    public List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
+        return list.stream().sorted(Comparator.comparing(
+                p -> getGemiddeldeAankoopPrijs(p, date)
+        )).toList();
     }
 }

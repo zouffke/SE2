@@ -10,22 +10,22 @@ public class Periode {
     /**
      * The start date of the period.
      */
-    private LocalDate start;
+    private final LocalDate START;
 
     /**
      * The end date of the period.
      */
-    private LocalDate end;
+    private final LocalDate END;
 
     /**
      * Constructor for Periode.
      *
      * @param start The start date of the period.
-     * @param end The end date of the period.
+     * @param end   The end date of the period.
      */
     Periode(LocalDate start, LocalDate end) {
-        this.start = start;
-        this.end = end;
+        this.START = start;
+        this.END = end;
     }
 
     /**
@@ -35,6 +35,6 @@ public class Periode {
      * @return true if the date is within the period, false otherwise.
      */
     public boolean isIn(LocalDate date) {
-        return start.isEqual(date) || end.isEqual(date) || (start.isBefore(date) && end.isAfter(date));
+        return START.isEqual(date) || END.isEqual(date) || (START.isBefore(date) && END.isAfter(date));
     }
 }

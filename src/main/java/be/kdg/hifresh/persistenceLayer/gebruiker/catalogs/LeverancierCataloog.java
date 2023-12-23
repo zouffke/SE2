@@ -4,7 +4,7 @@ import be.kdg.hifresh.businessLayer.gebruiker.Leverancier;
 import be.kdg.hifresh.persistenceLayer.Catalog;
 
 public class LeverancierCataloog extends Catalog<Leverancier> {
-    public LeverancierCataloog(){
+    public LeverancierCataloog() {
         super();
     }
 }

@@ -25,7 +25,7 @@ public class ProductSuggestiesRaadplegen {
 
     @And("product {int} in de lijst is {int}")
     public void productInDeLijstIs(int arg0, int arg1) {
-        int id = this.products.get(arg1 - 1).getId();
+        int id = this.products.get(arg1 - 1).getID();
         assertEquals(arg0, id);
     }
 }

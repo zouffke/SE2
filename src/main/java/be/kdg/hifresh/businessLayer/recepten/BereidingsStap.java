@@ -1,5 +1,7 @@
 package be.kdg.hifresh.businessLayer.recepten;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,34 +14,36 @@ public class BereidingsStap {
     /**
      * The name of this preparation step.
      */
-    private String naam;
+    private final String NAME;
 
     /**
      * The description of this preparation step.
      */
-    private String beschrijving;
+    @Getter
+    private final String BESCHRIJVING;
 
     /**
      * The id of this preparation step.
      */
-    private final int id;
-    private List<Integer> ingredient_ids;
+    private final int ID;
+    private final List<Integer> INGREDIENT_IDS;
     //endregion
+
     /**
      * Constructor for BereidingsStap.
      *
-     * @param naam The name of the preparation step.
+     * @param name         The name of the preparation step.
      * @param beschrijving The description of the preparation step.
-     * @param id The id of the preparation step.
+     * @param id           The id of the preparation step.
      */
-    BereidingsStap(String naam, String beschrijving, int id){
-        this.naam = naam;
-        this.beschrijving = beschrijving;
-        this.id = id;
-        this.ingredient_ids = new ArrayList<>();
+    BereidingsStap(String name, String beschrijving, int id) {
+        this.NAME = name;
+        this.BESCHRIJVING = beschrijving;
+        this.ID = id;
+        this.INGREDIENT_IDS = new ArrayList<>();
     }
 
-    public boolean addIngredient(int id){
-        return this.ingredient_ids.add(id);
+    public boolean addIngredient(int id) {
+        return this.INGREDIENT_IDS.add(id);
     }
 }

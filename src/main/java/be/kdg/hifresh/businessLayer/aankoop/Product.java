@@ -2,11 +2,13 @@ package be.kdg.hifresh.businessLayer.aankoop;
 
 import lombok.Getter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a product that is delivered by a supplier and is needed for preparing a meal.
  */
+@Getter
 public class Product {
 
     //region vars
@@ -14,19 +16,17 @@ public class Product {
     /**
      * The list of contracts associated with this product.
      */
-    @Getter
-    private final List<Contract> contracten;
+    private final List<Contract> CONTRACTEN;
 
     /**
      * The name of this product.
      */
-    private String naam;
+    private final String NAME;
 
     /**
      * The id of this product.
      */
-    @Getter
-    private final int id;
+    private final int ID;
 
     //endregion
 
@@ -35,13 +35,13 @@ public class Product {
     /**
      * Constructor for Product.
      *
-     * @param naam The name of the product.
-     * @param id The id of the product.
+     * @param name The name of the product.
+     * @param id   The id of the product.
      */
-    Product(String naam, int id){
-        this.naam = naam;
-        this.id = id;
-        this.contracten = new ArrayList<>();
+    Product(String name, int id) {
+        this.NAME = name;
+        this.ID = id;
+        this.CONTRACTEN = new ArrayList<>();
     }
 
     //endregion
@@ -51,7 +51,7 @@ public class Product {
      *
      * @param contract The contract to be added.
      */
-    public void addContract(Contract contract){
-        this.contracten.add(contract);
+    public void addContract(Contract contract) {
+        this.CONTRACTEN.add(contract);
     }
 }

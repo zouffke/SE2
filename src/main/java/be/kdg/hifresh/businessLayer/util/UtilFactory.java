@@ -18,7 +18,7 @@ public class UtilFactory {
      * Creates a new instance of Periode.
      *
      * @param start The start date of the period.
-     * @param end The end date of the period.
+     * @param end   The end date of the period.
      * @return A new instance of Periode.
      */
     public static Periode createPeriod(LocalDate start, LocalDate end) {
@@ -28,22 +28,22 @@ public class UtilFactory {
     /**
      * Creates a new instance of PrijsAfspraak.
      *
-     * @param prijs The price of the product.
+     * @param prijs          The price of the product.
      * @param maxHoeveelheid The maximum quantity of the product for which this price agreement applies.
      * @return A new instance of PrijsAfspraak.
      */
-    public static PrijsAfspraak createPrijsAfspraak(Munt prijs, double maxHoeveelheid){
+    public static PrijsAfspraak createPrijsAfspraak(Munt prijs, double maxHoeveelheid) {
         return new PrijsAfspraak(prijs, maxHoeveelheid);
     }
 
     /**
      * Creates a new instance of Munt.
      *
-     * @param bedrag The amount of money.
+     * @param bedrag  The amount of money.
      * @param eenheid The unit of the currency.
      * @return A new instance of Munt.
      */
-    public static Munt createMunt(double bedrag, String eenheid){
+    public static Munt createMunt(double bedrag, String eenheid) {
         return new Munt(bedrag, eenheid);
     }
 }

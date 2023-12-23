@@ -17,22 +17,22 @@ public class Contract {
     /**
      * The supplier associated with this contract.
      */
-    private final Leverancier leverancier;
-    private final DistributieCentrum distributieCentrum;
+    private final Leverancier LEVERANCIER;
+    private final DistributieCentrum DISTRIBUTIE_CENTRUM;
 
     /**
      * The product associated with this contract.
      */
     @Getter
-    private final Product product;
+    private final Product PRODUCT;
 
     /**
      * The list of clauses associated with this contract.
      */
     @Getter
-    private List<Clausule> clausules;
+    private final List<Clausule> CLAUSULES;
     @Getter
-    private final int id;
+    private final int ID;
     //endregion
 
     //region constructors
@@ -43,13 +43,13 @@ public class Contract {
      * @param product The product associated with the contract.
      */
     Contract(int id, Product product, Leverancier leverancier, DistributieCentrum distributieCentrum) {
-        this.product = product;
+        this.PRODUCT = product;
         product.addContract(this);
-        this.clausules = new ArrayList<>();
-        this.leverancier = leverancier;
+        this.CLAUSULES = new ArrayList<>();
+        this.LEVERANCIER = leverancier;
         leverancier.addContract(this);
-        this.distributieCentrum = distributieCentrum;
-        this.id = id;
+        this.DISTRIBUTIE_CENTRUM = distributieCentrum;
+        this.ID = id;
     }
     //endregion
 
@@ -60,7 +60,7 @@ public class Contract {
      * @return true if the clause was added successfully, false otherwise.
      */
     public boolean addClausule(Clausule clausule) {
-        return this.clausules.add(clausule);
+        return this.CLAUSULES.add(clausule);
     }
 
     /**
@@ -72,9 +72,9 @@ public class Contract {
     public List<PrijsAfspraak> getGeldendePrijsAfspraken(LocalDate date) {
         List<PrijsAfspraak> prijsAfspraken = new ArrayList<>();
 
-        for (Clausule clausule : this.clausules) {
+        for (Clausule clausule : this.CLAUSULES) {
             if (clausule.isActive(date)) {
-                prijsAfspraken.add(clausule.getPrijsAfspraak());
+                prijsAfspraken.add(clausule.getPRIJSAFSPRAAK());
             }
         }
 
