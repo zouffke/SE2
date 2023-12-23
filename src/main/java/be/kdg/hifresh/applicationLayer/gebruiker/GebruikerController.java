@@ -1,11 +1,9 @@
 package be.kdg.hifresh.applicationLayer.gebruiker;
 
-import be.kdg.hifresh.businessLayer.gebruiker.GebruikerFactory;
-import be.kdg.hifresh.businessLayer.gebruiker.Leverancier;
-import be.kdg.hifresh.persistenceLayer.gebruiker.GebruikerManager;
+import be.kdg.hifresh.businessLayer.domain.gebruiker.GebruikerFactory;
+import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
+import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
 import lombok.Setter;
-
-import java.lang.reflect.InvocationTargetException;
 
 public final class GebruikerController {
     //region vars
@@ -24,7 +22,7 @@ public final class GebruikerController {
     }
     //endregion
 
-    public static Leverancier getLeverancier(int leverancierId) throws InvocationTargetException, IllegalAccessException {
+    public static Leverancier getLeverancier(int leverancierId) {
         return manager.getById(leverancierId, manager.getLEVERANCIER_CATALOG());
     }
 }

@@ -1,15 +1,19 @@
 package features;
 
 import be.kdg.hifresh.applicationLayer.Controller;
-import be.kdg.hifresh.businessLayer.util.Munt;
+import be.kdg.hifresh.businessLayer.domain.util.Munt;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
+@CucumberContextConfiguration
 public class GemiddeldeAankoopprijsRaadplegen {
     private Munt avgResult;
 

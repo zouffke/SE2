@@ -3,14 +3,17 @@ package be.kdg.hifresh.applicationLayer;
 import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
 import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
 import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
-import be.kdg.hifresh.businessLayer.aankoop.Product;
-import be.kdg.hifresh.businessLayer.recepten.Recept;
-import be.kdg.hifresh.businessLayer.util.Eenheid;
-import be.kdg.hifresh.businessLayer.util.Munt;
-import be.kdg.hifresh.persistenceLayer.aankoop.AankoopManager;
-import be.kdg.hifresh.persistenceLayer.gebruiker.GebruikerManager;
-import be.kdg.hifresh.persistenceLayer.recepten.ReceptManager;
+import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
+import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
+import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
+import be.kdg.hifresh.businessLayer.domain.util.Munt;
+import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
+import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
+import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
+import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
+import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
@@ -30,6 +33,9 @@ public final class Controller {
      */
     @Getter
     private static LocalDate today;
+    @Setter
+    @Getter
+    private static MessageBroker messageBroker;
 
     /**
      * Private constructor to prevent instantiation of this utility class.
@@ -84,10 +90,8 @@ public final class Controller {
      * @param subReceptId The id of the sub-recipe.
      * @param receptId    The id of the recipe.
      * @return True if the sub-recipe was added successfully, false otherwise.
-     * @throws InvocationTargetException if the called method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) {
         return ReceptController.addSubreceptToRecept(subReceptId, receptId, stap);
     }
 
@@ -103,35 +107,18 @@ public final class Controller {
     }
 
     /**
-     * Adds an ingredient to a recipe.
-     *
-     * @param ingrId   The id of the ingredient.
-     * @param prodId   The id of the product.
-     * @param receptId The id of the recipe.
-     * @param amt      The amount of the ingredient.
-     * @return True if the ingredient was added successfully, false otherwise.
-     * @throws InvocationTargetException if the called method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
-     */
-    public static boolean addIngredientToRecept(int ingrId, int prodId, int receptId, double amt, Eenheid eenheid) throws InvocationTargetException, IllegalAccessException {
-        return ReceptController.addIngredientToRecept(ingrId, AankoopController.getProduct(prodId), receptId, amt, eenheid);
-    }
-
-    /**
      * Adds a preparation step to a recipe.
      *
      * @param receptId  The id of the recipe.
      * @param stapId    The id of the step.
      * @param stapName  The name of the step.
      * @param stapBesch The description of the step.
-     * @throws InvocationTargetException if the called method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) throws InvocationTargetException, IllegalAccessException {
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
         ReceptController.addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch);
     }
 
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) throws InvocationTargetException, IllegalAccessException {
+    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) {
         ReceptController.addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, volgnummer);
     }
 
@@ -160,7 +147,7 @@ public final class Controller {
      * @throws InvocationTargetException if the called method throws an exception.
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         return AankoopController.addClausule(id, contractId, start, end, hoeveelheid, eenheid, bedrag);
     }
 
@@ -176,10 +163,8 @@ public final class Controller {
      * @param receptId The id of the recipe.
      * @param date     The date of the purchase.
      * @return The average purchase price.
-     * @throws InvocationTargetException if the called method throws an exception.
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible.
      */
-    public static Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) throws InvocationTargetException, IllegalAccessException {
+    public static Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) {
         return AankoopController.getGemiddeldeAankoopPrijs(
                 ReceptController.getAllIngredients(receptId), date);
     }
@@ -190,24 +175,25 @@ public final class Controller {
      * @param date The date for which to provide product suggestions.
      * @return A list of product suggestions.
      */
-    public static List<Product> getProductSuggesties(LocalDate date) {
-        return AankoopController.getProductSuggesties(date);
+    public static List<Product> getProductSuggesties(IProductSuggestionsStrat productSuggestionsStrat, LocalDate date) {
+        return AankoopController.getProductSuggesties(productSuggestionsStrat, date);
     }
 
-    public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) throws InvocationTargetException, IllegalAccessException {
+    public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) {
         ReceptController.addIngredientToBereidingstap(receptId, volgNummer, ingredientIds);
     }
 
-    public static boolean addContract(int id, int productId, int leverancierId, int distributieCentrumId) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addContract(int id, int productId, int leverancierId, int distributieCentrumId) {
         return AankoopController.addContract(
                 id,
                 productId,
                 GebruikerController.getLeverancier(leverancierId),
-                distributieCentrumId
+                distributieCentrumId,
+                messageBroker
         );
     }
 
-    public static Recept getRecept(int receptId) throws InvocationTargetException, IllegalAccessException {
+    public static Recept getRecept(int receptId) {
         return ReceptController.getRecept(receptId);
     }
 
@@ -221,5 +207,14 @@ public final class Controller {
 
     public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
         return AankoopController.sortOnAvgPrice(list, date);
+    }
+
+    public static boolean addIngredient(int id, int prodId, double hoeveelheid, Eenheid eenheid) {
+        return ReceptController.addIngredient(
+                id,
+                AankoopController.getProduct(prodId),
+                hoeveelheid,
+                eenheid
+        );
     }
 }

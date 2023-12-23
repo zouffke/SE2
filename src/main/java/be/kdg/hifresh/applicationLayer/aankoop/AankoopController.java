@@ -1,14 +1,16 @@
 package be.kdg.hifresh.applicationLayer.aankoop;
 
-import be.kdg.hifresh.businessLayer.aankoop.AankoopFactory;
-import be.kdg.hifresh.businessLayer.aankoop.Contract;
-import be.kdg.hifresh.businessLayer.aankoop.Product;
-import be.kdg.hifresh.businessLayer.gebruiker.Leverancier;
-import be.kdg.hifresh.businessLayer.recepten.Ingredient;
-import be.kdg.hifresh.businessLayer.util.Eenheid;
-import be.kdg.hifresh.businessLayer.util.Munt;
-import be.kdg.hifresh.businessLayer.util.UtilFactory;
-import be.kdg.hifresh.persistenceLayer.aankoop.AankoopManager;
+import be.kdg.hifresh.businessLayer.domain.aankoop.AankoopFactory;
+import be.kdg.hifresh.businessLayer.domain.aankoop.Contract;
+import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
+import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
+import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
+import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
+import be.kdg.hifresh.businessLayer.domain.util.Munt;
+import be.kdg.hifresh.businessLayer.domain.util.UtilFactory;
+import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
+import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
+import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
 import lombok.Setter;
 
 import java.lang.reflect.InvocationTargetException;
@@ -61,10 +63,8 @@ public final class AankoopController {
      *
      * @param prodId Product ID
      * @return Product object
-     * @throws InvocationTargetException if the underlying method throws an exception
-     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static Product getProduct(int prodId) throws InvocationTargetException, IllegalAccessException {
+    public static Product getProduct(int prodId) {
         return manager.getById(
                 prodId,
                 manager.getPRODUCT_CATALOG());
@@ -101,7 +101,7 @@ public final class AankoopController {
      * @throws InvocationTargetException if the underlying method throws an exception
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Contract contract = manager.getById(
                 contractId,
                 manager.getCONTRACT_CATALOG()
@@ -122,13 +122,14 @@ public final class AankoopController {
         );
     }
 
-    public static boolean addContract(int id, int productId, Leverancier leverancier, int distributieCentrumId) throws InvocationTargetException, IllegalAccessException {
+    public static boolean addContract(int id, int productId, Leverancier leverancier, int distributieCentrumId, MessageBroker messageBroker) {
         return manager.add(
                 AankoopFactory.createContract(
                         id,
                         manager.getById(productId, manager.getPRODUCT_CATALOG()),
                         leverancier,
-                        manager.getById(distributieCentrumId, manager.getDC_CATALOG())
+                        manager.getById(distributieCentrumId, manager.getDC_CATALOG()),
+                        messageBroker
                 ),
                 manager.getCONTRACT_CATALOG()
         );
@@ -153,8 +154,8 @@ public final class AankoopController {
      * @param date Date
      * @return List of product suggestions
      */
-    public static List<Product> getProductSuggesties(LocalDate date) {
-        return manager.getProductSuggesties(date);
+    public static List<Product> getProductSuggesties(IProductSuggestionsStrat productSuggestionsStrat,LocalDate date) {
+        return manager.getProductSuggesties(productSuggestionsStrat, date);
     }
 
     public static List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
