@@ -6,8 +6,11 @@ import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.businessLayer.services.Manager;
 import be.kdg.hifresh.persistenceLayer.gebruiker.LeverancierCataloog;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Getter
+@Service
 public class GebruikerManager extends Manager {
     //region vars
     private final Catalog<Leverancier> LEVERANCIER_CATALOG;
@@ -15,6 +18,7 @@ public class GebruikerManager extends Manager {
     //endregion
 
     //region constructors
+    @Autowired
     public GebruikerManager(MessageBroker messageBroker) {
         this.LEVERANCIER_CATALOG = new LeverancierCataloog();
         this.messageBroker = messageBroker;

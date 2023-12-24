@@ -12,6 +12,8 @@ import be.kdg.hifresh.persistenceLayer.aankoop.ContractCataloog;
 import be.kdg.hifresh.persistenceLayer.aankoop.DistributieCentraCataloog;
 import be.kdg.hifresh.persistenceLayer.aankoop.ProductCataloog;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
@@ -26,6 +28,7 @@ import java.util.*;
  * @author Dandois Luca
  */
 @Getter
+@Service
 public class AankoopManager extends Manager {
 
     //region vars
@@ -49,10 +52,14 @@ public class AankoopManager extends Manager {
      *
      * @author Dandois Luca
      */
-    public AankoopManager() {
-        this.CONTRACT_CATALOG = new ContractCataloog();
-        this.DC_CATALOG = new DistributieCentraCataloog();
-        this.PRODUCT_CATALOG = new ProductCataloog();
+    @Autowired
+    public AankoopManager(
+            ContractCataloog contractCataloog,
+            DistributieCentraCataloog distributieCentraCataloog,
+            ProductCataloog productCataloog) {
+        this.CONTRACT_CATALOG = contractCataloog;
+        this.DC_CATALOG = distributieCentraCataloog;
+        this.PRODUCT_CATALOG = productCataloog;
     }
     //endregion
 

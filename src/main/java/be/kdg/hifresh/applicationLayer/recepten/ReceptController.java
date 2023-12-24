@@ -1,37 +1,40 @@
 package be.kdg.hifresh.applicationLayer.recepten;
 
-import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
+import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
 import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.domain.recepten.Recept;
 import be.kdg.hifresh.businessLayer.domain.recepten.ReceptenFactory;
 import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
+import be.kdg.hifresh.businessLayer.domain.util.Munt;
 import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
  * This class is responsible for managing recipes.
  * It provides methods to add recipes, add sub-recipes, add ingredients, and add preparation steps to recipes.
  */
+@Controller
 public final class ReceptController {
 
     //region vars
 
-    /**
-     * ReceptManager instance
-     */
-    @Setter
-    private static ReceptManager manager;
+
+    private final ReceptManager MANAGER;
+    private final AankoopController AANKOOP_CONTROLLER;
 
     //endregion
 
     //region constructors
 
-    /**
-     * Private constructor to prevent instantiation
-     */
-    private ReceptController() {
+    @Autowired
+    public ReceptController(ReceptManager manager,
+                            AankoopController aankoopController) {
+        this.MANAGER = manager;
+        this.AANKOOP_CONTROLLER = aankoopController;
     }
 
     //endregion
@@ -44,8 +47,8 @@ public final class ReceptController {
      * @param receptId Recipe ID
      * @return List of ingredients
      */
-    public static List<Ingredient> getAllIngredients(int receptId) {
-        return manager.getAllIngredients(receptId);
+    public List<Ingredient> getAllIngredients(int receptId) {
+        return MANAGER.getAllIngredients(receptId);
     }
 
     /**
@@ -56,10 +59,10 @@ public final class ReceptController {
      * @param beschrijving Recipe description
      * @return true if the recipe was added successfully, false otherwise
      */
-    public static boolean addRecept(int id, String name, String beschrijving) {
-        return manager.add(
+    public boolean addRecept(int id, String name, String beschrijving) {
+        return MANAGER.add(
                 ReceptenFactory.createRecept(id, name, beschrijving),
-                manager.getReceptCataloog()
+                MANAGER.getRECEPT_CATALOG()
         );
     }
 
@@ -70,9 +73,9 @@ public final class ReceptController {
      * @param receptId    Recipe ID
      * @return true if the sub-recipe was added successfully, false otherwise
      */
-    public static boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) {
-        Recept recept = manager.getById(receptId, manager.getReceptCataloog());
-        Recept subRecept = manager.getById(subReceptId, manager.getReceptCataloog());
+    public boolean addSubreceptToRecept(int subReceptId, int receptId, int stap) {
+        Recept recept = MANAGER.getById(receptId, MANAGER.getRECEPT_CATALOG());
+        Recept subRecept = MANAGER.getById(subReceptId, MANAGER.getRECEPT_CATALOG());
 
         return recept.addSubrecept(subRecept, stap);
     }
@@ -85,14 +88,14 @@ public final class ReceptController {
      * @param stapName  Step name
      * @param stapBesch Step description
      */
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
-        addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, manager.getById(receptId, manager.getReceptCataloog()).getNextVolgnummer());
+    public void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch) {
+        addBereidingsStapToRecept(receptId, stapId, stapName, stapBesch, MANAGER.getById(receptId, MANAGER.getRECEPT_CATALOG()).getNextVolgnummer());
     }
 
-    public static void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) {
-        Recept recept = manager.getById(
+    public void addBereidingsStapToRecept(int receptId, int stapId, String stapName, String stapBesch, int volgnummer) {
+        Recept recept = MANAGER.getById(
                 receptId,
-                manager.getReceptCataloog());
+                MANAGER.getRECEPT_CATALOG());
 
         recept.addBereidingsStap(
                 ReceptenFactory.createBereidingsStap(
@@ -104,28 +107,39 @@ public final class ReceptController {
         );
     }
 
-    public static void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) {
-        Recept recept = manager.getById(receptId, manager.getReceptCataloog());
+    public void addIngredientToBereidingstap(int receptId, int volgNummer, List<Integer> ingredientIds) {
+        Recept recept = MANAGER.getById(receptId, MANAGER.getRECEPT_CATALOG());
 
         for (Integer id : ingredientIds) {
-            recept.addIngredient(manager.getById(id, manager.getINGREDIENT_CATALOG()), volgNummer);
+            recept.addIngredient(MANAGER.getById(id, MANAGER.getINGREDIENT_CATALOG()), volgNummer);
         }
     }
     //endregion
 
-    public static Recept getRecept(int receptId) {
-        return manager.getById(receptId, manager.getReceptCataloog());
+    public Recept getRecept(int receptId) {
+        return MANAGER.getById(receptId, MANAGER.getRECEPT_CATALOG());
     }
 
-    public static boolean addIngredient(int ingrId, Product product, double hoeveelheid, Eenheid eenheid) {
-        return manager.add(
+    public boolean addIngredient(int ingrId, int prodId, double hoeveelheid, Eenheid eenheid) {
+        return MANAGER.add(
                 ReceptenFactory.createIngredient(
                         ingrId,
-                        product,
+                        AANKOOP_CONTROLLER.getProduct(prodId),
                         hoeveelheid,
                         eenheid
                 ),
-                manager.getINGREDIENT_CATALOG()
+                MANAGER.getINGREDIENT_CATALOG()
         );
+    }
+
+    /**
+     * Calculates the average purchase price
+     *
+     * @param date        Date
+     * @return Munt object representing the average purchase price
+     */
+    public Munt getGemiddeldeAankoopPrijs(int receptId, LocalDate date) {
+        List<Ingredient> ingredients = getAllIngredients(receptId);
+        return AANKOOP_CONTROLLER.getGemiddeldeAankoopPrijs(ingredients, date);
     }
 }

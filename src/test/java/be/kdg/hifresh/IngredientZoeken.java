@@ -1,13 +1,18 @@
-package features;
+package be.kdg.hifresh;
 
-import be.kdg.hifresh.applicationLayer.Controller;
+import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
+import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
+import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
 import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
+import be.kdg.hifresh.persistenceLayer.memory.MemoryRepository;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
@@ -16,14 +21,22 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest
-@CucumberContextConfiguration
 public class IngredientZoeken {
+
+    //region vars
+
     private List<Product> products;
+    @Autowired
+    AankoopController aankoopController;
+    @Autowired
+    MemoryRepository memoryRepository;
+
+    //endregion
 
     @When("ik zoek op het woord {string}")
     public void ikZoekOpHetWoord(String arg0) {
         try {
-            products = Controller.getProductsByName(arg0);
+            products = aankoopController.getProductsByName(arg0);
         } catch (InvocationTargetException | IllegalAccessException e) {
             Assertions.fail(e);
         }
@@ -44,12 +57,12 @@ public class IngredientZoeken {
 
     @When("ik zoek naar producten die beschikbaar zijn")
     public void ikZoekNaarProductenDieBeschikbaarZijn() {
-        products = Controller.getActiveProducts(Controller.getToday());
+        products = aankoopController.getActiveProducts((LocalDate) memoryRepository.get(LocalDate.class));
     }
 
     @When("ik zoek naar product die beschikbaar zijn, stijgend gesorteerd op gemiddelde aankoopprijs")
     public void ikZoekNaarProductDieBeschikbaarZijnStijgendGesorteerdOpGemiddeldeAankoopprijs() {
-        LocalDate date = Controller.getToday();
-        products = Controller.sortOnAvgPrice(Controller.getActiveProducts(date), date);
+        LocalDate date = (LocalDate) memoryRepository.get(LocalDate.class);
+        products = aankoopController.sortOnAvgPrice(aankoopController.getActiveProducts(date), date);
     }
 }

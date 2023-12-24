@@ -38,7 +38,7 @@ public final class GemiddeldeAankoopPrijs {
         for (Contract contract : product.getCONTRACTEN()) {
             for (PrijsAfspraak prijsAfspraak : contract.getGeldendePrijsAfspraken(date)) {
                 double tempHoeveelheid = prijsAfspraak.getMAX_HOEVEELHEID();
-                bedrag += prijsAfspraak.getPRIJS().getBedrag() * tempHoeveelheid;
+                bedrag += prijsAfspraak.getPRIJS().getBEDRAG() * tempHoeveelheid;
                 hoeveelheid += tempHoeveelheid;
             }
         }
@@ -93,7 +93,7 @@ public final class GemiddeldeAankoopPrijs {
         while (week.isBefore(LocalDate.of(date.getYear() + 1, 1, 1))) {
             Munt munt = getGemiddeldeWeekAankoopPrijs(week, product);
 
-            double tempBedrag = munt.getBedrag();
+            double tempBedrag = munt.getBEDRAG();
 
             if (tempBedrag > 0) {
                 bedrag += tempBedrag;

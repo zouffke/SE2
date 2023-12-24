@@ -1,9 +1,10 @@
 package be.kdg.hifresh.applicationLayer.aankoop;
 
+import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
+import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
 import be.kdg.hifresh.businessLayer.domain.aankoop.AankoopFactory;
 import be.kdg.hifresh.businessLayer.domain.aankoop.Contract;
 import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
-import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
 import be.kdg.hifresh.businessLayer.domain.recepten.Ingredient;
 import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
 import be.kdg.hifresh.businessLayer.domain.util.Munt;
@@ -11,7 +12,8 @@ import be.kdg.hifresh.businessLayer.domain.util.UtilFactory;
 import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
 import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
 import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
-import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDate;
@@ -21,15 +23,15 @@ import java.util.List;
  * This class is responsible for managing contracts.
  * It provides methods to add products, get products, add centrum to catalog, add clausule, get average purchase price and get product suggestions.
  */
+@Controller
 public final class AankoopController {
 
     //region vars
 
-    /**
-     * ContractManager instance
-     */
-    @Setter
-    private static AankoopManager manager;
+
+    private final AankoopManager MANAGER;
+    private final GebruikerController GEBRUIKER_CONTROLLER;
+    private final MessageBroker MESSAGE_BROKER;
 
     //endregion
 
@@ -38,7 +40,13 @@ public final class AankoopController {
     /**
      * Private constructor to prevent instantiation
      */
-    private AankoopController() {
+    @Autowired
+    public AankoopController(AankoopManager manager,
+                             GebruikerController gebruikerController,
+                             MessageBroker messageBroker) {
+        this.MANAGER = manager;
+        this.GEBRUIKER_CONTROLLER = gebruikerController;
+        this.MESSAGE_BROKER = messageBroker;
     }
 
     //endregion
@@ -52,10 +60,10 @@ public final class AankoopController {
      * @param name   Product name
      * @return true if the product was added successfully, false otherwise
      */
-    public static boolean addProduct(int prodId, String name) {
-        return manager.add(
+    public boolean addProduct(int prodId, String name) {
+        return MANAGER.add(
                 AankoopFactory.createProduct(prodId, name),
-                manager.getPRODUCT_CATALOG());
+                MANAGER.getPRODUCT_CATALOG());
     }
 
     /**
@@ -64,10 +72,10 @@ public final class AankoopController {
      * @param prodId Product ID
      * @return Product object
      */
-    public static Product getProduct(int prodId) {
-        return manager.getById(
+    public Product getProduct(int prodId) {
+        return MANAGER.getById(
                 prodId,
-                manager.getPRODUCT_CATALOG());
+                MANAGER.getPRODUCT_CATALOG());
     }
 
     /**
@@ -77,13 +85,13 @@ public final class AankoopController {
      * @param name Distribution center name
      * @return true if the distribution center was added successfully, false otherwise
      */
-    public static boolean addCentrum(int id, String name) {
-        return manager.add(
+    public boolean addCentrum(int id, String name) {
+        return MANAGER.add(
                 AankoopFactory.createDistributieCentrum(
                         id,
                         name
                 ),
-                manager.getDC_CATALOG()
+                MANAGER.getDC_CATALOG()
         );
     }
 
@@ -101,10 +109,10 @@ public final class AankoopController {
      * @throws InvocationTargetException if the underlying method throws an exception
      * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
      */
-    public static boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
-        Contract contract = manager.getById(
+    public boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
+        Contract contract = MANAGER.getById(
                 contractId,
-                manager.getCONTRACT_CATALOG()
+                MANAGER.getCONTRACT_CATALOG()
         );
 
         return contract.addClausule(
@@ -122,16 +130,16 @@ public final class AankoopController {
         );
     }
 
-    public static boolean addContract(int id, int productId, Leverancier leverancier, int distributieCentrumId, MessageBroker messageBroker) {
-        return manager.add(
+    public boolean addContract(int id, int productId, int leverancierId, int distributieCentrumId) {
+        return MANAGER.add(
                 AankoopFactory.createContract(
                         id,
-                        manager.getById(productId, manager.getPRODUCT_CATALOG()),
-                        leverancier,
-                        manager.getById(distributieCentrumId, manager.getDC_CATALOG()),
-                        messageBroker
+                        MANAGER.getById(productId, MANAGER.getPRODUCT_CATALOG()),
+                        GEBRUIKER_CONTROLLER.getLeverancier(leverancierId),
+                        MANAGER.getById(distributieCentrumId, MANAGER.getDC_CATALOG()),
+                        MESSAGE_BROKER
                 ),
-                manager.getCONTRACT_CATALOG()
+                MANAGER.getCONTRACT_CATALOG()
         );
     }
 
@@ -140,12 +148,11 @@ public final class AankoopController {
     /**
      * Calculates the average purchase price
      *
-     * @param ingredients List of ingredients
      * @param date        Date
      * @return Munt object representing the average purchase price
      */
-    public static Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
-        return manager.getGemiddeldeAankoopPrijs(ingredients, date);
+    public Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
+        return MANAGER.getGemiddeldeAankoopPrijs(ingredients, date);
     }
 
     /**
@@ -154,19 +161,19 @@ public final class AankoopController {
      * @param date Date
      * @return List of product suggestions
      */
-    public static List<Product> getProductSuggesties(IProductSuggestionsStrat productSuggestionsStrat,LocalDate date) {
-        return manager.getProductSuggesties(productSuggestionsStrat, date);
+    public List<Product> getProductSuggesties(IProductSuggestionsStrat productSuggestionsStrat, LocalDate date) {
+        return MANAGER.getProductSuggesties(productSuggestionsStrat, date);
     }
 
-    public static List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
-        return manager.getProductsByName(name);
+    public List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
+        return MANAGER.getProductsByName(name);
     }
 
-    public static List<Product> getActiveProducts(LocalDate date) {
-        return manager.getActiveProducts(date);
+    public List<Product> getActiveProducts(LocalDate date) {
+        return MANAGER.getActiveProducts(date);
     }
 
-    public static List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
-        return manager.sortOnAvgPrice(list, date);
+    public List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
+        return MANAGER.sortOnAvgPrice(list, date);
     }
 }

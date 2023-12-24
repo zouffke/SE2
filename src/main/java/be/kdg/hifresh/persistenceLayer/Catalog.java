@@ -36,6 +36,7 @@ public abstract class Catalog<T> {
      * @param obj The object to be added to the catalog.
      * @return true if the object was added successfully, false otherwise.
      */
+
     public boolean add(T obj) {
         return this.list.add(obj);
     }

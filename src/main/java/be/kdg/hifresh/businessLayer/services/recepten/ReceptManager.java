@@ -7,6 +7,8 @@ import be.kdg.hifresh.persistenceLayer.Catalog;
 import be.kdg.hifresh.persistenceLayer.recepten.IngredientCataloog;
 import be.kdg.hifresh.persistenceLayer.recepten.ReceptCataloog;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -19,13 +21,14 @@ import java.util.List;
  * @author Dandois Luca
  */
 @Getter
+@Service
 public class ReceptManager extends Manager {
     //region vars
 
     /**
      * Catalog of recipes.
      */
-    private final Catalog<Recept> receptCataloog;
+    private final Catalog<Recept> RECEPT_CATALOG;
 
     /**
      * Catalog of ingredients.
@@ -40,9 +43,11 @@ public class ReceptManager extends Manager {
      * Constructor for ReceptManager.
      * Initializes the recipe catalog and ingredient catalog.
      */
-    public ReceptManager() {
-        this.receptCataloog = new ReceptCataloog();
-        this.INGREDIENT_CATALOG = new IngredientCataloog();
+    @Autowired
+    public ReceptManager(ReceptCataloog receptCataloog
+            , IngredientCataloog ingredientCataloog) {
+        this.RECEPT_CATALOG = receptCataloog;
+        this.INGREDIENT_CATALOG = ingredientCataloog;
     }
     //endregion
 
@@ -54,6 +59,6 @@ public class ReceptManager extends Manager {
      * @return List of ingredients
      */
     public List<Ingredient> getAllIngredients(int receptId) {
-        return super.getById(receptId, receptCataloog).getIngredients();
+        return super.getById(receptId, RECEPT_CATALOG).getIngredients();
     }
 }

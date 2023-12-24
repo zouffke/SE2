@@ -4,25 +4,32 @@ import be.kdg.hifresh.businessLayer.domain.gebruiker.GebruikerFactory;
 import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
 import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
+@Controller
 public final class GebruikerController {
     //region vars
-    @Setter
-    private static GebruikerManager manager;
+    private final GebruikerManager MANAGER;
 
     //endregion
-    //constructors
-    private GebruikerController() {
+
+    //region constructors
+
+    @Autowired
+    public GebruikerController(GebruikerManager manager) {
+        this.MANAGER = manager;
     }
+
     //endregion
 
     //region setup functions
-    public static boolean addLeverancier(int id, String name) {
-        return manager.add(GebruikerFactory.createLeverancier(id, name), manager.getLEVERANCIER_CATALOG());
+    public boolean addLeverancier(int id, String name) {
+        return MANAGER.add(GebruikerFactory.createLeverancier(id, name), MANAGER.getLEVERANCIER_CATALOG());
     }
     //endregion
 
-    public static Leverancier getLeverancier(int leverancierId) {
-        return manager.getById(leverancierId, manager.getLEVERANCIER_CATALOG());
+    public Leverancier getLeverancier(int leverancierId) {
+        return MANAGER.getById(leverancierId, MANAGER.getLEVERANCIER_CATALOG());
     }
 }
