@@ -2,11 +2,28 @@ package be.kdg.hifresh.businessLayer.services;
 
 import be.kdg.hifresh.persistenceLayer.Catalog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * An abstract class that provides a base for all manager classes.
  * Implements the IManager interface.
  */
 public abstract class Manager {
+
+    //region vars
+
+    List<Catalog<?>> catalogs;
+
+    //endregion
+
+    //region constructors
+
+    protected Manager() {
+        this.catalogs = new ArrayList<>();
+    }
+
+    //endregion
 
     //region catalog functions
 
@@ -33,5 +50,6 @@ public abstract class Manager {
         return catalog.get(catalog.indexById(objId));
     }
 
+    public abstract void clearCatalogs();
     //endregion
 }

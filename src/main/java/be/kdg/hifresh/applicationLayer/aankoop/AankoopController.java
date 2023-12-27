@@ -176,4 +176,8 @@ public final class AankoopController {
     public List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
         return MANAGER.sortOnAvgPrice(list, date);
     }
+
+    public void clearCatalogs(){
+        this.MANAGER.clearCatalogs();
+    }
 }

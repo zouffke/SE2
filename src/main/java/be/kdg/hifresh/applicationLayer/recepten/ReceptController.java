@@ -142,4 +142,8 @@ public final class ReceptController {
         List<Ingredient> ingredients = getAllIngredients(receptId);
         return AANKOOP_CONTROLLER.getGemiddeldeAankoopPrijs(ingredients, date);
     }
+
+    public void clearCatalogs(){
+        this.MANAGER.clearCatalogs();
+    }
 }

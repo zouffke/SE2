@@ -89,4 +89,8 @@ public abstract class Catalog<T> {
         }
         return filtered;
     }
+
+    public void clear() {
+        this.list.clear();
+    }
 }

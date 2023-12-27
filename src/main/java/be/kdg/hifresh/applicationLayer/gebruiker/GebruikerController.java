@@ -32,4 +32,8 @@ public final class GebruikerController {
     public Leverancier getLeverancier(int leverancierId) {
         return MANAGER.getById(leverancierId, MANAGER.getLEVERANCIER_CATALOG());
     }
+
+    public void clearCatalogs(){
+        this.MANAGER.clearCatalogs();
+    }
 }

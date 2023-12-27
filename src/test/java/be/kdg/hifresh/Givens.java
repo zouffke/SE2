@@ -36,8 +36,16 @@ public class Givens {
 
     //endregion
 
+
+    private void beforeAll() {
+        aankoopController.clearCatalogs();
+        gebruikerController.clearCatalogs();
+        receptController.clearCatalogs();
+    }
+
     @Given("producten")
     public void producten(DataTable dataTable) {
+        beforeAll();
         dataTable.asMaps().forEach(r -> assertTrue(aankoopController.addProduct(
                 Integer.parseInt(r.get("product_id")),
                 r.get("product_naam"))

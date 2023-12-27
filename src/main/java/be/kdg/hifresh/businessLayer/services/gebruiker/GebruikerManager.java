@@ -1,9 +1,9 @@
 package be.kdg.hifresh.businessLayer.services.gebruiker;
 
 import be.kdg.hifresh.businessLayer.domain.gebruiker.Leverancier;
+import be.kdg.hifresh.businessLayer.services.Manager;
 import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
 import be.kdg.hifresh.persistenceLayer.Catalog;
-import be.kdg.hifresh.businessLayer.services.Manager;
 import be.kdg.hifresh.persistenceLayer.gebruiker.LeverancierCataloog;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,4 +31,9 @@ public class GebruikerManager extends Manager {
         messageBroker.subscribe(object);
         return super.add(object, catalog);
     }
+
+    public void clearCatalogs() {
+        this.LEVERANCIER_CATALOG.clear();
+    }
+
 }

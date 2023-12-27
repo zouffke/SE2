@@ -61,4 +61,10 @@ public class ReceptManager extends Manager {
     public List<Ingredient> getAllIngredients(int receptId) {
         return super.getById(receptId, RECEPT_CATALOG).getIngredients();
     }
+
+    @Override
+    public void clearCatalogs() {
+        this.RECEPT_CATALOG.clear();
+        this.INGREDIENT_CATALOG.clear();
+    }
 }

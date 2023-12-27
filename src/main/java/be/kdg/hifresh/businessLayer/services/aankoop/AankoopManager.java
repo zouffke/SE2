@@ -108,4 +108,11 @@ public class AankoopManager extends Manager {
                 p -> GemiddeldeAankoopPrijs.getGemiddeldeAankoopPrijs(p, date)
         )).toList();
     }
+
+    @Override
+    public void clearCatalogs(){
+        this.CONTRACT_CATALOG.clear();
+        this.DC_CATALOG.clear();
+        this.PRODUCT_CATALOG.clear();
+    }
 }
