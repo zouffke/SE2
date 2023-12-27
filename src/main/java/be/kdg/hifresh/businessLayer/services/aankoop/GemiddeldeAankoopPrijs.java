@@ -11,9 +11,24 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * This class provides utility methods for calculating the average purchase price of products.
+ * It contains methods to calculate the average purchase price for a list of ingredients, a single product,
+ * and weekly and yearly averages for a product.
+ */
 public final class GemiddeldeAankoopPrijs {
+    /**
+     * Private constructor to prevent instantiation of this utility class.
+     */
     private GemiddeldeAankoopPrijs(){}
 
+    /**
+     * Calculates the average purchase price for a list of ingredients on a given date.
+     *
+     * @param ingredients List of ingredients for which the average purchase price is to be calculated.
+     * @param date The date for which the average purchase price is to be calculated.
+     * @return The average purchase price as a Munt object.
+     */
     static Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date){
         double totaalBedrag = 0;
 

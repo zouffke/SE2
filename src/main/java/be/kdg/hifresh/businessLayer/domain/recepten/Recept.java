@@ -10,38 +10,39 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Represents a recipe for preparing a dish.
+ * This class represents a recipe for preparing a dish.
+ * It extends the Bereiding class and contains a list of preparation steps and sub-recipes.
+ * It also contains a meal, a list of labels, a preparation time, and a photo associated with the recipe.
  */
 public class Recept extends Bereiding {
 
-    //region vars
+    /**
+     * List of preparation steps and sub-recipes associated with this recipe.
+     */
     private final List<Bereiding> BEREIDINGEN;
+
     /**
      * The meal associated with this recipe.
      */
-    @SuppressWarnings("unused")
     private Maaltijd maaltijd;
+
     /**
      * The list of labels associated with this recipe.
      */
-    @SuppressWarnings("unused")
     private List<Label> labels;
+
     /**
      * The time required to prepare this recipe.
      */
-    @SuppressWarnings("unused")
     private Duration bereidingstijd;
+
     /**
      * The photo of this recipe.
      */
-    @SuppressWarnings("unused")
     private String foto;
-    //endregion
-
-    //region constructors
 
     /**
-     * Constructor for Recept.
+     * Constructor for creating a new recipe.
      *
      * @param name         The name of the recipe.
      * @param id           The id of the recipe.
@@ -51,8 +52,12 @@ public class Recept extends Bereiding {
         super(id, name, beschrijving);
         this.BEREIDINGEN = new ArrayList<>();
     }
-    //endregion
 
+    /**
+     * Retrieves all sub-recipes associated with this recipe.
+     *
+     * @return List of sub-recipes.
+     */
     public List<Recept> getSubrecepts() {
         return BEREIDINGEN.stream()
                 .filter(bereiding -> bereiding instanceof Recept)
@@ -60,6 +65,11 @@ public class Recept extends Bereiding {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves all preparation steps associated with this recipe.
+     *
+     * @return List of preparation steps.
+     */
     public List<BereidingsStap> getStappen() {
         return Stream.concat(
                         BEREIDINGEN.stream()
@@ -71,6 +81,12 @@ public class Recept extends Bereiding {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Retrieves a preparation step by its sequence number.
+     *
+     * @param volgnummer Sequence number of the preparation step.
+     * @return Preparation step.
+     */
     public BereidingsStap getStap(int volgnummer){
         return getStappen().stream()
                 .filter(stap -> stap.getVolgNummer() == volgnummer)
@@ -78,6 +94,11 @@ public class Recept extends Bereiding {
                 .orElse(null);
     }
 
+    /**
+     * Retrieves all ingredients associated with this recipe.
+     *
+     * @return List of ingredients.
+     */
     public List<Ingredient> getIngredients(){
         return this.getStappen().stream()
                 .flatMap(stap -> stap.getINGREDIENTS().stream())
@@ -88,9 +109,9 @@ public class Recept extends Bereiding {
      * Adds a sub-recipe to the list of sub-recipes associated with this recipe.
      *
      * @param recept The sub-recipe to be added.
+     * @param stap The sequence number of the preparation step.
      * @return true if the sub-recipe was added successfully, false otherwise.
      */
-    //TODO
     public boolean addSubrecept(Recept recept, int stap) {
         List<BereidingsStap> subStappen = recept.getStappen();
         this.getStappen().stream()
@@ -102,9 +123,10 @@ public class Recept extends Bereiding {
     }
 
     /**
-     * Adds an ingredient to the list of ingredients needed for this recipe.
+     * Adds an ingredient to a preparation step of this recipe.
      *
      * @param ingredient The ingredient to be added.
+     * @param volgnummer The sequence number of the preparation step.
      */
     public void addIngredient(Ingredient ingredient, int volgnummer) {
         this.getStap(volgnummer).addIngredient(ingredient);

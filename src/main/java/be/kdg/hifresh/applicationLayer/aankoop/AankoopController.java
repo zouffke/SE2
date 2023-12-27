@@ -1,7 +1,6 @@
 package be.kdg.hifresh.applicationLayer.aankoop;
 
 import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
-import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
 import be.kdg.hifresh.businessLayer.domain.aankoop.AankoopFactory;
 import be.kdg.hifresh.businessLayer.domain.aankoop.Contract;
 import be.kdg.hifresh.businessLayer.domain.aankoop.Product;
@@ -12,6 +11,9 @@ import be.kdg.hifresh.businessLayer.domain.util.UtilFactory;
 import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
 import be.kdg.hifresh.businessLayer.services.aankoop.productSuggestions.IProductSuggestionsStrat;
 import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
+import be.kdg.hifresh.persistenceLayer.aankoop.ContractCataloog;
+import be.kdg.hifresh.persistenceLayer.aankoop.DistributieCentraCataloog;
+import be.kdg.hifresh.persistenceLayer.aankoop.ProductCataloog;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -28,9 +30,19 @@ public final class AankoopController {
 
     //region vars
 
-
+    /**
+     * AankoopManager instance for managing contracts
+     */
     private final AankoopManager MANAGER;
+
+    /**
+     * GebruikerController instance for managing users
+     */
     private final GebruikerController GEBRUIKER_CONTROLLER;
+
+    /**
+     * MessageBroker instance for managing messages
+     */
     private final MessageBroker MESSAGE_BROKER;
 
     //endregion
@@ -39,6 +51,9 @@ public final class AankoopController {
 
     /**
      * Private constructor to prevent instantiation
+     * @param manager AankoopManager instance
+     * @param gebruikerController GebruikerController instance
+     * @param messageBroker MessageBroker instance
      */
     @Autowired
     public AankoopController(AankoopManager manager,
@@ -63,7 +78,7 @@ public final class AankoopController {
     public boolean addProduct(int prodId, String name) {
         return MANAGER.add(
                 AankoopFactory.createProduct(prodId, name),
-                MANAGER.getPRODUCT_CATALOG());
+                MANAGER.getCatalog(ProductCataloog.class));
     }
 
     /**
@@ -75,7 +90,7 @@ public final class AankoopController {
     public Product getProduct(int prodId) {
         return MANAGER.getById(
                 prodId,
-                MANAGER.getPRODUCT_CATALOG());
+                MANAGER.getCatalog(ProductCataloog.class));
     }
 
     /**
@@ -91,7 +106,7 @@ public final class AankoopController {
                         id,
                         name
                 ),
-                MANAGER.getDC_CATALOG()
+                MANAGER.getCatalog(DistributieCentraCataloog.class)
         );
     }
 
@@ -112,7 +127,7 @@ public final class AankoopController {
     public boolean addClausule(int id, int contractId, LocalDate start, LocalDate end, double hoeveelheid, Eenheid eenheid, double bedrag) throws InvocationTargetException, IllegalAccessException, NoSuchMethodException {
         Contract contract = MANAGER.getById(
                 contractId,
-                MANAGER.getCONTRACT_CATALOG()
+                MANAGER.getCatalog(ContractCataloog.class)
         );
 
         return contract.addClausule(
@@ -130,16 +145,25 @@ public final class AankoopController {
         );
     }
 
+    /**
+     * Adds a contract to the catalog
+     *
+     * @param id Contract ID
+     * @param productId Product ID
+     * @param leverancierId Supplier ID
+     * @param distributieCentrumId Distribution center ID
+     * @return true if the contract was added successfully, false otherwise
+     */
     public boolean addContract(int id, int productId, int leverancierId, int distributieCentrumId) {
         return MANAGER.add(
                 AankoopFactory.createContract(
                         id,
-                        MANAGER.getById(productId, MANAGER.getPRODUCT_CATALOG()),
+                        MANAGER.getById(productId, MANAGER.getCatalog(ProductCataloog.class)),
                         GEBRUIKER_CONTROLLER.getLeverancier(leverancierId),
-                        MANAGER.getById(distributieCentrumId, MANAGER.getDC_CATALOG()),
+                        MANAGER.getById(distributieCentrumId, MANAGER.getCatalog(DistributieCentraCataloog.class)),
                         MESSAGE_BROKER
                 ),
-                MANAGER.getCONTRACT_CATALOG()
+                MANAGER.getCatalog(ContractCataloog.class)
         );
     }
 
@@ -148,7 +172,7 @@ public final class AankoopController {
     /**
      * Calculates the average purchase price
      *
-     * @param date        Date
+     * @param date Date
      * @return Munt object representing the average purchase price
      */
     public Munt getGemiddeldeAankoopPrijs(List<Ingredient> ingredients, LocalDate date) {
@@ -165,19 +189,43 @@ public final class AankoopController {
         return MANAGER.getProductSuggesties(productSuggestionsStrat, date);
     }
 
+    /**
+     * Retrieves a list of products by their name
+     *
+     * @param name Product name
+     * @return List of products
+     * @throws InvocationTargetException if the underlying method throws an exception
+     * @throws IllegalAccessException    if this Method object is enforcing Java language access control and the underlying method is inaccessible
+     */
     public List<Product> getProductsByName(String name) throws InvocationTargetException, IllegalAccessException {
-        return MANAGER.getProductsByName(name);
+        return MANAGER.getTByName(name, Product.class);
     }
 
+    /**
+     * Retrieves a list of active products
+     *
+     * @param date Date
+     * @return List of active products
+     */
     public List<Product> getActiveProducts(LocalDate date) {
         return MANAGER.getActiveProducts(date);
     }
 
+    /**
+     * Sorts a list of products based on their average price
+     *
+     * @param list List of products
+     * @param date Date
+     * @return Sorted list of products
+     */
     public List<Product> sortOnAvgPrice(List<Product> list, LocalDate date) {
         return MANAGER.sortOnAvgPrice(list, date);
     }
 
-    public void clearCatalogs(){
+    /**
+     * Clears all catalogs
+     */
+    public void clearCatalogs() {
         this.MANAGER.clearCatalogs();
     }
 }

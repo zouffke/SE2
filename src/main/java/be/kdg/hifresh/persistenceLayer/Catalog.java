@@ -36,7 +36,6 @@ public abstract class Catalog<T> {
      * @param obj The object to be added to the catalog.
      * @return true if the object was added successfully, false otherwise.
      */
-
     public boolean add(T obj) {
         return this.list.add(obj);
     }
@@ -75,6 +74,14 @@ public abstract class Catalog<T> {
                 .orElse(-1);
     }
 
+    /**
+     * Retrieves a list of objects from the catalog by their name.
+     *
+     * @param name The name of the objects to be retrieved.
+     * @return A list of objects with the specified name in the catalog.
+     * @throws InvocationTargetException if the underlying method throws an exception.
+     * @throws IllegalAccessException if this Method object is enforcing Java language access control and the underlying method is inaccessible.
+     */
     public List<T> getByName(String name) throws InvocationTargetException, IllegalAccessException {
         List<T> filtered = new ArrayList<>();
         for (T t : list) {
@@ -90,6 +97,9 @@ public abstract class Catalog<T> {
         return filtered;
     }
 
+    /**
+     * Clears all objects from the catalog.
+     */
     public void clear() {
         this.list.clear();
     }
