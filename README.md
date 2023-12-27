@@ -17,10 +17,6 @@ December 10th, 2023
 
 [Opdracht 3](https://canvas.kdg.be/courses/42929/assignments/165551)
 
-### Domain model
-
-![img.png](img.png)
-
 ## Software Enineering 2 - Opdracht 4
 
 December 23rd, 2023
