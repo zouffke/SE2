@@ -41,7 +41,7 @@ public class PercentDiffProductSuggestionsStrat implements IProductSuggestionsSt
      * @return The percentage difference.
      */
     private double getProcentueelVerschil(Munt week, Munt year) {
-        return (1 - (week.getBedrag() / year.getBedrag()) * 100);
+        return (1 - (week.getBEDRAG() / year.getBEDRAG()) * 100);
     }
 
     /**

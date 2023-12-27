@@ -1,16 +1,15 @@
-package features;
+package be.kdg.hifresh;
 
-import be.kdg.hifresh.applicationLayer.Controller;
+import be.kdg.hifresh.applicationLayer.aankoop.AankoopController;
+import be.kdg.hifresh.applicationLayer.gebruiker.GebruikerController;
+import be.kdg.hifresh.applicationLayer.recepten.ReceptController;
 import be.kdg.hifresh.businessLayer.domain.util.Eenheid;
-import be.kdg.hifresh.businessLayer.services.aankoop.AankoopManager;
-import be.kdg.hifresh.businessLayer.services.gebruiker.GebruikerManager;
-import be.kdg.hifresh.businessLayer.services.pubSub.MessageBroker;
-import be.kdg.hifresh.businessLayer.services.recepten.ReceptManager;
+import be.kdg.hifresh.persistenceLayer.memory.MemoryRepository;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.Given;
 import io.cucumber.spring.CucumberContextConfiguration;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.lang.reflect.InvocationTargetException;
@@ -23,16 +22,31 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @CucumberContextConfiguration
 public class Givens {
-    @BeforeAll
-    static void beforeAll() {
-        Controller.setMessageBroker(new MessageBroker());
-        Controller.setManagers(new AankoopManager(), new ReceptManager(), new GebruikerManager(Controller.getMessageBroker()));
+
+    //region vars
+
+    @Autowired
+    AankoopController aankoopController;
+    @Autowired
+    GebruikerController gebruikerController;
+    @Autowired
+    ReceptController receptController;
+    @Autowired
+    MemoryRepository memoryRepository;
+
+    //endregion
+
+
+    private void beforeAll() {
+        aankoopController.clearCatalogs();
+        gebruikerController.clearCatalogs();
+        receptController.clearCatalogs();
     }
 
     @Given("producten")
     public void producten(DataTable dataTable) {
         beforeAll();
-        dataTable.asMaps().forEach(r -> assertTrue(Controller.addProduct(
+        dataTable.asMaps().forEach(r -> assertTrue(aankoopController.addProduct(
                 Integer.parseInt(r.get("product_id")),
                 r.get("product_naam"))
         ));
@@ -40,7 +54,7 @@ public class Givens {
 
     @Given("distributiecentra")
     public void distributiecentra(DataTable dataTable) {
-        dataTable.asMaps().forEach(r -> assertTrue(Controller.addCentrum(
+        dataTable.asMaps().forEach(r -> assertTrue(aankoopController.addCentrum(
                 Integer.parseInt(r.get("distributiecentrum_id")),
                 r.get("distributiecentrum_naam"))
         ));
@@ -49,7 +63,7 @@ public class Givens {
 
     @Given("leveranciers")
     public void leveranciers(DataTable dataTable) {
-        dataTable.asMaps().forEach(r -> assertTrue(Controller.addLeverancier(
+        dataTable.asMaps().forEach(r -> assertTrue(gebruikerController.addLeverancier(
                 Integer.parseInt(r.get("leverancier_id")),
                 r.get("leverancier_naam")
         )));
@@ -57,7 +71,7 @@ public class Givens {
 
     @Given("recepten")
     public void recepten(DataTable dataTable) {
-        dataTable.asMaps().forEach(row -> assertTrue(Controller.addRecept(
+        dataTable.asMaps().forEach(row -> assertTrue(receptController.addRecept(
                 Integer.parseInt(row.get("recept_id")),
                 row.get("recept_naam"),
                 row.get("recept_beschrijving"))
@@ -66,7 +80,7 @@ public class Givens {
 
     @Given("ingredienten")
     public void ingredienten(DataTable dataTable) {
-        dataTable.asMaps().forEach(r -> assertTrue(Controller.addIngredient(
+        dataTable.asMaps().forEach(r -> assertTrue(receptController.addIngredient(
                 Integer.parseInt(r.get("ingredient_id")),
                 Integer.parseInt(r.get("product_id")),
                 Double.parseDouble(r.get("hoeveelheid")),
@@ -77,7 +91,7 @@ public class Givens {
     @Given("bereidingsstappen")
     public void bereidingsstappen(DataTable dataTable) {
         dataTable.asMaps().forEach(r -> {
-            Controller.addBereidingsStapToRecept(
+            receptController.addBereidingsStapToRecept(
                     Integer.parseInt(r.get("recept_id")),
                     Integer.parseInt(r.get("bereidingsstap_id")),
                     r.get("bereidingsstap_naam"),
@@ -87,7 +101,7 @@ public class Givens {
 
             List<String> ingredientIds = this.getItemFromList(r.get("ingredient_ids"));
             if (!ingredientIds.get(0).equals("-")) {
-                Controller.addIngredientToBereidingstap(
+                receptController.addIngredientToBereidingstap(
                         Integer.parseInt(r.get("recept_id")),
                         Integer.parseInt(r.get("volgnummer")),
                         ingredientIds.stream().map(Integer::parseInt).toList()
@@ -104,31 +118,23 @@ public class Givens {
     @Given("subrecepten")
     public void subrecepten(DataTable dataTable) {
         dataTable.asMaps().forEach(row -> {
-            try {
-                assertTrue(Controller.addSubreceptToRecept(
-                        Integer.parseInt(row.get("recept_id")),
-                        Integer.parseInt(row.get("is_subrecept_van")),
-                        Integer.parseInt(row.get("invoegen_na_stap")))
-                );
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                Assertions.fail(e);
-            }
+            assertTrue(receptController.addSubreceptToRecept(
+                    Integer.parseInt(row.get("recept_id")),
+                    Integer.parseInt(row.get("is_subrecept_van")),
+                    Integer.parseInt(row.get("invoegen_na_stap")))
+            );
         });
     }
 
     @Given("contract")
     public void contract(DataTable dataTable) {
         dataTable.asMaps().forEach(r -> {
-            try {
-                assertTrue(Controller.addContract(
-                        Integer.parseInt(r.get("contract_id")),
-                        Integer.parseInt(r.get("product_id")),
-                        Integer.parseInt(r.get("leverancier_id")),
-                        Integer.parseInt(r.get("distributiecentrum_id"))
-                ));
-            } catch (InvocationTargetException | IllegalAccessException e) {
-                Assertions.fail(e);
-            }
+            assertTrue(aankoopController.addContract(
+                    Integer.parseInt(r.get("contract_id")),
+                    Integer.parseInt(r.get("product_id")),
+                    Integer.parseInt(r.get("leverancier_id")),
+                    Integer.parseInt(r.get("distributiecentrum_id"))
+            ));
         });
     }
 
@@ -136,7 +142,7 @@ public class Givens {
     public void clausules(DataTable dataTable) {
         dataTable.asMaps().forEach(r -> {
             try {
-                assertTrue(Controller.addClausule(
+                assertTrue(aankoopController.addClausule(
                         Integer.parseInt(r.get("clausule_id")),
                         Integer.parseInt(r.get("contract_id")),
                         LocalDate.parse(r.get("start_datum")),
@@ -151,13 +157,14 @@ public class Givens {
         });
     }
 
+    //TODO
     @Given("het is vandaag {string}-{string}-{string}")
     public void hetIsVandaag(String arg0, String arg1, String arg2) {
-        Controller.setToday(LocalDate.of(Integer.parseInt(arg0), Integer.parseInt(arg1), Integer.parseInt(arg2)));
+        memoryRepository.add(LocalDate.of(Integer.parseInt(arg0), Integer.parseInt(arg1), Integer.parseInt(arg2)));
     }
 
     @Given("we zoeken op datum van {string}-{string}-{string}")
     public void weZoekenOpDatumVan(String arg0, String arg1, String arg2) {
-        Controller.setToday(LocalDate.of(Integer.parseInt(arg0), Integer.parseInt(arg1), Integer.parseInt(arg2)));
+        memoryRepository.add(LocalDate.of(Integer.parseInt(arg0), Integer.parseInt(arg1), Integer.parseInt(arg2)));
     }
 }
